@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Proyecto Domotica</string>
+    <string name="app_name">DomUntref</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_portada">PortadaActivity</string>
@@ -10,5 +10,6 @@
     <string name="title_activity_artefactos">ArtefactosActivity</string>
     <string name="title_activity_configuracion">ConfiguracionActivity</string>
     <string name="title_activity_estadisticas">EstadisticasActivity</string>
+    <string name="title_activity_recycler_view">RecyclerViewActivity</string>
 
 </resources>

@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import ar.edu.untref.lp4.proyectodomotica.R;
 
@@ -13,6 +14,12 @@ public class ArtefactosActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artefactos);
+
+        TextView nombreHabitacion = (TextView) findViewById(R.id.nombre_habitacion);
+
+        String nombre = getIntent().getExtras().getString("nombre_habitacion");
+
+        nombreHabitacion.setText(nombre);
     }
 
 

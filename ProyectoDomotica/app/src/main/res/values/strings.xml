@@ -7,9 +7,8 @@
     <string name="title_activity_portada">PortadaActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_registro">RegistroActivity</string>
-    <string name="title_activity_artefactos">ArtefactosActivity</string>
-    <string name="title_activity_configuracion">ConfiguracionActivity</string>
-    <string name="title_activity_estadisticas">EstadisticasActivity</string>
-    <string name="title_activity_recycler_view">RecyclerViewActivity</string>
+    <string name="title_activity_artefactos">Artefactos</string>
+    <string name="title_activity_configuracion">Configuracion</string>
+    <string name="title_activity_estadisticas">Estadisticas</string>
 
 </resources>

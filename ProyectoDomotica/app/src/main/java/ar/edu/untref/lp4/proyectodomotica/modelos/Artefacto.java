@@ -13,23 +13,16 @@ public class Artefacto {
     }
 
     public int getId() {
-
         return this.id;
-
     }
 
     public String getNombre() {
-
         return nombre;
-
     }
 
     public void setNombre(String nombre) {
-
         this.nombre = nombre;
-
     }
-
 
     public boolean isActivo() {
         return activo;

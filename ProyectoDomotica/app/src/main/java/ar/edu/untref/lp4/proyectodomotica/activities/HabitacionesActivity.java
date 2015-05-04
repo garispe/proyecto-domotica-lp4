@@ -4,6 +4,7 @@ package ar.edu.untref.lp4.proyectodomotica.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -19,6 +20,7 @@ import ar.edu.untref.lp4.proyectodomotica.R;
 import ar.edu.untref.lp4.proyectodomotica.adapters.GridHabitacionesAdapter;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
+import ar.edu.untref.lp4.proyectodomotica.tasks.ConexionTask;
 
 public class HabitacionesActivity extends ActionBarActivity {
 
@@ -40,13 +42,13 @@ public class HabitacionesActivity extends ActionBarActivity {
         this.controladorBluetooth = new ControladorBluetooth();
 
         if(!this.controladorBluetooth.getBluetoothAdapter().isEnabled()) {
+
             mostrarDialogoEncendidoBluetooth();
 
         } else {
 
-            controladorBluetooth.conectar();
-            inicializarListaHabitaciones();
-            inicializarGridView();
+            ConexionTask conexionTask = new ConexionTask(this.controladorBluetooth, HabitacionesActivity.this);
+            conexionTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
@@ -70,9 +72,9 @@ public class HabitacionesActivity extends ActionBarActivity {
         dialogo.setPositiveButton(R.string.activar, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                controladorBluetooth.conectar();
-                inicializarListaHabitaciones();
-                inicializarGridView();
+
+                ConexionTask conexionTask = new ConexionTask(controladorBluetooth, HabitacionesActivity.this);
+                conexionTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
 
@@ -106,7 +108,7 @@ public class HabitacionesActivity extends ActionBarActivity {
         dialogo.show();
     }
 
-    private void inicializarListaHabitaciones() {
+    public void inicializarListaHabitaciones() {
 
         this.habitaciones = new ArrayList<>();
 
@@ -127,7 +129,7 @@ public class HabitacionesActivity extends ActionBarActivity {
         this.habitaciones.add(new Habitacion("Garage"));
     }
 
-    private void inicializarGridView() {
+    public void inicializarGridView() {
 
         GridHabitacionesAdapter adapter = new GridHabitacionesAdapter(this, habitaciones);
 

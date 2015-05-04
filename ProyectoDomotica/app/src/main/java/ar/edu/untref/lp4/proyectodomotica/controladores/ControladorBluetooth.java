@@ -14,7 +14,7 @@ public class ControladorBluetooth {
 
     private static final String TAG = "ControladorBluetooth --->";
 
-    private static final String MAC_MODULO_BLUETOOTH = "98:D3:31:70:3D:01"; // Modulo Bluetooth
+    private static final String MAC_MODULO_BLUETOOTH = "98:D3:31:70:3D:01";
     private static final UUID UUID_CONEXION = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
     private BluetoothAdapter bluetoothAdapter;
@@ -54,7 +54,7 @@ public class ControladorBluetooth {
                     outputStream = socket.getOutputStream();
                     inputStream = socket.getInputStream();
 
-                    Log.e(TAG, "Conectado"); // Nunca llega a este Log. Ver porque
+                    Log.e(TAG, "Conectado");
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -64,7 +64,7 @@ public class ControladorBluetooth {
 
                 intentos++;
 
-                if(intentos <= 100){
+                if(intentos <= 1000){
 
                     bluetoothAdapter.enable();
                     conectar();

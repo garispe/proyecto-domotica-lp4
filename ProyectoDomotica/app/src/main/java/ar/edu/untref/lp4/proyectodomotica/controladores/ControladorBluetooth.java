@@ -12,7 +12,9 @@ import java.util.UUID;
 
 public class ControladorBluetooth {
 
-    private static final String MAC_MODULO_BLUETOOTH = "98:D3:31:70:3D:01";
+    private static final String TAG = "ControladorBluetooth --->";
+
+    private static final String MAC_MODULO_BLUETOOTH = "98:D3:31:70:3D:01"; // Modulo Bluetooth
     private static final UUID UUID_CONEXION = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
     private BluetoothAdapter bluetoothAdapter;
@@ -20,9 +22,15 @@ public class ControladorBluetooth {
     private OutputStream outputStream;
     private InputStream inputStream;
 
+    private int intentos = 0;
+
     public ControladorBluetooth() {
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    }
+
+    public BluetoothAdapter getBluetoothAdapter(){
+        return this.bluetoothAdapter;
     }
 
     public void conectar() {
@@ -30,6 +38,11 @@ public class ControladorBluetooth {
         if (bluetoothAdapter != null) {
 
             if (bluetoothAdapter.isEnabled()) {
+
+                Log.e(TAG, "Bluetooth habilitado. Conectando...");
+                intentos = 0;
+
+                bluetoothAdapter.cancelDiscovery();
 
                 BluetoothDevice device = bluetoothAdapter.getRemoteDevice(MAC_MODULO_BLUETOOTH);
 
@@ -41,17 +54,41 @@ public class ControladorBluetooth {
                     outputStream = socket.getOutputStream();
                     inputStream = socket.getInputStream();
 
+                    Log.e(TAG, "Conectado"); // Nunca llega a este Log. Ver porque
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
             } else {
 
-                Log.e("ERROR ---->", "Bluetooth deshabilitado.");
+                intentos++;
 
-                bluetoothAdapter.enable();
-                conectar();
+                if(intentos <= 100){
+
+                    bluetoothAdapter.enable();
+                    conectar();
+
+                } else {
+
+                    Log.e(TAG, "No se pudo realizar la conexion. " + (intentos - 1) + " intentos realizados");
+                }
             }
+        }
+    }
+
+    public void desconectar(){
+
+        try {
+
+            if(this.socket != null){
+                this.socket.close();
+            }
+
+            this.bluetoothAdapter.disable();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

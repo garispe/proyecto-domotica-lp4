@@ -11,4 +11,15 @@
     <string name="title_activity_configuracion">Configuracion</string>
     <string name="title_activity_estadisticas">Estadisticas</string>
 
+    <string name="titulo_dialogo_encendido">Bluetooth deshabilitado</string>
+    <string name="texto_dialogo_encendido">La aplicación requiere que el bluetooth esté habilitado.\n¿Desea habilitar el bluetooth?</string>
+    <string name="salir">Salir</string>
+    <string name="activar">Activar</string>
+
+    <string name="titulo_dialogo_salir">Saliendo...</string>
+    <string name="texto_dialogo_salir">¿Desea deshabilitar el bluetooth al salir?</string>
+    <string name="salir_y_desactivar">Salir y deshabilitar</string>
+
+
+
 </resources>

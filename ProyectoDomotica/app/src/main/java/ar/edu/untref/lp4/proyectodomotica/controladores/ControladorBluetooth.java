@@ -10,6 +10,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
+/**
+ * Clase que se encarga de manejar la conexión bluetooth y la transferencia de datos.
+ */
 public class ControladorBluetooth {
 
     private static final String TAG = "ControladorBluetooth --->";
@@ -33,6 +36,11 @@ public class ControladorBluetooth {
         return this.bluetoothAdapter;
     }
 
+    /**
+     * Se realiza la conexión con el módulo bluetooth conectado a la placa Arduino.
+     * Si el bluetooth del teléfono esta habilitado, se crea el socket para la comunicación con el módulo.
+     * Si está deshabilitado, se lo habilita y se reintenta la conexión.
+     */
     public void conectar() {
 
         if (bluetoothAdapter != null) {
@@ -77,6 +85,11 @@ public class ControladorBluetooth {
         }
     }
 
+
+    /**
+     * Se cierra el socket de comunicación con el módulo bluetooth
+     * y se deshabilita el bluetooth del teléfono.
+     */
     public void desconectar(){
 
         try {
@@ -92,6 +105,9 @@ public class ControladorBluetooth {
         }
     }
 
+    /**
+     * Envía el dato pasado por parámetro, a través del socket, al módulo bluetooh.
+     */
     public void enviarDato(String dato) {
 
         try {
@@ -105,6 +121,9 @@ public class ControladorBluetooth {
     // TODO:
     // Falta probar
 
+    /**
+     * Lee un dato, a través del socket, proveniente desde el módulo bluetooh.
+     */
     public String leerDato() throws IOException {
 
         String datoLeido = "No se leyó ningún dato";

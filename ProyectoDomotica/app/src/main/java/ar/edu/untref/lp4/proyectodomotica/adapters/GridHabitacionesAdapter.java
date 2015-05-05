@@ -13,6 +13,9 @@ import java.util.List;
 import ar.edu.untref.lp4.proyectodomotica.R;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
 
+/**
+ * Adapter para GridView personalizado con imagen y texto.
+ */
 public class GridHabitacionesAdapter extends BaseAdapter {
 
     private Context context;

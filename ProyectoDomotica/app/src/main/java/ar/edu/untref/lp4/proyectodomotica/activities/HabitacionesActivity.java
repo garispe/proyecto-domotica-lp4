@@ -7,11 +7,12 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
+
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ import ar.edu.untref.lp4.proyectodomotica.tasks.ConexionTask;
 
 public class HabitacionesActivity extends ActionBarActivity {
 
-    private static final String TAG = "HabitacionesActivity --->";
+    private static final String TAG = "HabitacionesActivity";
     private static final String NOMBRE_HABITACION = "nombre_habitacion";
     private long backPressed;
 
@@ -37,11 +38,12 @@ public class HabitacionesActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habitaciones);
 
-        Log.e(TAG, "onCreate");
+        Logger.init(TAG);
+        Logger.i("onCreate");
 
         this.controladorBluetooth = new ControladorBluetooth();
 
-        if(!this.controladorBluetooth.getBluetoothAdapter().isEnabled()) {
+        if (!this.controladorBluetooth.getBluetoothAdapter().isEnabled()) {
 
             mostrarDialogoEncendidoBluetooth();
 
@@ -155,9 +157,9 @@ public class HabitacionesActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
 
-        Log.e(TAG, "onBackPressed");
+        Logger.i("onBackPressed");
 
-        if(backPressed + 2000 > System.currentTimeMillis()){
+        if (backPressed + 2000 > System.currentTimeMillis()) {
             mostrarDialogoBackPressed();
 
         } else {

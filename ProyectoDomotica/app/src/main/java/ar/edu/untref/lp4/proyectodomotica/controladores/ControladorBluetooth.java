@@ -3,7 +3,8 @@ package ar.edu.untref.lp4.proyectodomotica.controladores;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.util.Log;
+
+import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,7 +16,7 @@ import java.util.UUID;
  */
 public class ControladorBluetooth {
 
-    private static final String TAG = "ControladorBluetooth --->";
+    private static final String TAG = "ControladorBluetooth";
 
     private static final String MAC_MODULO_BLUETOOTH = "98:D3:31:70:3D:01";
     private static final UUID UUID_CONEXION = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
@@ -29,6 +30,7 @@ public class ControladorBluetooth {
 
     public ControladorBluetooth() {
 
+        Logger.init(TAG);
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 
@@ -47,7 +49,7 @@ public class ControladorBluetooth {
 
             if (bluetoothAdapter.isEnabled()) {
 
-                Log.e(TAG, "Bluetooth habilitado. Conectando...");
+                Logger.i("Bluetooth habilitado. Conectando...");
                 intentos = 0;
 
                 bluetoothAdapter.cancelDiscovery();
@@ -62,7 +64,7 @@ public class ControladorBluetooth {
                     outputStream = socket.getOutputStream();
                     inputStream = socket.getInputStream();
 
-                    Log.e(TAG, "Conectado");
+                    Logger.i("Conexion establecida");
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -79,7 +81,7 @@ public class ControladorBluetooth {
 
                 } else {
 
-                    Log.e(TAG, "No se pudo realizar la conexion. " + (intentos - 1) + " intentos realizados");
+                    Logger.i("No se pudo realizar la conexion. " + (intentos - 1) + " intentos realizados");
                 }
             }
         }

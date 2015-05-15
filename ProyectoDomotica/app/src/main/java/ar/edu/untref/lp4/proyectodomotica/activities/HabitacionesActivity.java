@@ -25,7 +25,7 @@ import ar.edu.untref.lp4.proyectodomotica.tasks.ConexionTask;
 
 public class HabitacionesActivity extends ActionBarActivity {
 
-    private static final String TAG = "HabitacionesActivity";
+    private static final String TAG = HabitacionesActivity.class.getSimpleName();
     private static final String NOMBRE_HABITACION = "nombre_habitacion";
     private long backPressed;
 

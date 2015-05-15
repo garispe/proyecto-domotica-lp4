@@ -39,7 +39,7 @@ public class ControladorBluetooth {
     }
 
     /**
-     * Se realiza la conexión con el módulo bluetooth conectado a la placa Arduino.
+     * Realiza la conexión con el módulo bluetooth conectado a la placa Arduino.
      * Si el bluetooth del teléfono esta habilitado, se crea el socket para la comunicación con el módulo.
      * Si está deshabilitado, se lo habilita y se reintenta la conexión.
      */
@@ -89,7 +89,7 @@ public class ControladorBluetooth {
 
 
     /**
-     * Se cierra el socket de comunicación con el módulo bluetooth
+     * Cierra el socket de comunicación con el módulo bluetooth
      * y se deshabilita el bluetooth del teléfono.
      */
     public void desconectar(){

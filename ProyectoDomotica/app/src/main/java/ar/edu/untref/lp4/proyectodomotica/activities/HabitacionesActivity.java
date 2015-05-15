@@ -43,6 +43,14 @@ public class HabitacionesActivity extends ActionBarActivity {
 
         this.controladorBluetooth = new ControladorBluetooth();
 
+        realizarConexion();
+    }
+
+    /**
+     * Lanza la tarea que realiza la conexion Bluetooth
+     */
+    private void realizarConexion() {
+
         if (!this.controladorBluetooth.getBluetoothAdapter().isEnabled()) {
 
             mostrarDialogoEncendidoBluetooth();
@@ -54,6 +62,9 @@ public class HabitacionesActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * Muestra un dialogo al ingresar a la aplicacion, solicitando el encendido del Bluetooth
+     */
     private void mostrarDialogoEncendidoBluetooth() {
 
         AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
@@ -83,6 +94,9 @@ public class HabitacionesActivity extends ActionBarActivity {
         dialogo.show();
     }
 
+    /**
+     * Muestra un dialogo para que al salir, el usuario decida si quiere mantener la conexion Bluetooth
+     */
     private void mostrarDialogoBackPressed() {
 
         AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
@@ -110,19 +124,17 @@ public class HabitacionesActivity extends ActionBarActivity {
         dialogo.show();
     }
 
+    /**
+     * Agrega las habitaciones a la lista de habitaciones
+     */
     public void inicializarListaHabitaciones() {
 
         this.habitaciones = new ArrayList<>();
 
         /*
-
-        Los nombres e imagenes van almacenarse y leerse desde donde esten almacenados
-
-           Por ejemplo, de una base de datos:
-
-           this.habitaciones.addAll(baseDatos.getHabitaciones());
-
-         */
+        Las habitaciones van almacenarse y leerse desde donde esten almacenados
+        Por ejemplo, de una base de datos: this.habitaciones.addAll(baseDatos.getHabitaciones());
+        */
 
         this.habitaciones.add(new Habitacion("Cocina"));
         this.habitaciones.add(new Habitacion("Habitacion"));
@@ -131,7 +143,10 @@ public class HabitacionesActivity extends ActionBarActivity {
         this.habitaciones.add(new Habitacion("Garage"));
     }
 
-    public void inicializarGridView() {
+    /**
+     * Crea el GridView con las habitaciones que contenga la lista de habitaciones
+     */
+    public void inicializarGridViewHabitaciones() {
 
         GridHabitacionesAdapter adapter = new GridHabitacionesAdapter(this, habitaciones);
 

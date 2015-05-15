@@ -39,6 +39,6 @@ public class ConexionTask extends AsyncTask <Void, Void, Void>{
         super.onPostExecute(aVoid);
 
         activity.inicializarListaHabitaciones();
-        activity.inicializarGridView();
+        activity.inicializarGridViewHabitaciones();
     }
 }

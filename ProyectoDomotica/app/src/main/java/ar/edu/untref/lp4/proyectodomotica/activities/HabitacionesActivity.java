@@ -10,8 +10,15 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -44,6 +51,58 @@ public class HabitacionesActivity extends ActionBarActivity {
         this.controladorBluetooth = new ControladorBluetooth();
 
         realizarConexion();
+
+        // Se crean las instancias del menu.
+        final ImageView fabIconNew = new ImageView(this);
+        fabIconNew.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_settings));
+        final FloatingActionButton rightLowerButton = new FloatingActionButton.Builder(this)
+                .setContentView(fabIconNew)
+                .build();
+
+        SubActionButton.Builder rLSubBuilder = new SubActionButton.Builder(this);
+        ImageView rlIcon1 = new ImageView(this);
+        ImageView rlIcon2 = new ImageView(this);
+        ImageView rlIcon3 = new ImageView(this);
+        ImageView rlIcon4 = new ImageView(this);
+
+        rlIcon1.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_settings));
+        rlIcon2.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_settings));
+        rlIcon3.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_settings));
+        rlIcon4.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_settings));
+
+        // Build the menu with default options: light theme, 90 degrees, 72dp radius.
+        // Set 4 default SubActionButtons
+        final FloatingActionMenu rightLowerMenu = new FloatingActionMenu.Builder(this)
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon1).build())
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon2).build())
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon3).build())
+                .addSubActionView(rLSubBuilder.setContentView(rlIcon4).build())
+                .attachTo(rightLowerButton)
+                .build();
+
+        // Listen menu open and close events to animate the button content view
+        rightLowerMenu.setStateChangeListener(new FloatingActionMenu.MenuStateChangeListener() {
+            @Override
+            public void onMenuOpened(FloatingActionMenu menu) {
+                // Rotate the icon of rightLowerButton 45 degrees clockwise
+                fabIconNew.setRotation(0);
+                PropertyValuesHolder pvhR = PropertyValuesHolder.ofFloat(View.ROTATION, 45);
+                ObjectAnimator animation = ObjectAnimator.ofPropertyValuesHolder(fabIconNew, pvhR);
+                animation.start();
+            }
+
+            @Override
+            public void onMenuClosed(FloatingActionMenu menu) {
+                // Rotate the icon of rightLowerButton 45 degrees counter-clockwise
+                fabIconNew.setRotation(45);
+                PropertyValuesHolder pvhR = PropertyValuesHolder.ofFloat(View.ROTATION, 0);
+                ObjectAnimator animation = ObjectAnimator.ofPropertyValuesHolder(fabIconNew, pvhR);
+                animation.start();
+            }
+        });
+
+
+
     }
 
     /**

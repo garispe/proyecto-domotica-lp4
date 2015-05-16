@@ -25,4 +25,5 @@ dependencies {
 
     //Logger
     compile 'com.orhanobut:logger:1.8'
+    compile 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
 }

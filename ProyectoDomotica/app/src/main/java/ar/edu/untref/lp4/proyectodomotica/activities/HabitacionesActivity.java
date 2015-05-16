@@ -62,6 +62,8 @@ public class HabitacionesActivity extends ActionBarActivity {
                 .build();
 
         SubActionButton.Builder subActBuilder = new SubActionButton.Builder(this);
+        //seteo el fondo de los iconos del subMenu
+        subActBuilder.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_action_blue_selector));
 
         //Declaro los iconos que voy a usar en el menu
         ImageView icono1 = new ImageView(this);

@@ -57,9 +57,12 @@ public class HabitacionesActivity extends ActionBarActivity {
         fabIconNew.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_settings));
         final FloatingActionButton rightLowerButton = new FloatingActionButton.Builder(this)
                 .setContentView(fabIconNew)
+                .setBackgroundDrawable(R.drawable.button_action_blue_selector)
+                .setPosition(FloatingActionButton.POSITION_BOTTOM_LEFT)
                 .build();
 
         SubActionButton.Builder rLSubBuilder = new SubActionButton.Builder(this);
+
         ImageView rlIcon1 = new ImageView(this);
         ImageView rlIcon2 = new ImageView(this);
         ImageView rlIcon3 = new ImageView(this);
@@ -70,13 +73,16 @@ public class HabitacionesActivity extends ActionBarActivity {
         rlIcon3.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_settings));
         rlIcon4.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_settings));
 
-        // Build the menu with default options: light theme, 90 degrees, 72dp radius.
+        // Build the menu with default options: light theme
         // Set 4 default SubActionButtons
         final FloatingActionMenu rightLowerMenu = new FloatingActionMenu.Builder(this)
                 .addSubActionView(rLSubBuilder.setContentView(rlIcon1).build())
                 .addSubActionView(rLSubBuilder.setContentView(rlIcon2).build())
                 .addSubActionView(rLSubBuilder.setContentView(rlIcon3).build())
                 .addSubActionView(rLSubBuilder.setContentView(rlIcon4).build())
+                .setRadius(140) //Define el radio de despligue del menu
+                .setStartAngle(0) //Define a donde arranca el menu que se despliega.
+                .setEndAngle(-90) //Define para donde se va a abrir el abanico de opciones.
                 .attachTo(rightLowerButton)
                 .build();
 

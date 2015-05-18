@@ -16,10 +16,11 @@
     <string name="salir">Salir</string>
     <string name="activar">Activar</string>
 
-    <string name="titulo_dialogo_salir">Saliendo...</string>
+    <string name="titulo_dialogo_salir">Saliendo…</string>
     <string name="texto_dialogo_salir">¿Desea deshabilitar el bluetooth al salir?</string>
     <string name="salir_y_desactivar">Salir y deshabilitar</string>
 
-
+    <string name="estableciendo_conexion">Estableciendo conexión…</string>
+    <string name="cancelar">Cancelar</string>
 
 </resources>

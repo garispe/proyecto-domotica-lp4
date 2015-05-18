@@ -1,7 +1,10 @@
 package ar.edu.untref.lp4.proyectodomotica.activities;
 
 
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -12,11 +15,8 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
-import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
 
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
-import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import com.orhanobut.logger.Logger;
@@ -51,10 +51,34 @@ public class HabitacionesActivity extends ActionBarActivity {
         this.controladorBluetooth = new ControladorBluetooth();
 
         realizarConexion();
+    }
+
+    /**
+     * Lanza la tarea que realiza la conexion Bluetooth
+     */
+    private void realizarConexion() {
+
+        if (!this.controladorBluetooth.getBluetoothAdapter().isEnabled()) {
+
+            mostrarDialogoEncendidoBluetooth();
+
+        } else {
+
+            mostrarProgressBarConexion();
+            ConexionTask conexionTask = new ConexionTask(this.controladorBluetooth, HabitacionesActivity.this);
+            conexionTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+    }
+
+    /**
+     * Crea el Menu con sus diferentes opciones
+     */
+    public void inicializarMenu(){
 
         // Se crean las instancias del menu.
         final ImageView iconNew = new ImageView(this);
         iconNew.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_settings));
+
         final FloatingActionButton botonMenu = new FloatingActionButton.Builder(this)
                 .setContentView(iconNew)
                 .setBackgroundDrawable(R.drawable.button_action_blue_selector)
@@ -62,7 +86,6 @@ public class HabitacionesActivity extends ActionBarActivity {
                 .build();
 
         SubActionButton.Builder subActBuilder = new SubActionButton.Builder(this);
-        //seteo el fondo de los iconos del subMenu
         subActBuilder.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_action_blue_selector));
 
         //Declaro los iconos que voy a usar en el menu
@@ -109,27 +132,19 @@ public class HabitacionesActivity extends ActionBarActivity {
                 animation.start();
             }
         });
-
-
-
     }
 
-    /**
-     * Lanza la tarea que realiza la conexion Bluetooth
-     */
-    private void realizarConexion() {
+    private ProgressDialog progressDialog;
 
-        if (!this.controladorBluetooth.getBluetoothAdapter().isEnabled()) {
+    private void mostrarProgressBarConexion(){
 
-            mostrarDialogoEncendidoBluetooth();
-
-        } else {
-
-            ConexionTask conexionTask = new ConexionTask(this.controladorBluetooth, HabitacionesActivity.this);
-            conexionTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }
+        progressDialog = ProgressDialog.show(this, "", getString(R.string.estableciendo_conexion), true);
     }
 
+    public void quitarProgressBarConexion(){
+
+        progressDialog.dismiss();
+    }
     /**
      * Muestra un dialogo al ingresar a la aplicacion, solicitando el encendido del Bluetooth
      */
@@ -154,6 +169,7 @@ public class HabitacionesActivity extends ActionBarActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                mostrarProgressBarConexion();
                 ConexionTask conexionTask = new ConexionTask(controladorBluetooth, HabitacionesActivity.this);
                 conexionTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }

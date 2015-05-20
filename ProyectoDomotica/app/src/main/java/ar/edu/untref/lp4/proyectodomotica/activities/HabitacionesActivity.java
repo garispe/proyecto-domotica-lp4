@@ -3,6 +3,7 @@ package ar.edu.untref.lp4.proyectodomotica.activities;
 
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -30,15 +31,14 @@ import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
 import ar.edu.untref.lp4.proyectodomotica.tasks.ConexionTask;
 
-public class HabitacionesActivity extends ActionBarActivity {
+public class HabitacionesActivity extends Activity {
 
     private static final String TAG = HabitacionesActivity.class.getSimpleName();
     private static final String NOMBRE_HABITACION = "nombre_habitacion";
     private long backPressed;
 
-    private ControladorBluetooth controladorBluetooth;
-
     private List<Habitacion> habitaciones;
+    private ControladorBluetooth controladorBluetooth = ControladorBluetooth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +48,6 @@ public class HabitacionesActivity extends ActionBarActivity {
         Logger.init(TAG);
         Logger.i("onCreate");
 
-        this.controladorBluetooth = new ControladorBluetooth();
-
         realizarConexion();
     }
 
@@ -58,14 +56,14 @@ public class HabitacionesActivity extends ActionBarActivity {
      */
     private void realizarConexion() {
 
-        if (!this.controladorBluetooth.getBluetoothAdapter().isEnabled()) {
+        if (!controladorBluetooth.getBluetoothAdapter().isEnabled()) {
 
             mostrarDialogoEncendidoBluetooth();
 
         } else {
 
             mostrarProgressBarConexion();
-            ConexionTask conexionTask = new ConexionTask(this.controladorBluetooth, HabitacionesActivity.this);
+            ConexionTask conexionTask = new ConexionTask(controladorBluetooth, HabitacionesActivity.this);
             conexionTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
@@ -219,7 +217,6 @@ public class HabitacionesActivity extends ActionBarActivity {
         Las habitaciones van almacenarse y leerse desde donde esten almacenados
         Por ejemplo, de una base de datos: this.habitaciones.addAll(baseDatos.getHabitaciones());
         */
-
         this.habitaciones.add(new Habitacion("Cocina"));
         this.habitaciones.add(new Habitacion("Habitacion"));
         this.habitaciones.add(new Habitacion("Living"));
@@ -267,4 +264,5 @@ public class HabitacionesActivity extends ActionBarActivity {
             backPressed = System.currentTimeMillis();
         }
     }
+
 }

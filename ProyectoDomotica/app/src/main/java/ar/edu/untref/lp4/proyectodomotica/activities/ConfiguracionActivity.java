@@ -1,5 +1,6 @@
 package ar.edu.untref.lp4.proyectodomotica.activities;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,7 +8,7 @@ import android.view.MenuItem;
 
 import ar.edu.untref.lp4.proyectodomotica.R;
 
-public class ConfiguracionActivity extends ActionBarActivity {
+public class ConfiguracionActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

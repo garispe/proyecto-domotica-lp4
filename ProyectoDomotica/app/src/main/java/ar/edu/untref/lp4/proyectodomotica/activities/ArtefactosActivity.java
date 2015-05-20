@@ -1,5 +1,6 @@
 package ar.edu.untref.lp4.proyectodomotica.activities;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -15,14 +16,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.edu.untref.lp4.proyectodomotica.R;
+import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
 
-public class ArtefactosActivity extends ActionBarActivity {
+public class ArtefactosActivity extends Activity {
 
     private static final String TAG = ArtefactosActivity.class.getSimpleName();
     private static final String NOMBRE_HABITACION = "nombre_habitacion";
 
     private List<Artefacto> artefactos;
+    private ControladorBluetooth controladorBluetooth = ControladorBluetooth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,12 +120,26 @@ public class ArtefactosActivity extends ActionBarActivity {
         listView.setOnItemClickListener(onItemClickListener);
     }
 
+
+    /**
+     * Setea el comportamiento al clickear un artefacto
+     */
+
+    //ToDo: Manejo de errores con respescto a la conexión con arduino.
     private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            Toast.makeText(getApplicationContext(), "Artefacto seleccionado: " + artefactos.get(position).getNombre(), Toast.LENGTH_SHORT).show();
+            if(artefactos.get(position).getNombre() == "Lampara"){
+
+                controladorBluetooth.enviarDato("1");
+
+            } else {
+
+                controladorBluetooth.enviarDato("0");
+
+            }
         }
     };
 }

@@ -26,12 +26,20 @@ public class ControladorBluetooth {
     private OutputStream outputStream;
     private InputStream inputStream;
 
+    private static ControladorBluetooth instance = new ControladorBluetooth();
+
     private int intentos = 0;
 
-    public ControladorBluetooth() {
+    private ControladorBluetooth() {
 
         Logger.init(TAG);
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    }
+
+    public static ControladorBluetooth getInstance(){
+
+        return instance;
+
     }
 
     public BluetoothAdapter getBluetoothAdapter(){

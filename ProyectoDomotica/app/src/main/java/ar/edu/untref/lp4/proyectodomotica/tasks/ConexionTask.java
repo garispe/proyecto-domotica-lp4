@@ -1,19 +1,23 @@
 package ar.edu.untref.lp4.proyectodomotica.tasks;
 
 import android.os.AsyncTask;
+import android.widget.Toast;
 
+import ar.edu.untref.lp4.proyectodomotica.R;
 import ar.edu.untref.lp4.proyectodomotica.activities.HabitacionesActivity;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
 
 /**
  * Tarea que realiza la conexión bluetooth en background, utilizando el ControladorBluetooth.
  */
-public class ConexionTask extends AsyncTask <Void, Void, Void>{
+public class ConexionTask extends AsyncTask<Void, Void, Void> {
 
     private ControladorBluetooth controladorBluetooth;
     private HabitacionesActivity activity;
 
-    public ConexionTask(ControladorBluetooth controladorBluetooth, HabitacionesActivity activity){
+    private boolean estaConectado = false;
+
+    public ConexionTask(ControladorBluetooth controladorBluetooth, HabitacionesActivity activity) {
 
         this.controladorBluetooth = controladorBluetooth;
         this.activity = activity;
@@ -25,7 +29,7 @@ public class ConexionTask extends AsyncTask <Void, Void, Void>{
     @Override
     protected Void doInBackground(Void... params) {
 
-        this.controladorBluetooth.conectar();
+        this.estaConectado = this.controladorBluetooth.conectar();
 
         return null;
     }
@@ -37,6 +41,12 @@ public class ConexionTask extends AsyncTask <Void, Void, Void>{
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
+
+        if (!estaConectado) {
+
+            activity.mostrarTextoConexion(true);
+            Toast.makeText(activity, activity.getString(R.string.conexion_no_establecida), Toast.LENGTH_SHORT).show();
+        }
 
         activity.inicializarListaHabitaciones();
         activity.quitarProgressBarConexion();

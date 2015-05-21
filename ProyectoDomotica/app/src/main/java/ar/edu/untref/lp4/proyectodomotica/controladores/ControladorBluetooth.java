@@ -3,6 +3,8 @@ package ar.edu.untref.lp4.proyectodomotica.controladores;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
+import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 
@@ -25,6 +27,8 @@ public class ControladorBluetooth {
     private BluetoothSocket socket;
     private OutputStream outputStream;
     private InputStream inputStream;
+
+    private boolean estaConectado = false;
 
     private static ControladorBluetooth instance = new ControladorBluetooth();
 
@@ -51,7 +55,7 @@ public class ControladorBluetooth {
      * Si el bluetooth del teléfono esta habilitado, se crea el socket para la comunicación con el módulo.
      * Si está deshabilitado, se lo habilita y se reintenta la conexión.
      */
-    public void conectar() {
+    public boolean conectar() {
 
         if (bluetoothAdapter != null) {
 
@@ -69,12 +73,17 @@ public class ControladorBluetooth {
                     socket = device.createRfcommSocketToServiceRecord(UUID_CONEXION);
                     socket.connect();
 
+                    estaConectado = true;
+
                     outputStream = socket.getOutputStream();
                     inputStream = socket.getInputStream();
 
                     Logger.i("Conexion establecida");
 
                 } catch (IOException e) {
+
+                    estaConectado = false;
+                    Logger.i("Timeout de Conexion");
                     e.printStackTrace();
                 }
 
@@ -89,12 +98,19 @@ public class ControladorBluetooth {
 
                 } else {
 
+                    estaConectado = false;
                     Logger.i("No se pudo realizar la conexion. " + (intentos - 1) + " intentos realizados");
                 }
             }
         }
+
+        return estaConectado;
     }
 
+    public boolean estaConectado(){
+
+        return estaConectado;
+    }
 
     /**
      * Cierra el socket de comunicación con el módulo bluetooth

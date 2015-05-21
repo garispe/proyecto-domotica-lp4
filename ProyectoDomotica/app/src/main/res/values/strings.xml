@@ -21,6 +21,10 @@
     <string name="salir_y_desactivar">Salir y deshabilitar</string>
 
     <string name="estableciendo_conexion">Estableciendo conexión…</string>
+    <string name="conexion_no_establecida">No se pudo establecer la conexión</string>
+    <string name="verificar_conexion">Verifique su conexión y vuelva a intentarlo</string>
     <string name="cancelar">Cancelar</string>
+    <string name="no_conectado">NO CONECTADO</string>
+
 
 </resources>

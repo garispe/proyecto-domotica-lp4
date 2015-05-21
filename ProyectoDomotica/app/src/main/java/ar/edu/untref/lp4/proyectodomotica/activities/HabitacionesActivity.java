@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
@@ -37,6 +38,8 @@ public class HabitacionesActivity extends Activity {
     private static final String NOMBRE_HABITACION = "nombre_habitacion";
     private long backPressed;
 
+    private TextView textoConexion;
+
     private List<Habitacion> habitaciones;
     private ControladorBluetooth controladorBluetooth = ControladorBluetooth.getInstance();
 
@@ -44,6 +47,9 @@ public class HabitacionesActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habitaciones);
+
+        textoConexion = (TextView) findViewById(R.id.texto_conexion);
+        textoConexion.setVisibility(View.GONE);
 
         Logger.init(TAG);
         Logger.i("onCreate");
@@ -159,7 +165,6 @@ public class HabitacionesActivity extends Activity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 controladorBluetooth.desconectar();
-                finish();
             }
         });
 
@@ -262,6 +267,18 @@ public class HabitacionesActivity extends Activity {
 
             Toast.makeText(this, "Presione de nuevo para salir", Toast.LENGTH_SHORT).show();
             backPressed = System.currentTimeMillis();
+        }
+    }
+
+    public void mostrarTextoConexion(boolean mostrar){
+
+        if(mostrar) {
+
+            textoConexion.setVisibility(View.VISIBLE);
+
+        } else {
+
+            textoConexion.setVisibility(View.GONE);
         }
     }
 

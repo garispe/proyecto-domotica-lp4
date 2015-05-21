@@ -125,20 +125,25 @@ public class ArtefactosActivity extends Activity {
      * Setea el comportamiento al clickear un artefacto
      */
 
-    //ToDo: Manejo de errores con respescto a la conexión con arduino.
     private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            if(artefactos.get(position).getNombre() == "Lampara"){
+            if(controladorBluetooth.estaConectado()) {
 
-                controladorBluetooth.enviarDato("1");
+                if (artefactos.get(position).getNombre().equals("Lampara")) {
+
+                    controladorBluetooth.enviarDato("1");
+
+                } else {
+
+                    controladorBluetooth.enviarDato("0");
+                }
 
             } else {
 
-                controladorBluetooth.enviarDato("0");
-
+                Toast.makeText(getApplicationContext(), getString(R.string.verificar_conexion), Toast.LENGTH_SHORT).show();
             }
         }
     };

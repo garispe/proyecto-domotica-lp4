@@ -81,6 +81,8 @@ public class HabitacionesActivity extends Activity {
     public void inicializarMenu(){
 
         MenuFlotante menu = new MenuFlotante(this);
+
+        // Agregar OnClickListener a los botones del menu
     }
 
     private ProgressDialog progressDialog;

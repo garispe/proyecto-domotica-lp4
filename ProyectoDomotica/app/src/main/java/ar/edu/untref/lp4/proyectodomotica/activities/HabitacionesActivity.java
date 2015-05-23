@@ -31,6 +31,7 @@ import ar.edu.untref.lp4.proyectodomotica.adapters.GridHabitacionesAdapter;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
 import ar.edu.untref.lp4.proyectodomotica.tasks.ConexionTask;
+import ar.edu.untref.lp4.proyectodomotica.utils.MenuFlotante;
 
 public class HabitacionesActivity extends Activity {
 
@@ -79,63 +80,7 @@ public class HabitacionesActivity extends Activity {
      */
     public void inicializarMenu(){
 
-        // Se crean las instancias del menu.
-        final ImageView iconNew = new ImageView(this);
-        iconNew.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_settings));
-
-        final FloatingActionButton botonMenu = new FloatingActionButton.Builder(this)
-                .setContentView(iconNew)
-                .setBackgroundDrawable(R.drawable.button_action_blue_selector)
-                .setPosition(FloatingActionButton.POSITION_BOTTOM_LEFT)
-                .build();
-
-        SubActionButton.Builder subActBuilder = new SubActionButton.Builder(this);
-        subActBuilder.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_action_blue_selector));
-
-        //Declaro los iconos que voy a usar en el menu
-        ImageView icono1 = new ImageView(this);
-        ImageView icono2 = new ImageView(this);
-        ImageView icono3 = new ImageView(this);
-        ImageView icono4 = new ImageView(this);
-
-        //Seteo las imagenes que contendras los iconos del sub menu
-        icono1.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_settings));
-        icono2.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_settings));
-        icono3.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_settings));
-        icono4.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_settings));
-
-        // Se setan 4 botones en el botonMenu
-        final FloatingActionMenu botonAccionMenu = new FloatingActionMenu.Builder(this)
-                .addSubActionView(subActBuilder.setContentView(icono1).build())
-                .addSubActionView(subActBuilder.setContentView(icono2).build())
-                .addSubActionView(subActBuilder.setContentView(icono3).build())
-                .addSubActionView(subActBuilder.setContentView(icono4).build())
-                .setRadius(140) //Define el radio de despligue del menu
-                .setStartAngle(0) //Define a donde arranca el menu que se despliega.
-                .setEndAngle(-90) //Define para donde se va a abrir el abanico de opciones.
-                .attachTo(botonMenu)
-                .build();
-
-        // Aca estan los eventos de las animaciones para abrir y cerrar el botonMenu.
-        botonAccionMenu.setStateChangeListener(new FloatingActionMenu.MenuStateChangeListener() {
-            @Override
-            public void onMenuOpened(FloatingActionMenu menu) {
-                // Rota el dibujo que se encuentra en el botonMenu 45 grados a favor del reloj
-                iconNew.setRotation(0);
-                PropertyValuesHolder pvhR = PropertyValuesHolder.ofFloat(View.ROTATION, 45);
-                ObjectAnimator animation = ObjectAnimator.ofPropertyValuesHolder(iconNew, pvhR);
-                animation.start();
-            }
-
-            @Override
-            public void onMenuClosed(FloatingActionMenu menu) {
-                // Rota el dibujo que se encuentra en el botonMenu 45 grados contra reloj
-                iconNew.setRotation(45);
-                PropertyValuesHolder pvhR = PropertyValuesHolder.ofFloat(View.ROTATION, 0);
-                ObjectAnimator animation = ObjectAnimator.ofPropertyValuesHolder(iconNew, pvhR);
-                animation.start();
-            }
-        });
+        MenuFlotante menu = new MenuFlotante(this);
     }
 
     private ProgressDialog progressDialog;

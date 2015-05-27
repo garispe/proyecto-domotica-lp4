@@ -1,6 +1,9 @@
 package ar.edu.untref.lp4.proyectodomotica.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -18,6 +21,9 @@ import java.util.List;
 import ar.edu.untref.lp4.proyectodomotica.R;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
+import ar.edu.untref.lp4.proyectodomotica.utils.MenuFlotante;
+
+import static android.support.v4.app.ActivityCompat.startActivity;
 
 public class ArtefactosActivity extends Activity {
 
@@ -41,6 +47,7 @@ public class ArtefactosActivity extends Activity {
 
         inicializarListaArtefactosPorHabitacion(nombreHabitacion);
         inicializarListViewArtefactos();
+        inicializarMenu();
     }
 
     /**
@@ -147,4 +154,66 @@ public class ArtefactosActivity extends Activity {
             }
         }
     };
+
+    public void inicializarMenu(){
+
+        MenuFlotante menu = new MenuFlotante(this);
+
+        //BOTON LOGOFF
+        //Implementar!     <-----
+        menu.logoff.setClickable(true);
+        menu.logoff.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Implementar", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        //BOTON ACERCA DE
+        menu.about.setClickable(true);
+        menu.about.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ArtefactosActivity.this);
+                builder.setMessage("Version 1.0.0")
+                        .setTitle("DomUntref")
+                        .setCancelable(false)
+                        .setNeutralButton("Entendido",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
+
+        //BOTON ESTADISTICAS
+        menu.estadisticas.setClickable(true);
+        menu.estadisticas.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ArtefactosActivity.this, EstadisticasActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //BOTON CONFIGURACION
+        menu.configuracion.setClickable(true);
+        menu.configuracion.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ArtefactosActivity.this, ConfiguracionActivity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
 }

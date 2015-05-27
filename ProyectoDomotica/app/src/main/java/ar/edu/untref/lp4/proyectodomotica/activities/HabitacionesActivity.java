@@ -56,6 +56,7 @@ public class HabitacionesActivity extends Activity {
         Logger.i("onCreate");
 
         realizarConexion();
+        inicializarMenu();
     }
 
     /**
@@ -82,7 +83,62 @@ public class HabitacionesActivity extends Activity {
 
         MenuFlotante menu = new MenuFlotante(this);
 
-        // Agregar OnClickListener a los botones del menu
+        //BOTON LOGOFF
+        //Implementar!     <-----
+        menu.logoff.setClickable(true);
+        menu.logoff.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Implementar", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+        //BOTON ACERCA DE
+        menu.about.setClickable(true);
+        menu.about.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(HabitacionesActivity.this);
+                builder.setMessage("Version 1.0.0")
+                        .setTitle("DomUntref")
+                        .setCancelable(false)
+                        .setNeutralButton("Entendido",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
+
+        //BOTON ESTADISTICAS
+        menu.estadisticas.setClickable(true);
+        menu.estadisticas.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HabitacionesActivity.this, EstadisticasActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //BOTON CONFIGURACION
+        menu.configuracion.setClickable(true);
+        menu.configuracion.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HabitacionesActivity.this, ConfiguracionActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private ProgressDialog progressDialog;

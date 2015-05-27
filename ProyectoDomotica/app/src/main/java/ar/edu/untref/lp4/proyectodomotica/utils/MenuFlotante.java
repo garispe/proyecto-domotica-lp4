@@ -3,6 +3,7 @@ package ar.edu.untref.lp4.proyectodomotica.utils;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -11,10 +12,23 @@ import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import ar.edu.untref.lp4.proyectodomotica.R;
+import ar.edu.untref.lp4.proyectodomotica.activities.ConfiguracionActivity;
+import ar.edu.untref.lp4.proyectodomotica.activities.EstadisticasActivity;
+
+import static android.support.v4.app.ActivityCompat.startActivity;
 
 public class MenuFlotante {
 
     private Activity activity;
+
+
+    public ImageView logoff;
+    public ImageView about;
+    public ImageView estadisticas;
+    public ImageView configuracion;
+
+
+
 
     public MenuFlotante(Activity activity) {
 
@@ -34,24 +48,24 @@ public class MenuFlotante {
         subActBuilder.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.button_action_blue_selector));
 
         //Declaro los iconos que voy a usar en el menu
-        ImageView icono1 = new ImageView(activity);
-        ImageView icono2 = new ImageView(activity);
-        ImageView icono3 = new ImageView(activity);
-        ImageView icono4 = new ImageView(activity);
+        about = new ImageView(activity);
+        estadisticas = new ImageView(activity);
+        configuracion = new ImageView(activity);
+        logoff = new ImageView(activity);
 
         //Seteo las imagenes que contendras los iconos del sub menu
-        icono1.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_action_settings));
-        icono2.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_action_settings));
-        icono3.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_action_settings));
-        icono4.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_action_settings));
+        about.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_action_settings));
+        estadisticas.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_action_settings));
+        configuracion.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_action_settings));
+        logoff.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_action_settings));
 
         // Se setan 4 botones en el botonMenu
         final FloatingActionMenu botonAccionMenu = new FloatingActionMenu.Builder(activity)
-                .addSubActionView(subActBuilder.setContentView(icono1).build())
-                .addSubActionView(subActBuilder.setContentView(icono2).build())
-                .addSubActionView(subActBuilder.setContentView(icono3).build())
-                .addSubActionView(subActBuilder.setContentView(icono4).build())
-                .setRadius(140) //Define el radio de despligue del menu
+                .addSubActionView(subActBuilder.setContentView(logoff).build())
+                .addSubActionView(subActBuilder.setContentView(about).build())
+                .addSubActionView(subActBuilder.setContentView(estadisticas).build())
+                .addSubActionView(subActBuilder.setContentView(configuracion).build())
+                .setRadius(240) //Define el radio de despligue del menu
                 .setStartAngle(0) //Define a donde arranca el menu que se despliega.
                 .setEndAngle(-90) //Define para donde se va a abrir el abanico de opciones.
                 .attachTo(botonMenu)

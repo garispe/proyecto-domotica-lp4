@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.edu.untref.lp4.proyectodomotica.R;
+import ar.edu.untref.lp4.proyectodomotica.adapters.ListViewArtefactosAdapter;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
 import ar.edu.untref.lp4.proyectodomotica.utils.MenuFlotante;
@@ -31,6 +32,7 @@ public class ArtefactosActivity extends Activity {
     private static final String NOMBRE_HABITACION = "nombre_habitacion";
 
     private List<Artefacto> artefactos;
+    private ListViewArtefactosAdapter artefactosAdapter;
     private ControladorBluetooth controladorBluetooth = ControladorBluetooth.getInstance();
 
     @Override
@@ -112,17 +114,9 @@ public class ArtefactosActivity extends Activity {
 
         ListView listView = (ListView) findViewById(R.id.lista_artefactos);
 
-        String[] artefactosArray = new String[artefactos.size()];
+        artefactosAdapter = new ListViewArtefactosAdapter(this, artefactos);
 
-        for (int i = 0; i < artefactos.size(); i++) {
-
-            artefactosArray[i] = artefactos.get(i).getNombre();
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, artefactosArray);
-
-        listView.setAdapter(adapter);
+        listView.setAdapter(artefactosAdapter);
 
         listView.setOnItemClickListener(onItemClickListener);
     }
@@ -137,25 +131,32 @@ public class ArtefactosActivity extends Activity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            if(controladorBluetooth.estaConectado()) {
+            if (controladorBluetooth.estaConectado()) {
 
-                if (artefactos.get(position).getNombre().equals("Lampara")) {
+                Artefacto artefacto = artefactos.get(position);
 
-                    controladorBluetooth.enviarDato("1");
+                if (artefacto.getNombre().equals("Lampara")) {
+
+                    if (!artefacto.isActivo()) {
+
+                        controladorBluetooth.enviarDato("1");
+                        artefacto.setActivo(true);
+
+                    } else {
+
+                        controladorBluetooth.enviarDato("0");
+                        artefacto.setActivo(false);
+                    }
 
                 } else {
 
-                    controladorBluetooth.enviarDato("0");
+                    Toast.makeText(getApplicationContext(), getString(R.string.verificar_conexion), Toast.LENGTH_SHORT).show();
                 }
-
-            } else {
-
-                Toast.makeText(getApplicationContext(), getString(R.string.verificar_conexion), Toast.LENGTH_SHORT).show();
             }
         }
     };
 
-    public void inicializarMenu(){
+    public void inicializarMenu() {
 
         MenuFlotante menu = new MenuFlotante(this);
 

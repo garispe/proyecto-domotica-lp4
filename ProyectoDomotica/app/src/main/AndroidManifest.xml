@@ -10,7 +10,8 @@
         android:icon="@drawable/icono"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.PortadaActivity">
+        <activity android:name=".activities.PortadaActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,21 +20,27 @@
         </activity>
         <activity
             android:name=".activities.HabitacionesActivity"
-            android:label="@string/app_name"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/app_name"/>
         <activity
             android:name=".activities.LoginActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_login" />
         <activity
             android:name=".activities.RegistroActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_registro" />
         <activity
             android:name=".activities.ArtefactosActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_artefactos" />
         <activity
             android:name=".activities.ConfiguracionActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_configuracion" />
         <activity
             android:name=".activities.EstadisticasActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_estadisticas" />
     </application>
 

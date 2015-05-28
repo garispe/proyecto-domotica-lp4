@@ -119,8 +119,8 @@ public class ArtefactosActivity extends Activity {
         listView.setAdapter(artefactosAdapter);
 
         listView.setOnItemClickListener(onItemClickListener);
-    }
 
+    }
 
     /**
      * Setea el comportamiento al clickear un artefacto
@@ -131,7 +131,7 @@ public class ArtefactosActivity extends Activity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            if (controladorBluetooth.estaConectado()) {
+//            if (controladorBluetooth.estaConectado()) {
 
                 Artefacto artefacto = artefactos.get(position);
 
@@ -139,19 +139,19 @@ public class ArtefactosActivity extends Activity {
 
                     if (!artefacto.isActivo()) {
 
-                        controladorBluetooth.enviarDato("1");
+                        //controladorBluetooth.enviarDato("1");
                         artefacto.setActivo(true);
 
                     } else {
 
-                        controladorBluetooth.enviarDato("0");
+                        //controladorBluetooth.enviarDato("0");
                         artefacto.setActivo(false);
                     }
 
-                } else {
-
-                    Toast.makeText(getApplicationContext(), getString(R.string.verificar_conexion), Toast.LENGTH_SHORT).show();
-                }
+//                } else {
+//
+//                    Toast.makeText(getApplicationContext(), getString(R.string.verificar_conexion), Toast.LENGTH_SHORT).show();
+//                }
             }
         }
     };

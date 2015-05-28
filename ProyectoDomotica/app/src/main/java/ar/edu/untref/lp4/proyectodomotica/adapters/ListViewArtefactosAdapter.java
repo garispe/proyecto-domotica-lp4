@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.orhanobut.logger.Logger;
+
 import java.util.List;
 
 import ar.edu.untref.lp4.proyectodomotica.R;
@@ -64,21 +66,40 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
         }
 
         viewHolder.texto.setText(getItem(position).getNombre());
+
+        // SHARED PREFERENCES PARA IMAGEN POR DEFECTO
+
         viewHolder.boton.setImageResource(R.drawable.imagen_off);
         viewHolder.boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                setEstadoImagen(artefactos.get(position), v);
+                Artefacto artefacto = getItem(position);
+
+                if(!artefacto.isActivo()){
+
+                    artefacto.setActivo(true);
+
+                } else {
+
+                    artefacto.setActivo(false);
+                }
+
+                setEstadoImagen(artefactos.get(position), viewHolder.boton);
+
+                // ALMACENAR EN SHARED PREFERENCES
             }
         });
+
         return convertView;
     }
 
-    private void setEstadoImagen(Artefacto artefacto, View view){
+
+    private static final String ESTADO_ARTEFACTOS = "estado_artefactos";
+
+    private void setEstadoImagen(Artefacto artefacto, ImageButton boton){
 
         int imagen;
-        ImageButton boton = (ImageButton) view;
 
         if(artefacto.isActivo()){
 

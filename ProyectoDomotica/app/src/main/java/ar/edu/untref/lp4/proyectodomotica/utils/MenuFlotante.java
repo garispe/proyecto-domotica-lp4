@@ -36,7 +36,7 @@ public class MenuFlotante {
 
         // Se crean las instancias del menu.
         final ImageView iconNew = new ImageView(activity);
-        iconNew.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_action_settings));
+        iconNew.setImageDrawable(activity.getResources().getDrawable(R.drawable.menu));
 
         final FloatingActionButton botonMenu = new FloatingActionButton.Builder(activity)
                 .setContentView(iconNew)
@@ -54,10 +54,10 @@ public class MenuFlotante {
         logoff = new ImageView(activity);
 
         //Seteo las imagenes que contendras los iconos del sub menu
-        about.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_action_settings));
-        estadisticas.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_action_settings));
+        about.setImageDrawable(activity.getResources().getDrawable(R.drawable.informacion));
+        estadisticas.setImageDrawable(activity.getResources().getDrawable(R.drawable.estadisticas));
         configuracion.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_action_settings));
-        logoff.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_action_settings));
+        logoff.setImageDrawable(activity.getResources().getDrawable(R.drawable.logoff));
 
         // Se setan 4 botones en el botonMenu
         final FloatingActionMenu botonAccionMenu = new FloatingActionMenu.Builder(activity)

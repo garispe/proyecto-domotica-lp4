@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,6 +35,8 @@ public class ArtefactosActivity extends Activity {
     private List<Artefacto> artefactos;
     private ListViewArtefactosAdapter artefactosAdapter;
     private ControladorBluetooth controladorBluetooth = ControladorBluetooth.getInstance();
+    private MenuFlotante menu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,7 +161,7 @@ public class ArtefactosActivity extends Activity {
 
     public void inicializarMenu() {
 
-        MenuFlotante menu = new MenuFlotante(this);
+        menu = new MenuFlotante(this);
 
         //BOTON LOGOFF
         //Implementar!     <-----
@@ -167,6 +170,7 @@ public class ArtefactosActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                menu.botonAccionMenu.close(true);
                 Toast.makeText(getApplicationContext(), "Implementar", Toast.LENGTH_SHORT).show();
             }
         });
@@ -178,8 +182,9 @@ public class ArtefactosActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                menu.botonAccionMenu.close(true);
                 AlertDialog.Builder builder = new AlertDialog.Builder(ArtefactosActivity.this);
-                builder.setMessage("Version 1.0.0")
+                builder.setMessage("Version 1.0.0000")
                         .setTitle("DomUntref")
                         .setCancelable(false)
                         .setNeutralButton("Entendido",
@@ -199,6 +204,7 @@ public class ArtefactosActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                menu.botonAccionMenu.close(true);
                 Intent intent = new Intent(ArtefactosActivity.this, EstadisticasActivity.class);
                 startActivity(intent);
             }
@@ -210,10 +216,58 @@ public class ArtefactosActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                menu.botonAccionMenu.close(true);
                 Intent intent = new Intent(ArtefactosActivity.this, ConfiguracionActivity.class);
                 startActivity(intent);
+
             }
         });
+
+    }
+
+
+    /*
+    *Acción de los botones fisicos BACK y MENU
+    *
+    *MENU:
+    *    En caso de que el menú esté cerrado, lo abre.
+    *    En caso de que el menú esté abierto, lo cierra.
+    *BACK:
+    *    En caso de que el menú este cerado, vuelve a la pantalla anterior.
+    *    En caso de que el menú esté abierto, lo cierra.
+    */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            if (!this.menu.botonAccionMenu.isOpen()) {
+
+                this.menu.botonAccionMenu.open(true);
+
+
+            }else{
+
+                this.menu.botonAccionMenu.close(true);
+
+            }
+
+
+        }
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+
+            if (this.menu.botonAccionMenu.isOpen()){
+
+                this.menu.botonAccionMenu.close(true);
+
+            }else {
+                super.onBackPressed();
+            }
+
+        }
+
+        return true;
 
     }
 

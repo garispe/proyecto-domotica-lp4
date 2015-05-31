@@ -6,15 +6,23 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.orhanobut.logger.Logger;
+
 import ar.edu.untref.lp4.proyectodomotica.R;
+import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
 import ar.edu.untref.lp4.proyectodomotica.utils.MenuFlotante;
 
 public class ConfiguracionActivity extends Activity {
+
+
+    private MenuFlotante menu;
+    private ControladorBluetooth controladorBluetooth = ControladorBluetooth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +54,9 @@ public class ConfiguracionActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void inicializarMenu(){
+    public void inicializarMenu() {
 
-        MenuFlotante menu = new MenuFlotante(this);
+        menu = new MenuFlotante(this);
 
         //BOTON LOGOFF
         //Implementar!     <-----
@@ -57,6 +65,7 @@ public class ConfiguracionActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                menu.botonAccionMenu.close(true);
                 Toast.makeText(getApplicationContext(), "Implementar", Toast.LENGTH_SHORT).show();
             }
         });
@@ -68,6 +77,7 @@ public class ConfiguracionActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                menu.botonAccionMenu.close(true);
                 AlertDialog.Builder builder = new AlertDialog.Builder(ConfiguracionActivity.this);
                 builder.setMessage("Version 1.0.0")
                         .setTitle("DomUntref")
@@ -89,6 +99,7 @@ public class ConfiguracionActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                menu.botonAccionMenu.close(true);
                 Intent intent = new Intent(ConfiguracionActivity.this, EstadisticasActivity.class);
                 startActivity(intent);
             }
@@ -100,11 +111,61 @@ public class ConfiguracionActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                menu.botonAccionMenu.close(true);
                 Intent intent = new Intent(ConfiguracionActivity.this, ConfiguracionActivity.class);
                 startActivity(intent);
             }
         });
 
     }
+
+
+    /*
+    *Acción de los botones fisicos BACK y MENU
+    *
+    *MENU:
+    *    En caso de que el menú esté cerrado, lo abre.
+    *    En caso de que el menú esté abierto, lo cierra.
+    *BACK:
+    *    En caso de que el menú este cerado, vuelve a la pantalla anterior.
+    *    En caso de que el menú esté abierto, lo cierra.
+    */
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            if (!this.menu.botonAccionMenu.isOpen()) {
+
+                this.menu.botonAccionMenu.open(true);
+
+
+            }else{
+
+                this.menu.botonAccionMenu.close(true);
+
+            }
+
+
+        }
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+
+            if (this.menu.botonAccionMenu.isOpen()){
+
+                this.menu.botonAccionMenu.close(true);
+
+            }else {
+
+                super.onBackPressed();
+            }
+
+        }
+
+        return true;
+
+    }
+
 
 }

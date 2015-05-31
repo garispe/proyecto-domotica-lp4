@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -43,6 +44,7 @@ public class HabitacionesActivity extends Activity {
 
     private List<Habitacion> habitaciones;
     private ControladorBluetooth controladorBluetooth = ControladorBluetooth.getInstance();
+    private MenuFlotante menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,7 @@ public class HabitacionesActivity extends Activity {
         realizarConexion();
         inicializarMenu();
     }
+
 
     /**
      * Lanza la tarea que realiza la conexion Bluetooth
@@ -79,9 +82,10 @@ public class HabitacionesActivity extends Activity {
     /**
      * Crea el Menu con sus diferentes opciones
      */
-    public void inicializarMenu(){
+    public void inicializarMenu() {
 
-        MenuFlotante menu = new MenuFlotante(this);
+        menu = new MenuFlotante(this);
+
 
         //BOTON LOGOFF
         //Implementar!     <-----
@@ -90,10 +94,10 @@ public class HabitacionesActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                menu.botonAccionMenu.close(true);
                 Toast.makeText(getApplicationContext(), "Implementar", Toast.LENGTH_SHORT).show();
             }
         });
-
 
 
         //BOTON ACERCA DE
@@ -102,6 +106,7 @@ public class HabitacionesActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                menu.botonAccionMenu.close(true);
                 AlertDialog.Builder builder = new AlertDialog.Builder(HabitacionesActivity.this);
                 builder.setMessage("Version 1.0.0")
                         .setTitle("DomUntref")
@@ -123,6 +128,7 @@ public class HabitacionesActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                menu.botonAccionMenu.close(true);
                 Intent intent = new Intent(HabitacionesActivity.this, EstadisticasActivity.class);
                 startActivity(intent);
             }
@@ -134,6 +140,7 @@ public class HabitacionesActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                menu.botonAccionMenu.close(true);
                 Intent intent = new Intent(HabitacionesActivity.this, ConfiguracionActivity.class);
                 startActivity(intent);
             }
@@ -141,17 +148,19 @@ public class HabitacionesActivity extends Activity {
 
     }
 
+
     private ProgressDialog progressDialog;
 
-    private void mostrarProgressBarConexion(){
+    private void mostrarProgressBarConexion() {
 
         progressDialog = ProgressDialog.show(this, "", getString(R.string.estableciendo_conexion), true);
     }
 
-    public void quitarProgressBarConexion(){
+    public void quitarProgressBarConexion() {
 
         progressDialog.dismiss();
     }
+
     /**
      * Muestra un dialogo al ingresar a la aplicacion, solicitando el encendido del Bluetooth
      */
@@ -258,24 +267,12 @@ public class HabitacionesActivity extends Activity {
         startActivity(intent);
     }
 
-    @Override
-    public void onBackPressed() {
 
-        Logger.i("onBackPressed");
 
-        if (backPressed + 2000 > System.currentTimeMillis()) {
-            mostrarDialogoBackPressed();
 
-        } else {
+    public void mostrarTextoConexion(boolean mostrar) {
 
-            Toast.makeText(this, "Presione de nuevo para salir", Toast.LENGTH_SHORT).show();
-            backPressed = System.currentTimeMillis();
-        }
-    }
-
-    public void mostrarTextoConexion(boolean mostrar){
-
-        if(mostrar) {
+        if (mostrar) {
 
             textoConexion.setVisibility(View.VISIBLE);
 
@@ -285,4 +282,59 @@ public class HabitacionesActivity extends Activity {
         }
     }
 
+
+    /*
+    *Acción de los botones fisicos BACK y MENU
+    *
+    *MENU:
+    *    En caso de que el menú esté cerrado, lo abre.
+    *    En caso de que el menú esté abierto, lo cierra.
+    *BACK:
+    *    En caso de que el menú este cerado, vuelve a la pantalla anterior.
+    *    En caso de que el menú esté abierto, lo cierra.
+    */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // TODO Auto-generated method stub
+
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            if (!this.menu.botonAccionMenu.isOpen()) {
+
+                this.menu.botonAccionMenu.open(true);
+
+
+            }else{
+
+                this.menu.botonAccionMenu.close(true);
+
+            }
+
+
+        }
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            Logger.i("onBackPressed");
+
+            if (backPressed + 2000 > System.currentTimeMillis()) {
+                mostrarDialogoBackPressed();
+
+            } else {
+                if (this.menu.botonAccionMenu.isOpen()){
+
+                    this.menu.botonAccionMenu.close(true);
+
+                }else {
+                    Toast.makeText(this, "Presione de nuevo para salir", Toast.LENGTH_SHORT).show();
+                    backPressed = System.currentTimeMillis();
+                }
+            }
+
+        }
+
+        return true;
+
+    }
+
 }
+

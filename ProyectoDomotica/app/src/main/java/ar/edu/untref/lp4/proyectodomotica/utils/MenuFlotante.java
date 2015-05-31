@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.app.Activity;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -26,11 +27,13 @@ public class MenuFlotante {
     public ImageView about;
     public ImageView estadisticas;
     public ImageView configuracion;
+    //Atributos publicos para que puedan ser utilizados por las Activities que implementan esta utilidad
+    public FloatingActionButton botonMenu;
+    public FloatingActionMenu botonAccionMenu;
 
 
 
-
-    public MenuFlotante(Activity activity) {
+    public MenuFlotante(final Activity activity) {
 
         this.activity = activity;
 
@@ -38,7 +41,7 @@ public class MenuFlotante {
         final ImageView iconNew = new ImageView(activity);
         iconNew.setImageDrawable(activity.getResources().getDrawable(R.drawable.menu));
 
-        final FloatingActionButton botonMenu = new FloatingActionButton.Builder(activity)
+        botonMenu = new FloatingActionButton.Builder(activity)
                 .setContentView(iconNew)
                 .setBackgroundDrawable(R.drawable.button_action_blue_selector)
                 .setPosition(FloatingActionButton.POSITION_BOTTOM_LEFT)
@@ -60,7 +63,7 @@ public class MenuFlotante {
         logoff.setImageDrawable(activity.getResources().getDrawable(R.drawable.logoff));
 
         // Se setan 4 botones en el botonMenu
-        final FloatingActionMenu botonAccionMenu = new FloatingActionMenu.Builder(activity)
+        botonAccionMenu = new FloatingActionMenu.Builder(activity)
                 .addSubActionView(subActBuilder.setContentView(logoff).build())
                 .addSubActionView(subActBuilder.setContentView(about).build())
                 .addSubActionView(subActBuilder.setContentView(estadisticas).build())
@@ -80,6 +83,7 @@ public class MenuFlotante {
                 PropertyValuesHolder pvhR = PropertyValuesHolder.ofFloat(View.ROTATION, 45);
                 ObjectAnimator animation = ObjectAnimator.ofPropertyValuesHolder(iconNew, pvhR);
                 animation.start();
+
             }
 
             @Override
@@ -91,5 +95,8 @@ public class MenuFlotante {
                 animation.start();
             }
         });
+
+
     }
+
 }

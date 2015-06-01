@@ -30,12 +30,13 @@ import static android.support.v4.app.ActivityCompat.startActivity;
 public class ArtefactosActivity extends Activity {
 
     private static final String TAG = ArtefactosActivity.class.getSimpleName();
-    private static final String NOMBRE_HABITACION = "nombre_habitacion";
+    public static final String NOMBRE_HABITACION = "nombre_habitacion";
 
     private List<Artefacto> artefactos;
     private ListViewArtefactosAdapter artefactosAdapter;
     private ControladorBluetooth controladorBluetooth = ControladorBluetooth.getInstance();
     private MenuFlotante menu;
+    public static String nombreHabitacion;
 
 
     @Override
@@ -45,7 +46,7 @@ public class ArtefactosActivity extends Activity {
 
         Logger.init(TAG);
 
-        String nombreHabitacion = getIntent().getExtras().getString(NOMBRE_HABITACION);
+        nombreHabitacion = getIntent().getExtras().getString(NOMBRE_HABITACION);
 
         TextView habitacion = (TextView) findViewById(R.id.nombre_habitacion);
         habitacion.setText(nombreHabitacion);

@@ -61,7 +61,6 @@ public class HabitacionesActivity extends Activity {
         realizarConexion();
     }
 
-
     /**
      * Lanza la tarea que realiza la conexion Bluetooth
      */
@@ -275,7 +274,6 @@ public class HabitacionesActivity extends Activity {
             textoConexion.setVisibility(View.GONE);
         }
     }
-
 
     /**
      * En caso de que el menú este cerado, vuelve a la pantalla anterior.

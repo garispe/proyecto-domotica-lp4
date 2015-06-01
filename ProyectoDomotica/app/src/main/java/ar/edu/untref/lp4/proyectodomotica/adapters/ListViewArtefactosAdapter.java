@@ -5,18 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
 import ar.edu.untref.lp4.proyectodomotica.R;
+import ar.edu.untref.lp4.proyectodomotica.activities.ArtefactosActivity;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
+import ar.edu.untref.lp4.proyectodomotica.utils.DUPreferences;
 
 public class ListViewArtefactosAdapter extends BaseAdapter {
 
@@ -27,7 +24,6 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
 
         this.context = context;
         this.artefactos = artefactos;
-
     }
 
     @Override
@@ -67,9 +63,16 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
 
         viewHolder.texto.setText(getItem(position).getNombre());
 
-        // SHARED PREFERENCES PARA IMAGEN POR DEFECTO
+        // SE CONSULTA EL ESTADO ALMACENADO PARA CARGAR LA IMAGEN AL CREAR LA ACTIVIDAD
+        if(DUPreferences.getBoolean(context, ArtefactosActivity.nombreHabitacion + "_" + getItem(position).getNombre(), false)){
 
-        viewHolder.boton.setImageResource(R.drawable.imagen_off);
+            viewHolder.boton.setImageResource(R.drawable.imagen_on);
+
+        } else {
+
+            viewHolder.boton.setImageResource(R.drawable.imagen_off);
+        }
+
         viewHolder.boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,17 +88,15 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
                     artefacto.setActivo(false);
                 }
 
-                setEstadoImagen(artefactos.get(position), viewHolder.boton);
+                setEstadoImagen(artefacto, viewHolder.boton);
 
-                // ALMACENAR EN SHARED PREFERENCES
+                // SE ALMACENA EL VALOR EN LAS PREFERENCIAS
+                DUPreferences.guardarBoolean(context, ArtefactosActivity.nombreHabitacion + "_" + artefacto.getNombre(), artefacto.isActivo());
             }
         });
 
         return convertView;
     }
-
-
-    private static final String ESTADO_ARTEFACTOS = "estado_artefactos";
 
     private void setEstadoImagen(Artefacto artefacto, ImageButton boton){
 

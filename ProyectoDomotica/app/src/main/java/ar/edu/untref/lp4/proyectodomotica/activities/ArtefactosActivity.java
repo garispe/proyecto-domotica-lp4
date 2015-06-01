@@ -5,11 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,11 +19,8 @@ import java.util.List;
 import ar.edu.untref.lp4.proyectodomotica.BuildConfig;
 import ar.edu.untref.lp4.proyectodomotica.R;
 import ar.edu.untref.lp4.proyectodomotica.adapters.ListViewArtefactosAdapter;
-import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
 import ar.edu.untref.lp4.proyectodomotica.utils.MenuFlotante;
-
-import static android.support.v4.app.ActivityCompat.startActivity;
 
 public class ArtefactosActivity extends Activity {
 
@@ -35,10 +29,8 @@ public class ArtefactosActivity extends Activity {
 
     private List<Artefacto> artefactos;
     private ListViewArtefactosAdapter artefactosAdapter;
-    private ControladorBluetooth controladorBluetooth = ControladorBluetooth.getInstance();
     private MenuFlotante menu;
     public static String nombreHabitacion;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,40 +105,7 @@ public class ArtefactosActivity extends Activity {
         artefactosAdapter = new ListViewArtefactosAdapter(this, artefactos);
 
         listView.setAdapter(artefactosAdapter);
-
-        listView.setOnItemClickListener(onItemClickListener);
-
     }
-
-    /**
-     * Setea el comportamiento al clickear un artefacto
-     */
-    private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
-
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            if (controladorBluetooth.estaConectado()) {
-
-                Artefacto artefacto = artefactos.get(position);
-
-                if (!artefacto.isActivo()) {
-
-                    artefacto.setActivo(true);
-                    controladorBluetooth.enviarDato("1");
-
-                } else {
-
-                    artefacto.setActivo(false);
-                    controladorBluetooth.enviarDato("0");
-                }
-
-            } else {
-
-                Toast.makeText(getApplicationContext(), getString(R.string.verificar_conexion), Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
 
     public void inicializarMenu() {
 

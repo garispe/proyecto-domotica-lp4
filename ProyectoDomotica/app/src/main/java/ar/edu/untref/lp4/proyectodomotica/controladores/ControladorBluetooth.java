@@ -108,7 +108,6 @@ public class ControladorBluetooth {
     }
 
     public boolean estaConectado(){
-
         return estaConectado;
     }
 

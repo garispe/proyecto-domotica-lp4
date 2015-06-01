@@ -3,8 +3,6 @@ package ar.edu.untref.lp4.proyectodomotica.utils;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.app.Activity;
-import android.content.Intent;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -13,25 +11,19 @@ import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import ar.edu.untref.lp4.proyectodomotica.R;
-import ar.edu.untref.lp4.proyectodomotica.activities.ConfiguracionActivity;
-import ar.edu.untref.lp4.proyectodomotica.activities.EstadisticasActivity;
-
-import static android.support.v4.app.ActivityCompat.startActivity;
 
 public class MenuFlotante {
 
     private Activity activity;
 
-
     public ImageView logoff;
     public ImageView about;
     public ImageView estadisticas;
     public ImageView configuracion;
+
     //Atributos publicos para que puedan ser utilizados por las Activities que implementan esta utilidad
     public FloatingActionButton botonMenu;
     public FloatingActionMenu botonAccionMenu;
-
-
 
     public MenuFlotante(final Activity activity) {
 
@@ -68,7 +60,7 @@ public class MenuFlotante {
                 .addSubActionView(subActBuilder.setContentView(about).build())
                 .addSubActionView(subActBuilder.setContentView(estadisticas).build())
                 .addSubActionView(subActBuilder.setContentView(configuracion).build())
-                .setRadius(240) //Define el radio de despligue del menu
+                .setRadius(150) //Define el radio de despligue del menu
                 .setStartAngle(0) //Define a donde arranca el menu que se despliega.
                 .setEndAngle(-90) //Define para donde se va a abrir el abanico de opciones.
                 .attachTo(botonMenu)
@@ -83,7 +75,6 @@ public class MenuFlotante {
                 PropertyValuesHolder pvhR = PropertyValuesHolder.ofFloat(View.ROTATION, 45);
                 ObjectAnimator animation = ObjectAnimator.ofPropertyValuesHolder(iconNew, pvhR);
                 animation.start();
-
             }
 
             @Override
@@ -95,8 +86,5 @@ public class MenuFlotante {
                 animation.start();
             }
         });
-
-
     }
-
 }

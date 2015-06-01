@@ -72,39 +72,30 @@ public class ArtefactosActivity extends Activity {
             case "Cocina":
 
                 this.artefactos.add(new Artefacto("Lampara"));
-                this.artefactos.add(new Artefacto("Cafetera"));
-                this.artefactos.add(new Artefacto("Licuadora"));
 
                 break;
 
             case "Habitacion":
 
                 this.artefactos.add(new Artefacto("Lampara"));
-                this.artefactos.add(new Artefacto("Ventilador"));
-                this.artefactos.add(new Artefacto("Persiana"));
 
                 break;
 
             case "Living":
 
                 this.artefactos.add(new Artefacto("Lampara"));
-                this.artefactos.add(new Artefacto("Aire Acondicionado"));
-                this.artefactos.add(new Artefacto("Televisor"));
-                this.artefactos.add(new Artefacto("Equipo de Audio"));
 
                 break;
 
             case "Baño":
 
                 this.artefactos.add(new Artefacto("Lampara"));
-                this.artefactos.add(new Artefacto("Ventilacion"));
 
                 break;
 
             case "Garage":
 
                 this.artefactos.add(new Artefacto("Lampara"));
-                this.artefactos.add(new Artefacto("Porton"));
 
                 break;
         }
@@ -136,20 +127,20 @@ public class ArtefactosActivity extends Activity {
 
 //            if (controladorBluetooth.estaConectado()) {
 
-                Artefacto artefacto = artefactos.get(position);
+            Artefacto artefacto = artefactos.get(position);
 
-                if (artefacto.getNombre().equals("Lampara")) {
+            if (artefacto.getNombre().equals("Lampara")) {
 
-                    if (!artefacto.isActivo()) {
+                if (!artefacto.isActivo()) {
 
-                        //controladorBluetooth.enviarDato("1");
-                        artefacto.setActivo(true);
+                    //controladorBluetooth.enviarDato("1");
+                    artefacto.setActivo(true);
 
-                    } else {
+                } else {
 
-                        //controladorBluetooth.enviarDato("0");
-                        artefacto.setActivo(false);
-                    }
+                    //controladorBluetooth.enviarDato("0");
+                    artefacto.setActivo(false);
+                }
 
 //                } else {
 //
@@ -171,7 +162,7 @@ public class ArtefactosActivity extends Activity {
             @Override
             public void onClick(View v) {
                 menu.botonAccionMenu.close(true);
-                Toast.makeText(getApplicationContext(), "Implementar", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Proximamente", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -226,49 +217,20 @@ public class ArtefactosActivity extends Activity {
     }
 
 
-    /*
-    *Acción de los botones fisicos BACK y MENU
-    *
-    *MENU:
-    *    En caso de que el menú esté cerrado, lo abre.
-    *    En caso de que el menú esté abierto, lo cierra.
-    *BACK:
-    *    En caso de que el menú este cerado, vuelve a la pantalla anterior.
-    *    En caso de que el menú esté abierto, lo cierra.
-    */
+    /**
+     * En caso de que el menú este cerado, vuelve a la pantalla anterior.
+     * En caso de que el menú esté abierto, lo cierra.
+     */
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public void onBackPressed() {
 
-        if (keyCode == KeyEvent.KEYCODE_MENU) {
-            if (!this.menu.botonAccionMenu.isOpen()) {
+        if (this.menu.botonAccionMenu.isOpen()) {
 
-                this.menu.botonAccionMenu.open(true);
+            this.menu.botonAccionMenu.close(true);
 
+        } else {
 
-            }else{
-
-                this.menu.botonAccionMenu.close(true);
-
-            }
-
-
+            finish();
         }
-
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-
-
-            if (this.menu.botonAccionMenu.isOpen()){
-
-                this.menu.botonAccionMenu.close(true);
-
-            }else {
-                super.onBackPressed();
-            }
-
-        }
-
-        return true;
-
     }
-
 }

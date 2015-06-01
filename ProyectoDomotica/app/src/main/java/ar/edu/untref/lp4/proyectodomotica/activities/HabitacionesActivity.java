@@ -40,6 +40,7 @@ public class HabitacionesActivity extends Activity {
     private static final String NOMBRE_HABITACION = "nombre_habitacion";
     private long backPressed;
 
+    private ProgressDialog progressDialog;
     private TextView textoConexion;
 
     private List<Habitacion> habitaciones;
@@ -58,7 +59,6 @@ public class HabitacionesActivity extends Activity {
         Logger.i("onCreate");
 
         realizarConexion();
-        inicializarMenu();
     }
 
 
@@ -147,9 +147,6 @@ public class HabitacionesActivity extends Activity {
         });
 
     }
-
-
-    private ProgressDialog progressDialog;
 
     private void mostrarProgressBarConexion() {
 
@@ -267,9 +264,6 @@ public class HabitacionesActivity extends Activity {
         startActivity(intent);
     }
 
-
-
-
     public void mostrarTextoConexion(boolean mostrar) {
 
         if (mostrar) {
@@ -283,58 +277,31 @@ public class HabitacionesActivity extends Activity {
     }
 
 
-    /*
-    *Acción de los botones fisicos BACK y MENU
-    *
-    *MENU:
-    *    En caso de que el menú esté cerrado, lo abre.
-    *    En caso de que el menú esté abierto, lo cierra.
-    *BACK:
-    *    En caso de que el menú este cerado, vuelve a la pantalla anterior.
-    *    En caso de que el menú esté abierto, lo cierra.
-    */
+    /**
+     * En caso de que el menú este cerado, vuelve a la pantalla anterior.
+     * En caso de que el menú esté abierto, lo cierra.
+     */
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        // TODO Auto-generated method stub
+    public void onBackPressed() {
 
-        if (keyCode == KeyEvent.KEYCODE_MENU) {
-            if (!this.menu.botonAccionMenu.isOpen()) {
+        Logger.i("onBackPressed");
 
-                this.menu.botonAccionMenu.open(true);
+        if (this.menu.botonAccionMenu.isOpen()) {
 
+            this.menu.botonAccionMenu.close(true);
 
-            }else{
-
-                this.menu.botonAccionMenu.close(true);
-
-            }
-
-
-        }
-
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-
-            Logger.i("onBackPressed");
+        } else {
 
             if (backPressed + 2000 > System.currentTimeMillis()) {
+
                 mostrarDialogoBackPressed();
 
             } else {
-                if (this.menu.botonAccionMenu.isOpen()){
 
-                    this.menu.botonAccionMenu.close(true);
-
-                }else {
-                    Toast.makeText(this, "Presione de nuevo para salir", Toast.LENGTH_SHORT).show();
-                    backPressed = System.currentTimeMillis();
-                }
+                Toast.makeText(this, "Presione de nuevo para salir", Toast.LENGTH_SHORT).show();
+                backPressed = System.currentTimeMillis();
             }
-
         }
-
-        return true;
-
     }
-
 }
 

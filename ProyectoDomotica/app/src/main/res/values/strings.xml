@@ -25,6 +25,8 @@
     <string name="verificar_conexion">Verifique su conexión y vuelva a intentarlo</string>
     <string name="cancelar">Cancelar</string>
     <string name="no_conectado">NO CONECTADO</string>
+    <string name="entendido">Entendido</string>
+    <string name="proximamente">PROXIMAMENTE</string>
 
 
 </resources>

@@ -27,6 +27,7 @@ import com.orhanobut.logger.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.edu.untref.lp4.proyectodomotica.BuildConfig;
 import ar.edu.untref.lp4.proyectodomotica.R;
 import ar.edu.untref.lp4.proyectodomotica.adapters.GridHabitacionesAdapter;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
@@ -85,16 +86,14 @@ public class HabitacionesActivity extends Activity {
 
         menu = new MenuFlotante(this);
 
-
         //BOTON LOGOFF
-        //Implementar!     <-----
         menu.logoff.setClickable(true);
         menu.logoff.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 menu.botonAccionMenu.close(true);
-                Toast.makeText(getApplicationContext(), "Implementar", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.proximamente), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -107,10 +106,10 @@ public class HabitacionesActivity extends Activity {
             public void onClick(View v) {
                 menu.botonAccionMenu.close(true);
                 AlertDialog.Builder builder = new AlertDialog.Builder(HabitacionesActivity.this);
-                builder.setMessage("Version 1.0.0")
-                        .setTitle("DomUntref")
+                builder.setMessage(BuildConfig.VERSION_NAME)
+                        .setTitle(getString(R.string.app_name))
                         .setCancelable(false)
-                        .setNeutralButton("Entendido",
+                        .setNeutralButton(getString(R.string.entendido),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         dialog.cancel();
@@ -144,7 +143,6 @@ public class HabitacionesActivity extends Activity {
                 startActivity(intent);
             }
         });
-
     }
 
     private void mostrarProgressBarConexion() {

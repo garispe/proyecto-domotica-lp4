@@ -19,6 +19,7 @@ import com.orhanobut.logger.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.edu.untref.lp4.proyectodomotica.BuildConfig;
 import ar.edu.untref.lp4.proyectodomotica.R;
 import ar.edu.untref.lp4.proyectodomotica.adapters.ListViewArtefactosAdapter;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
@@ -120,33 +121,29 @@ public class ArtefactosActivity extends Activity {
     /**
      * Setea el comportamiento al clickear un artefacto
      */
-
     private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-//            if (controladorBluetooth.estaConectado()) {
+            if (controladorBluetooth.estaConectado()) {
 
-            Artefacto artefacto = artefactos.get(position);
-
-            if (artefacto.getNombre().equals("Lampara")) {
+                Artefacto artefacto = artefactos.get(position);
 
                 if (!artefacto.isActivo()) {
 
-                    //controladorBluetooth.enviarDato("1");
                     artefacto.setActivo(true);
+                    controladorBluetooth.enviarDato("1");
 
                 } else {
 
-                    //controladorBluetooth.enviarDato("0");
                     artefacto.setActivo(false);
+                    controladorBluetooth.enviarDato("0");
                 }
 
-//                } else {
-//
-//                    Toast.makeText(getApplicationContext(), getString(R.string.verificar_conexion), Toast.LENGTH_SHORT).show();
-//                }
+            } else {
+
+                Toast.makeText(getApplicationContext(), getString(R.string.verificar_conexion), Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -156,14 +153,13 @@ public class ArtefactosActivity extends Activity {
         menu = new MenuFlotante(this);
 
         //BOTON LOGOFF
-        //Implementar!     <-----
         menu.logoff.setClickable(true);
         menu.logoff.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 menu.botonAccionMenu.close(true);
-                Toast.makeText(getApplicationContext(), "Proximamente", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.proximamente), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -176,10 +172,10 @@ public class ArtefactosActivity extends Activity {
             public void onClick(View v) {
                 menu.botonAccionMenu.close(true);
                 AlertDialog.Builder builder = new AlertDialog.Builder(ArtefactosActivity.this);
-                builder.setMessage("Version 1.0.0000")
-                        .setTitle("DomUntref")
+                builder.setMessage(BuildConfig.VERSION_NAME)
+                        .setTitle(getString(R.string.app_name))
                         .setCancelable(false)
-                        .setNeutralButton("Entendido",
+                        .setNeutralButton(getString(R.string.entendido),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         dialog.cancel();
@@ -211,12 +207,9 @@ public class ArtefactosActivity extends Activity {
                 menu.botonAccionMenu.close(true);
                 Intent intent = new Intent(ArtefactosActivity.this, ConfiguracionActivity.class);
                 startActivity(intent);
-
             }
         });
-
     }
-
 
     /**
      * En caso de que el menú este cerado, vuelve a la pantalla anterior.

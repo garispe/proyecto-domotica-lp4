@@ -51,11 +51,7 @@ public class HabitacionesActivity extends Activity {
         textoConexion.setVisibility(View.GONE);
 
         botonAgregarHabitacion = (FloatingActionButton) findViewById(R.id.agregar_habitacion_boton);
-        botonAgregarHabitacion.setSize(FloatingActionButton.SIZE_NORMAL);
-        botonAgregarHabitacion.setColorNormalResId(R.color.gris);
-        botonAgregarHabitacion.setColorPressedResId(R.color.azul);
-        botonAgregarHabitacion.setIcon(R.drawable.icono_agregar);
-        botonAgregarHabitacion.setOnClickListener(agregarHabitacionListener);
+        botonAgregarHabitacion.setVisibility(View.INVISIBLE);
 
         Logger.init(TAG);
         Logger.i("onCreate");
@@ -78,6 +74,19 @@ public class HabitacionesActivity extends Activity {
             ConexionTask conexionTask = new ConexionTask(controladorBluetooth, HabitacionesActivity.this);
             conexionTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
+    }
+
+    /**
+     * Crea el boton para agregar habitacion
+     */
+    public void inicializarBotonAgregarHabitacion(){
+
+        botonAgregarHabitacion.setVisibility(View.VISIBLE);
+        botonAgregarHabitacion.setSize(FloatingActionButton.SIZE_NORMAL);
+        botonAgregarHabitacion.setColorNormalResId(R.color.gris);
+        botonAgregarHabitacion.setColorPressedResId(R.color.azul);
+        botonAgregarHabitacion.setIcon(R.drawable.icono_agregar);
+        botonAgregarHabitacion.setOnClickListener(agregarHabitacionListener);
     }
 
     /**

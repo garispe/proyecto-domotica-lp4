@@ -26,6 +26,9 @@ dependencies {
     //Logger
     compile 'com.orhanobut:logger:1.8'
 
-    //Circular Floating Button
+    //Circular Floating Menu
     compile 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
+
+    //Floating Button
+    compile 'com.getbase:floatingactionbutton:1.9.0'
 }

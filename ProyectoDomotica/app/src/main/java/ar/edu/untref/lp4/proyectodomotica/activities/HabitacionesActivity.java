@@ -13,6 +13,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class HabitacionesActivity extends Activity {
 
     private ProgressDialog progressDialog;
     private TextView textoConexion;
+    private FloatingActionButton botonAgregarHabitacion;
 
     private List<Habitacion> habitaciones;
 
@@ -47,6 +49,13 @@ public class HabitacionesActivity extends Activity {
 
         textoConexion = (TextView) findViewById(R.id.texto_conexion);
         textoConexion.setVisibility(View.GONE);
+
+        botonAgregarHabitacion = (FloatingActionButton) findViewById(R.id.agregar_habitacion_button);
+        botonAgregarHabitacion.setSize(FloatingActionButton.SIZE_NORMAL);
+        botonAgregarHabitacion.setColorNormalResId(R.color.gris);
+        botonAgregarHabitacion.setColorPressedResId(R.color.azul);
+        botonAgregarHabitacion.setIcon(R.drawable.icono_agregar);
+        botonAgregarHabitacion.setOnClickListener(agregarHabitacionListener);
 
         Logger.init(TAG);
         Logger.i("onCreate");
@@ -291,5 +300,13 @@ public class HabitacionesActivity extends Activity {
             }
         }
     }
+
+    private View.OnClickListener agregarHabitacionListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            // AGREGAR HABITACION
+        }
+    };
 }
 

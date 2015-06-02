@@ -50,7 +50,7 @@ public class HabitacionesActivity extends Activity {
         textoConexion = (TextView) findViewById(R.id.texto_conexion);
         textoConexion.setVisibility(View.GONE);
 
-        botonAgregarHabitacion = (FloatingActionButton) findViewById(R.id.agregar_habitacion_button);
+        botonAgregarHabitacion = (FloatingActionButton) findViewById(R.id.agregar_habitacion_boton);
         botonAgregarHabitacion.setSize(FloatingActionButton.SIZE_NORMAL);
         botonAgregarHabitacion.setColorNormalResId(R.color.gris);
         botonAgregarHabitacion.setColorPressedResId(R.color.azul);

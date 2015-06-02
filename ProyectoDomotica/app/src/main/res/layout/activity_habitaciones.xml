@@ -28,7 +28,7 @@
         android:verticalSpacing="10dp" />
 
     <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/agregar_habitacion_button"
+        android:id="@+id/agregar_habitacion_boton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class ArtefactosActivity extends Activity {
     private List<Artefacto> artefactos;
     private ListViewArtefactosAdapter artefactosAdapter;
     private MenuFlotante menu;
+    private FloatingActionButton botonAgregarHabitacion;
     public static String nombreHabitacion;
 
     @Override
@@ -43,6 +45,13 @@ public class ArtefactosActivity extends Activity {
 
         TextView habitacion = (TextView) findViewById(R.id.nombre_habitacion);
         habitacion.setText(nombreHabitacion);
+
+        botonAgregarHabitacion = (FloatingActionButton) findViewById(R.id.agregar_artefacto_boton);
+        botonAgregarHabitacion.setSize(FloatingActionButton.SIZE_NORMAL);
+        botonAgregarHabitacion.setColorNormalResId(R.color.gris);
+        botonAgregarHabitacion.setColorPressedResId(R.color.azul);
+        botonAgregarHabitacion.setIcon(R.drawable.icono_agregar);
+        botonAgregarHabitacion.setOnClickListener(agregarArtefactoListener);
 
         inicializarListaArtefactosPorHabitacion(nombreHabitacion);
         inicializarListViewArtefactos();
@@ -186,4 +195,12 @@ public class ArtefactosActivity extends Activity {
             finish();
         }
     }
+
+    private View.OnClickListener agregarArtefactoListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            // AGREGAR ARTEFACTO
+        }
+    };
 }

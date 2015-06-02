@@ -21,7 +21,7 @@ public class GridHabitacionesAdapter extends BaseAdapter {
     private Context context;
     private final List<Habitacion> nombresHabitaciones;
 
-    public GridHabitacionesAdapter(Context context, List<Habitacion> nombres){
+    public GridHabitacionesAdapter(Context context, List<Habitacion> nombres) {
 
         this.context = context;
         this.nombresHabitaciones = nombres;
@@ -49,12 +49,12 @@ public class GridHabitacionesAdapter extends BaseAdapter {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        if(convertView == null){
+        if (convertView == null) {
 
             grid = inflater.inflate(R.layout.item_grid_habitaciones, null);
 
             TextView textView = (TextView) grid.findViewById(R.id.grid_text);
-            ImageView imageView = (ImageView)grid.findViewById(R.id.grid_image);
+            ImageView imageView = (ImageView) grid.findViewById(R.id.grid_image);
 
             textView.setText(nombresHabitaciones.get(position).getNombre());
             imageView.setImageResource(getImagenAleatoria());
@@ -68,7 +68,7 @@ public class GridHabitacionesAdapter extends BaseAdapter {
     }
 
 
-    private int getImagenAleatoria(){
+    private int getImagenAleatoria() {
 
         return R.drawable.cuadro128;
     }

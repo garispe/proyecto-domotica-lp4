@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -22,6 +23,7 @@ import java.util.List;
 import ar.edu.untref.lp4.proyectodomotica.BuildConfig;
 import ar.edu.untref.lp4.proyectodomotica.R;
 import ar.edu.untref.lp4.proyectodomotica.adapters.GridHabitacionesAdapter;
+import ar.edu.untref.lp4.proyectodomotica.baseDatos.BaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
 import ar.edu.untref.lp4.proyectodomotica.tasks.ConexionTask;
@@ -37,6 +39,8 @@ public class HabitacionesActivity extends Activity {
     private ProgressDialog progressDialog;
     private TextView textoConexion;
     private FloatingActionButton botonAgregarHabitacion;
+
+    private BaseDatos bd;
 
     private List<Habitacion> habitaciones;
 
@@ -55,6 +59,28 @@ public class HabitacionesActivity extends Activity {
 
         Logger.init(TAG);
         Logger.i("onCreate");
+
+
+        // Prueba Base de datos
+        //------------------------------------------------------------------------------------------
+ /**
+         bd = new BaseDatos(this, "DOMUNTREF", null, 2);
+
+        Logger.d("Agregar: ", "Agregando ..");
+        bd.agregarHabitacion(new Habitacion(0, "Habitacion 2"));
+
+        Logger.d("Leer: ", "Leyendo las habitaciones..");
+        List<Habitacion> habitaciones = bd.getTodasHabitaciones();
+
+        for (Habitacion hb : habitaciones) {
+            String log = "Id: " + hb.getId() + " ,Nombre: " + hb.getNombre();
+
+            Logger.d("Nombre: ", log);
+
+        }
+  */
+        //------------------------------------------------------------------------------------------
+
 
         realizarConexion();
     }

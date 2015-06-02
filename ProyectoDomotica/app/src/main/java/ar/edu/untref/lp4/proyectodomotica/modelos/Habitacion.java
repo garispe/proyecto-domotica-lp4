@@ -9,11 +9,17 @@ public class Habitacion {
     private String nombre;
     private List<Artefacto> listaArtefactos;
 
+    public Habitacion(){}
+
     public Habitacion(String nombre) {
 
-        //ver si hace falta setear id
         this.nombre = nombre;
         this.listaArtefactos = new LinkedList<Artefacto>();
+    }
+
+    public void setId(int id){
+
+        this.id = id;
     }
 
     public int getId() {

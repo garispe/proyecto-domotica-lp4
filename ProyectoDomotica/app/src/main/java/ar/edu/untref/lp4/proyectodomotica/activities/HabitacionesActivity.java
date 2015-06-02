@@ -1,8 +1,5 @@
 package ar.edu.untref.lp4.proyectodomotica.activities;
 
-
-import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -10,18 +7,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
-import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
-import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -39,13 +30,14 @@ public class HabitacionesActivity extends Activity {
 
     private static final String TAG = HabitacionesActivity.class.getSimpleName();
     private static final String NOMBRE_HABITACION = "nombre_habitacion";
+    private ControladorBluetooth controladorBluetooth = ControladorBluetooth.getInstance();
     private long backPressed;
 
     private ProgressDialog progressDialog;
     private TextView textoConexion;
 
     private List<Habitacion> habitaciones;
-    private ControladorBluetooth controladorBluetooth = ControladorBluetooth.getInstance();
+
     private MenuFlotante menu;
 
     @Override
@@ -294,7 +286,7 @@ public class HabitacionesActivity extends Activity {
 
             } else {
 
-                Toast.makeText(this, "Presione de nuevo para salir", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.presione_nuevamente), Toast.LENGTH_SHORT).show();
                 backPressed = System.currentTimeMillis();
             }
         }

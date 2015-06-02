@@ -27,6 +27,6 @@
     <string name="no_conectado">NO CONECTADO</string>
     <string name="entendido">Entendido</string>
     <string name="proximamente">PROXIMAMENTE</string>
-
+    <string name="presione_nuevamente">Presione nuevamente para salir</string>
 
 </resources>

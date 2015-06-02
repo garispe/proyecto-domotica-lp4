@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 
+import ar.edu.untref.lp4.proyectodomotica.BuildConfig;
 import ar.edu.untref.lp4.proyectodomotica.R;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
 import ar.edu.untref.lp4.proyectodomotica.utils.MenuFlotante;
@@ -28,30 +29,7 @@ public class ConfiguracionActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracion);
-//        inicializarMenu();
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_configuracion, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        inicializarMenu();
     }
 
     public void inicializarMenu() {
@@ -79,10 +57,10 @@ public class ConfiguracionActivity extends Activity {
             public void onClick(View v) {
                 menu.botonAccionMenu.close(true);
                 AlertDialog.Builder builder = new AlertDialog.Builder(ConfiguracionActivity.this);
-                builder.setMessage("Version 1.0.0")
-                        .setTitle("DomUntref")
+                builder.setMessage(BuildConfig.VERSION_NAME)
+                        .setTitle(getString(R.string.app_name))
                         .setCancelable(false)
-                        .setNeutralButton("Entendido",
+                        .setNeutralButton(getString(R.string.entendido),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         dialog.cancel();
@@ -120,52 +98,22 @@ public class ConfiguracionActivity extends Activity {
     }
 
 
-    /*
-    *Acción de los botones fisicos BACK y MENU
-    *
-    *MENU:
-    *    En caso de que el menú esté cerrado, lo abre.
-    *    En caso de que el menú esté abierto, lo cierra.
-    *BACK:
-    *    En caso de que el menú este cerado, vuelve a la pantalla anterior.
-    *    En caso de que el menú esté abierto, lo cierra.
-    */
-
+    /**
+     * En caso de que el menú este cerado, vuelve a la pantalla anterior.
+     * En caso de que el menú esté abierto, lo cierra.
+     */
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public void onBackPressed() {
 
-        if (keyCode == KeyEvent.KEYCODE_MENU) {
-            if (!this.menu.botonAccionMenu.isOpen()) {
+        Logger.i("onBackPressed");
 
-                this.menu.botonAccionMenu.open(true);
+        if (this.menu.botonAccionMenu.isOpen()) {
 
+            this.menu.botonAccionMenu.close(true);
 
-            }else{
+        } else {
 
-                this.menu.botonAccionMenu.close(true);
-
-            }
-
-
+            finish();
         }
-
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-
-
-            if (this.menu.botonAccionMenu.isOpen()){
-
-                this.menu.botonAccionMenu.close(true);
-
-            }else {
-
-                super.onBackPressed();
-            }
-
-        }
-
-        return true;
-
     }
-
-
 }

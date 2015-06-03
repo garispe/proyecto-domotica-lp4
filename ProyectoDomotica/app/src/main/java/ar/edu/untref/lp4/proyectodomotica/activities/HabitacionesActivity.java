@@ -22,9 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.edu.untref.lp4.proyectodomotica.BuildConfig;
+import ar.edu.untref.lp4.proyectodomotica.Constantes;
 import ar.edu.untref.lp4.proyectodomotica.R;
 import ar.edu.untref.lp4.proyectodomotica.adapters.GridHabitacionesAdapter;
 import ar.edu.untref.lp4.proyectodomotica.baseDatos.BaseDatos;
+import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
 import ar.edu.untref.lp4.proyectodomotica.tasks.ConexionTask;
@@ -45,6 +47,7 @@ public class HabitacionesActivity extends Activity {
     private GridView gridview;
 
     private BaseDatos bd;
+    private ControladorBaseDatos controladorBaseDatos;
     private List<Habitacion> habitaciones;
     private MenuFlotante menu;
 
@@ -62,15 +65,8 @@ public class HabitacionesActivity extends Activity {
         Logger.init(TAG);
         Logger.i("onCreate");
 
-
-        // Prueba Base de datos
-        //------------------------------------------------------------------------------------------
-
-        bd = new BaseDatos(this, "DOMUNTREF", null, 2);
-        bd.limpiarBD();
-
-        //------------------------------------------------------------------------------------------
-
+        bd = new BaseDatos(this, Constantes.NOMBRE_BD, null, 2);
+        controladorBaseDatos = new ControladorBaseDatos(bd);
 
         realizarConexion();
     }
@@ -95,7 +91,7 @@ public class HabitacionesActivity extends Activity {
     /**
      * Crea el boton para agregar habitacion
      */
-    public void inicializarBotonAgregarHabitacion(){
+    public void inicializarBotonAgregarHabitacion() {
 
         botonAgregarHabitacion.setVisibility(View.VISIBLE);
         botonAgregarHabitacion.setSize(FloatingActionButton.SIZE_NORMAL);
@@ -250,7 +246,7 @@ public class HabitacionesActivity extends Activity {
 
         this.habitaciones = new ArrayList<>();
 
-        this.habitaciones.addAll(bd.getTodasHabitaciones());
+        this.habitaciones.addAll(controladorBaseDatos.getTodasHabitaciones());
     }
 
     /**
@@ -332,7 +328,7 @@ public class HabitacionesActivity extends Activity {
         }
     };
 
-    public void escribirNombreHabitacion(){
+    private void escribirNombreHabitacion() {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle(R.string.nueva_habitacion);
@@ -353,7 +349,7 @@ public class HabitacionesActivity extends Activity {
                         String nombreHabitacion = editText.getText().toString();
 
                         Habitacion habitacion = new Habitacion(nombreHabitacion);
-                        bd.agregarHabitacion(habitacion);
+                        controladorBaseDatos.agregarHabitacion(habitacion);
 
                         inicializarListaHabitaciones();
                         inicializarGridViewHabitaciones();
@@ -368,6 +364,6 @@ public class HabitacionesActivity extends Activity {
                 });
 
         alertDialog.show();
-   }
+    }
 }
 

@@ -6,10 +6,17 @@ public class Artefacto {
     private String nombre;
     private boolean activo;
 
+    public Artefacto() {
+    }
+
     public Artefacto(String nombre) {
         //ver si hace falta setear id
         this.nombre = nombre;
         this.activo = false;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getId() {

@@ -7,14 +7,15 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.edu.untref.lp4.proyectodomotica.Constantes;
+import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
+import ar.edu.untref.lp4.proyectodomotica.utils.Constantes;
 import ar.edu.untref.lp4.proyectodomotica.baseDatos.BaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
 
 public class ControladorBaseDatos {
 
-    private SQLiteDatabase db;
-    private BaseDatos baseDatos;
+    private static SQLiteDatabase db;
+    private static BaseDatos baseDatos;
 
     public ControladorBaseDatos(BaseDatos baseDatos) {
 
@@ -22,12 +23,12 @@ public class ControladorBaseDatos {
     }
 
     // Agrega la habitacion indicada
-    public void agregarHabitacion(Habitacion habitacion) {
+    public static void agregarHabitacion(Habitacion habitacion) {
 
         db = baseDatos.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(Constantes.NOMBRE, habitacion.getNombre());
+        values.put(Constantes.NOMBRE_HABITACION, habitacion.getNombre());
 
         // Inserta una fila
         db.insert(Constantes.TABLA_HABITACIONES, null, values);
@@ -35,12 +36,12 @@ public class ControladorBaseDatos {
     }
 
     // Devuelve la habitacion correspodiente al id
-    public Habitacion getHabitacion(int id) {
+    public static Habitacion getHabitacion(int id) {
 
         db = baseDatos.getReadableDatabase();
-        String[] valores = {Constantes.ID, Constantes.NOMBRE};
+        String[] valores = {Constantes.ID_HABITACION, Constantes.NOMBRE_HABITACION};
 
-        Cursor cursor = db.query(Constantes.TABLA_HABITACIONES, valores, Constantes.ID + "=?",
+        Cursor cursor = db.query(Constantes.TABLA_HABITACIONES, valores, Constantes.ID_HABITACION + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
 
         if (cursor != null) {
@@ -50,13 +51,15 @@ public class ControladorBaseDatos {
 
         Habitacion habitacion = new Habitacion(cursor.getString(1));
 
+        cursor.close();
+
         return habitacion;
     }
 
     // Devuelve todas las habitaciones almacenadas
-    public List<Habitacion> getTodasHabitaciones() {
+    public static List<Habitacion> getTodasHabitaciones() {
 
-        List<Habitacion> listaHabitaciones = new ArrayList<Habitacion>();
+        List<Habitacion> listaHabitaciones = new ArrayList<>();
 
         String selectQuery = "SELECT  * FROM " + Constantes.TABLA_HABITACIONES;
 
@@ -74,22 +77,64 @@ public class ControladorBaseDatos {
             } while (cursor.moveToNext());
         }
 
+        cursor.close();
+
         return listaHabitaciones;
     }
 
     // Elimina la habitacion que se pasa por parametro
-    public void eliminarHabitacion(Habitacion habitacion) {
+    public static void eliminarHabitacion(Habitacion habitacion) {
 
         db = baseDatos.getWritableDatabase();
 
-        db.delete(Constantes.TABLA_HABITACIONES, Constantes.ID + " = ?",
+        db.delete(Constantes.TABLA_HABITACIONES, Constantes.ID_HABITACION + " = ?",
                 new String[]{String.valueOf(habitacion.getId())});
 
         db.close();
     }
 
+
+    // Devuelve los artefactos correspodiente a la habitacion
+    public static List<Artefacto> getArtefactosPorHabitacion(Habitacion habitacion) {
+
+        List<Artefacto> listaArtefactos = new ArrayList<>();
+
+        String selectQuery = "SELECT * FROM " + Constantes.TABLA_ARTEFACTOS
+                + " WHERE " + Constantes.FK_HABITACION + "=" + String.valueOf(habitacion.getId());
+
+        db = baseDatos.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+
+            do {
+                Artefacto artefacto = new Artefacto();
+                artefacto.setId(cursor.getInt(0));
+                artefacto.setNombre(cursor.getString(1));
+
+                if (cursor.getInt(2) == 1) {
+
+                    artefacto.setActivo(true);
+
+                } else {
+
+                    artefacto.setActivo(false);
+                }
+
+                listaArtefactos.add(artefacto);
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+
+        return listaArtefactos;
+    }
+
+
     // Limpia la tabla
-    public void limpiarBD() {
+    public static void limpiarBD() {
 
         db = baseDatos.getWritableDatabase();
 
@@ -97,5 +142,4 @@ public class ControladorBaseDatos {
 
         db.close();
     }
-
 }

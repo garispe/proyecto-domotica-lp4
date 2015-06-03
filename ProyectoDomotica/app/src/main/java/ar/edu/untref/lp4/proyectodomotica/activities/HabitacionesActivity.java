@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.edu.untref.lp4.proyectodomotica.BuildConfig;
-import ar.edu.untref.lp4.proyectodomotica.Constantes;
 import ar.edu.untref.lp4.proyectodomotica.R;
 import ar.edu.untref.lp4.proyectodomotica.adapters.GridHabitacionesAdapter;
 import ar.edu.untref.lp4.proyectodomotica.baseDatos.BaseDatos;
@@ -30,11 +29,13 @@ import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
 import ar.edu.untref.lp4.proyectodomotica.tasks.ConexionTask;
+import ar.edu.untref.lp4.proyectodomotica.utils.Constantes;
 import ar.edu.untref.lp4.proyectodomotica.utils.MenuFlotante;
 
 public class HabitacionesActivity extends Activity {
 
     private static final String TAG = HabitacionesActivity.class.getSimpleName();
+    private static final String ID_HABITACION = "id_habitacion";
     private static final String NOMBRE_HABITACION = "nombre_habitacion";
     private ControladorBluetooth controladorBluetooth = ControladorBluetooth.getInstance();
     private long backPressed;
@@ -65,7 +66,7 @@ public class HabitacionesActivity extends Activity {
         Logger.init(TAG);
         Logger.i("onCreate");
 
-        bd = new BaseDatos(this, Constantes.NOMBRE_BD, null, 2);
+        bd = new BaseDatos(this, Constantes.NOMBRE_BD, null, Constantes.VERSION_BD);
         controladorBaseDatos = new ControladorBaseDatos(bd);
 
         realizarConexion();
@@ -263,15 +264,16 @@ public class HabitacionesActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                abrirArtefactosActivity(habitaciones.get(position).getNombre());
+                abrirArtefactosActivity(habitaciones.get(position));
             }
         });
     }
 
-    private void abrirArtefactosActivity(String habitacion) {
+    private void abrirArtefactosActivity(Habitacion habitacion) {
 
         Intent intent = new Intent(HabitacionesActivity.this, ArtefactosActivity.class);
-        intent.putExtra(NOMBRE_HABITACION, habitacion);
+        intent.putExtra(ID_HABITACION, habitacion.getId());
+        intent.putExtra(NOMBRE_HABITACION, habitacion.getNombre());
         startActivity(intent);
     }
 

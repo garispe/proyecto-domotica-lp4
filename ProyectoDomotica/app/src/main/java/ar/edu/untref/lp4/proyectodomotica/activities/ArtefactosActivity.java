@@ -20,12 +20,15 @@ import java.util.List;
 import ar.edu.untref.lp4.proyectodomotica.BuildConfig;
 import ar.edu.untref.lp4.proyectodomotica.R;
 import ar.edu.untref.lp4.proyectodomotica.adapters.ListViewArtefactosAdapter;
+import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
+import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
 import ar.edu.untref.lp4.proyectodomotica.utils.MenuFlotante;
 
 public class ArtefactosActivity extends Activity {
 
     private static final String TAG = ArtefactosActivity.class.getSimpleName();
+    private static final String ID_HABITACION = "id_habitacion";
     public static final String NOMBRE_HABITACION = "nombre_habitacion";
 
     private List<Artefacto> artefactos;
@@ -33,6 +36,7 @@ public class ArtefactosActivity extends Activity {
     private MenuFlotante menu;
     private FloatingActionButton botonAgregarHabitacion;
     public static String nombreHabitacion;
+    private Habitacion habitacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,10 @@ public class ArtefactosActivity extends Activity {
         Logger.init(TAG);
 
         nombreHabitacion = getIntent().getExtras().getString(NOMBRE_HABITACION);
+
+        int id = getIntent().getExtras().getInt(ID_HABITACION);
+
+        habitacion = ControladorBaseDatos.getHabitacion(id);
 
         TextView habitacion = (TextView) findViewById(R.id.nombre_habitacion);
         habitacion.setText(nombreHabitacion);
@@ -53,55 +61,19 @@ public class ArtefactosActivity extends Activity {
         botonAgregarHabitacion.setIcon(R.drawable.icono_agregar);
         botonAgregarHabitacion.setOnClickListener(agregarArtefactoListener);
 
-        //inicializarListaArtefactosPorHabitacion(nombreHabitacion);
-        //inicializarListViewArtefactos();
+        inicializarListaArtefactosPorHabitacion();
+        inicializarListViewArtefactos();
         inicializarMenu();
     }
 
     /**
      * Agrega los artefactos correspondientes de acuerdo a la habitacion seleccionada
      */
-    private void inicializarListaArtefactosPorHabitacion(String habitacion) {
+    private void inicializarListaArtefactosPorHabitacion() {
 
         this.artefactos = new ArrayList<>();
 
-        /*
-        Los artefactos van almacenarse y leerse desde donde esten almacenados
-        Por ejemplo, de una base de datos: this.artefactos.addAll(baseDatos.getArtefactosPorHabitacion("Cocina"));
-        */
-
-        switch (habitacion) {
-
-            case "Cocina":
-
-                this.artefactos.add(new Artefacto("Lampara"));
-
-                break;
-
-            case "Habitacion":
-
-                this.artefactos.add(new Artefacto("Lampara"));
-
-                break;
-
-            case "Living":
-
-                this.artefactos.add(new Artefacto("Lampara"));
-
-                break;
-
-            case "Baño":
-
-                this.artefactos.add(new Artefacto("Lampara"));
-
-                break;
-
-            case "Garage":
-
-                this.artefactos.add(new Artefacto("Lampara"));
-
-                break;
-        }
+        this.artefactos.addAll(ControladorBaseDatos.getArtefactosPorHabitacion(habitacion));
     }
 
     /**

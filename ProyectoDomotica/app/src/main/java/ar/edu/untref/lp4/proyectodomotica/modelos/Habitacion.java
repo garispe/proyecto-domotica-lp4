@@ -14,7 +14,7 @@ public class Habitacion {
     public Habitacion(String nombre) {
 
         this.nombre = nombre;
-        this.listaArtefactos = new LinkedList<Artefacto>();
+        this.listaArtefactos = new LinkedList<>();
     }
 
     public void setId(int id){

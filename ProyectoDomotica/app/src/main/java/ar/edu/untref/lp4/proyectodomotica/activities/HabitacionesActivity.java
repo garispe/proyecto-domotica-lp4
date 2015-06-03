@@ -45,11 +45,7 @@ public class HabitacionesActivity extends Activity {
     private GridView gridview;
 
     private BaseDatos bd;
-
-    private String nombreHabitacion;
-
     private List<Habitacion> habitaciones;
-
     private MenuFlotante menu;
 
     @Override
@@ -255,7 +251,6 @@ public class HabitacionesActivity extends Activity {
         this.habitaciones = new ArrayList<>();
 
         this.habitaciones.addAll(bd.getTodasHabitaciones());
-
     }
 
     /**
@@ -328,14 +323,12 @@ public class HabitacionesActivity extends Activity {
         public void onClick(View v) {
 
             escribirNombreHabitacion();
-            Habitacion habitacion = new Habitacion(nombreHabitacion);
-            bd.agregarHabitacion(habitacion);
 
-            for (Habitacion hb : bd.getTodasHabitaciones()) {
-                String log = "Id: " + hb.getId() + " ,Nombre: " + hb.getNombre();
-
-                Logger.e("Nombre: " + log);
-            }
+//            for (Habitacion hb : bd.getTodasHabitaciones()) {
+//
+//                String log = "Id: " + hb.getId() + " ,Nombre: " + hb.getNombre();
+//                Logger.e("Nombre: " + log);
+//            }
         }
     };
 
@@ -357,8 +350,13 @@ public class HabitacionesActivity extends Activity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
-                        nombreHabitacion = editText.getText().toString();
+                        String nombreHabitacion = editText.getText().toString();
+
+                        Habitacion habitacion = new Habitacion(nombreHabitacion);
+                        bd.agregarHabitacion(habitacion);
+
                         inicializarListaHabitaciones();
+                        inicializarGridViewHabitaciones();
                     }
                 });
 

@@ -37,7 +37,7 @@ public class BaseDatos extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String CREAR_TABLA_HABITACION = "CREATE TABLE " + TABLA_HABITACIONES + "("
-                + ID + " INTEGER PRIMARY KEY," + NOMBRE + " TEXT," + ")";
+                + ID + " INTEGER PRIMARY KEY," + NOMBRE + " TEXT" + ")";
 
         db.execSQL(CREAR_TABLA_HABITACION);
     }

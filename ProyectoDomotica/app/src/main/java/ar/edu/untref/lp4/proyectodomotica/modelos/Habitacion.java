@@ -18,7 +18,6 @@ public class Habitacion {
     }
 
     public void setId(int id){
-
         this.id = id;
     }
 

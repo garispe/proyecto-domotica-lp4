@@ -10,7 +10,7 @@ public class Artefacto {
     }
 
     public Artefacto(String nombre) {
-        //ver si hace falta setear id
+
         this.nombre = nombre;
         this.activo = false;
     }
@@ -38,6 +38,4 @@ public class Artefacto {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
-
-
 }

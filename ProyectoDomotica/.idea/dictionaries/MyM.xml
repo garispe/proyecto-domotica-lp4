@@ -2,17 +2,21 @@
   <dictionary name="MyM">
     <words>
       <w>abrir</w>
+      <w>aceptar</w>
       <w>activo</w>
       <w>agrega</w>
       <w>agregando</w>
       <w>agregar</w>
+      <w>aleatoria</w>
       <w>almacenadas</w>
       <w>anda</w>
       <w>artefacto</w>
       <w>artefactos</w>
       <w>baño</w>
+      <w>cancelar</w>
       <w>cantidad</w>
       <w>columnas</w>
+      <w>contenga</w>
       <w>correspodiente</w>
       <w>crea</w>
       <w>crear</w>
@@ -23,6 +27,8 @@
       <w>elimina</w>
       <w>eliminar</w>
       <w>encendido</w>
+      <w>escriba</w>
+      <w>escribir</w>
       <w>estado</w>
       <w>fila</w>
       <w>habitacion</w>
@@ -32,9 +38,13 @@
       <w>lampara</w>
       <w>lanza</w>
       <w>leyendo</w>
+      <w>limpia</w>
+      <w>limpiar</w>
       <w>lista</w>
       <w>mostrar</w>
       <w>nombre</w>
+      <w>nombres</w>
+      <w>nueva</w>
       <w>parametro</w>
       <w>pasa</w>
       <w>prueba</w>

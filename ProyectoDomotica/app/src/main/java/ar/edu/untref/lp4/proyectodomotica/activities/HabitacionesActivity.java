@@ -7,10 +7,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +41,12 @@ public class HabitacionesActivity extends Activity {
     private TextView textoConexion;
     private FloatingActionButton botonAgregarHabitacion;
 
+    private GridHabitacionesAdapter adapter;
+    private GridView gridview;
+
     private BaseDatos bd;
+
+    private String nombreHabitacion;
 
     private List<Habitacion> habitaciones;
 
@@ -63,22 +69,10 @@ public class HabitacionesActivity extends Activity {
 
         // Prueba Base de datos
         //------------------------------------------------------------------------------------------
- /**
-         bd = new BaseDatos(this, "DOMUNTREF", null, 2);
 
-        Logger.d("Agregar: ", "Agregando ..");
-        bd.agregarHabitacion(new Habitacion(0, "Habitacion 2"));
+        bd = new BaseDatos(this, "DOMUNTREF", null, 2);
+        bd.limpiarBD();
 
-        Logger.d("Leer: ", "Leyendo las habitaciones..");
-        List<Habitacion> habitaciones = bd.getTodasHabitaciones();
-
-        for (Habitacion hb : habitaciones) {
-            String log = "Id: " + hb.getId() + " ,Nombre: " + hb.getNombre();
-
-            Logger.d("Nombre: ", log);
-
-        }
-  */
         //------------------------------------------------------------------------------------------
 
 
@@ -260,15 +254,8 @@ public class HabitacionesActivity extends Activity {
 
         this.habitaciones = new ArrayList<>();
 
-        /*
-        Las habitaciones van almacenarse y leerse desde donde esten almacenados
-        Por ejemplo, de una base de datos: this.habitaciones.addAll(baseDatos.getHabitaciones());
-        */
-        this.habitaciones.add(new Habitacion("Cocina"));
-        this.habitaciones.add(new Habitacion("Habitacion"));
-        this.habitaciones.add(new Habitacion("Living"));
-        this.habitaciones.add(new Habitacion("Baño"));
-        this.habitaciones.add(new Habitacion("Garage"));
+        this.habitaciones.addAll(bd.getTodasHabitaciones());
+
     }
 
     /**
@@ -276,9 +263,9 @@ public class HabitacionesActivity extends Activity {
      */
     public void inicializarGridViewHabitaciones() {
 
-        GridHabitacionesAdapter adapter = new GridHabitacionesAdapter(this, habitaciones);
+        adapter = new GridHabitacionesAdapter(this, habitaciones);
 
-        GridView gridview = (GridView) findViewById(R.id.grid_view_habitaciones);
+        gridview = (GridView) findViewById(R.id.grid_view_habitaciones);
         gridview.setAdapter(adapter);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -340,8 +327,49 @@ public class HabitacionesActivity extends Activity {
         @Override
         public void onClick(View v) {
 
-            // AGREGAR HABITACION
+            escribirNombreHabitacion();
+            Habitacion habitacion = new Habitacion(nombreHabitacion);
+            bd.agregarHabitacion(habitacion);
+
+            for (Habitacion hb : bd.getTodasHabitaciones()) {
+                String log = "Id: " + hb.getId() + " ,Nombre: " + hb.getNombre();
+
+                Logger.e("Nombre: " + log);
+            }
         }
     };
+
+    public void escribirNombreHabitacion(){
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle(R.string.nueva_habitacion);
+        alertDialog.setMessage(R.string.nombre_habitacion);
+
+        final EditText editText = new EditText(this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+
+        editText.setLayoutParams(lp);
+        alertDialog.setView(editText);
+
+        alertDialog.setPositiveButton("Aceptar",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        nombreHabitacion = editText.getText().toString();
+                        inicializarListaHabitaciones();
+                    }
+                });
+
+        alertDialog.setNegativeButton("Cancelar",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialog.show();
+   }
 }
 

@@ -15,6 +15,7 @@ public class BaseDatos extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
 
+    // Nombre de la Base de Datos
     private static final String NOMBRE_BD = "DOMUNTREF";
 
     // Columnas de la tabla
@@ -25,14 +26,35 @@ public class BaseDatos extends SQLiteOpenHelper {
     // Nombre de la tabla
     private static final String TABLA_HABITACIONES = "habitaciones";
 
+    private SQLiteDatabase db;
+
     public BaseDatos(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
+    }
+
+    @Override
+    // Se crea la tabla
+    public void onCreate(SQLiteDatabase db) {
+
+        String CREAR_TABLA_HABITACION = "CREATE TABLE " + TABLA_HABITACIONES + "("
+                + ID + " INTEGER PRIMARY KEY," + NOMBRE + " TEXT," + ")";
+
+        db.execSQL(CREAR_TABLA_HABITACION);
+    }
+
+    @Override
+    // Recicla la tabla
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        db.execSQL("DROP TABLE IF EXISTS " + TABLA_HABITACIONES);
+        onCreate(db);
+
     }
 
     // Agrega la habitacion indicada
     public void agregarHabitacion(Habitacion habitacion){
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(NOMBRE, habitacion.getNombre());
@@ -46,7 +68,7 @@ public class BaseDatos extends SQLiteOpenHelper {
     // Devuelve la habitacion correspodiente al id
     public Habitacion getHabitacion(int id) {
 
-        SQLiteDatabase db = this.getReadableDatabase();
+        db = this.getReadableDatabase();
         String[] valores =  { ID, NOMBRE };
 
         Cursor cursor = db.query(TABLA_HABITACIONES, valores, ID + "=?",
@@ -57,7 +79,6 @@ public class BaseDatos extends SQLiteOpenHelper {
             cursor.moveToFirst();
         }
 
-        // No anda aca -----------------------------------------------------
         Habitacion habitacion = new Habitacion(cursor.getString(1));
 
         return habitacion;
@@ -71,7 +92,7 @@ public class BaseDatos extends SQLiteOpenHelper {
 
         String selectQuery = "SELECT  * FROM " + TABLA_HABITACIONES;
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
@@ -91,30 +112,21 @@ public class BaseDatos extends SQLiteOpenHelper {
     // Elimina la habitacion que se pasa por parametro
     public void eliminarHabitacion(Habitacion habitacion) {
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        db = this.getWritableDatabase();
 
         db.delete(TABLA_HABITACIONES, ID + " = ?",
-                new String[] { String.valueOf(habitacion.getId()) });
+                new String[]{String.valueOf(habitacion.getId())});
 
         db.close();
     }
 
-    @Override
-    // Se crea la tabla
-    public void onCreate(SQLiteDatabase db) {
+    // Limpia la tabla
+    public void limpiarBD() {
 
-        String CREAR_TABLA_HABITACION = "CREATE TABLE " + TABLA_HABITACIONES + "("
-                + ID + " INTEGER PRIMARY KEY," + NOMBRE + " TEXT,"
-                + ARTEFACTOS + " LISTA" + ")";
-        db.execSQL(CREAR_TABLA_HABITACION);
-    }
+        db = this.getWritableDatabase();
 
-    @Override
-    // Recicla la tabla
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DELETE FROM " + TABLA_HABITACIONES);
 
-        db.execSQL("DROP TABLE IF EXISTS " + TABLA_HABITACIONES);
-        onCreate(db);
-
+        db.close();
     }
 }

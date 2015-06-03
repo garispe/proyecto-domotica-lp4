@@ -53,8 +53,8 @@ public class ArtefactosActivity extends Activity {
         botonAgregarHabitacion.setIcon(R.drawable.icono_agregar);
         botonAgregarHabitacion.setOnClickListener(agregarArtefactoListener);
 
-        inicializarListaArtefactosPorHabitacion(nombreHabitacion);
-        inicializarListViewArtefactos();
+        //inicializarListaArtefactosPorHabitacion(nombreHabitacion);
+        //inicializarListViewArtefactos();
         inicializarMenu();
     }
 

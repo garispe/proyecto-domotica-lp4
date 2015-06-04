@@ -351,12 +351,13 @@ public class HabitacionesActivity extends Activity {
 
                         String nombreHabitacion = editText.getText().toString();
 
-                        Habitacion habitacion = new Habitacion(nombreHabitacion);
+                        if (!nombreHabitacion.isEmpty()) {
+                            Habitacion habitacion = new Habitacion(nombreHabitacion);
 
-                        controladorBaseDatos.agregarHabitacion(habitacion);
+                            controladorBaseDatos.agregarHabitacion(habitacion);
 
-                        inicializarListaHabitaciones();
-                        inicializarGridViewHabitaciones();
+                            inicializarListaHabitaciones();
+                            inicializarGridViewHabitaciones();
 
 //                        if (nombreHabitacionDisponible(nombreHabitacion)) {
 //
@@ -371,6 +372,12 @@ public class HabitacionesActivity extends Activity {
 //
 //                            Toast.makeText(HabitacionesActivity.this, getString(R.string.habitacion_existente), Toast.LENGTH_SHORT).show();
 //                        }
+
+                        } else {
+
+                            escribirNombreHabitacion();
+                            Toast.makeText(HabitacionesActivity.this, getString(R.string.nombre_vacio), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 
@@ -384,7 +391,7 @@ public class HabitacionesActivity extends Activity {
         alertDialog.show();
     }
 
-    private boolean nombreHabitacionDisponible(String nombre){
+    private boolean nombreHabitacionDisponible(String nombre) {
 
         boolean nombreDisponible = false;
 

@@ -24,7 +24,9 @@ public class ControladorBaseDatos {
         this.baseDatos = baseDatos;
     }
 
-    // Agrega la habitacion indicada
+    /**
+     * Agrega la habitacion indicada.
+     */
     public static void agregarHabitacion(Habitacion habitacion) {
 
         db = baseDatos.getWritableDatabase();
@@ -32,12 +34,13 @@ public class ControladorBaseDatos {
         ContentValues values = new ContentValues();
         values.put(Constantes.NOMBRE_HABITACION, habitacion.getNombre());
 
-        // Inserta una fila
         db.insert(Constantes.TABLA_HABITACIONES, null, values);
         db.close();
     }
 
-    // Devuelve la habitacion correspodiente al id
+    /**
+     * Devuelve la habitacion correspodiente al id.
+     */
     public static Habitacion getHabitacion(int id) {
 
         db = baseDatos.getReadableDatabase();
@@ -46,19 +49,25 @@ public class ControladorBaseDatos {
         Cursor cursor = db.query(Constantes.TABLA_HABITACIONES, valores, Constantes.ID_HABITACION + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
 
+        Habitacion habitacion = null;
+
         if (cursor != null) {
 
             cursor.moveToFirst();
+            habitacion = new Habitacion(cursor.getString(1));
         }
 
-        Habitacion habitacion = new Habitacion(cursor.getString(1));
+        // CORREGIR, NO ESTA DEVOLVIENDO MAL LA HABITACION
+
 
         cursor.close();
 
         return habitacion;
     }
 
-    // Devuelve todas las habitaciones almacenadas
+    /**
+     * Devuelve todas las habitaciones almacenadas.
+     */
     public static List<Habitacion> getTodasHabitaciones() {
 
         List<Habitacion> listaHabitaciones = new ArrayList<>();
@@ -71,7 +80,7 @@ public class ControladorBaseDatos {
         if (cursor.moveToFirst()) {
             do {
                 Habitacion habitacion = new Habitacion();
-                habitacion.setId(Integer.parseInt(cursor.getString(0)));
+                habitacion.setId(cursor.getInt(0));
                 habitacion.setNombre(cursor.getString(1));
 
                 listaHabitaciones.add(habitacion);
@@ -84,7 +93,9 @@ public class ControladorBaseDatos {
         return listaHabitaciones;
     }
 
-    // Elimina la habitacion que se pasa por parametro
+    /**
+     * Elimina la habitacion que se pasa por parametro.
+     */
     public static void eliminarHabitacion(Habitacion habitacion) {
 
         db = baseDatos.getWritableDatabase();
@@ -96,7 +107,9 @@ public class ControladorBaseDatos {
     }
 
 
-    // Devuelve los artefactos correspodiente a la habitacion
+    /**
+     * Devuelve los artefactos correspodiente a la habitacion.
+     */
     public static List<Artefacto> getArtefactosPorHabitacion(int idHabitacion) {
 
         List<Artefacto> listaArtefactos = new ArrayList<>();

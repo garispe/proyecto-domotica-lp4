@@ -352,6 +352,7 @@ public class HabitacionesActivity extends Activity {
                         String nombreHabitacion = editText.getText().toString();
 
                         if (!nombreHabitacion.isEmpty()) {
+
                             Habitacion habitacion = new Habitacion(nombreHabitacion);
 
                             controladorBaseDatos.agregarHabitacion(habitacion);

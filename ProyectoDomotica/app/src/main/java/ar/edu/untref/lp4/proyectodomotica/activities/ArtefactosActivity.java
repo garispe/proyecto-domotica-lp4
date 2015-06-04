@@ -60,7 +60,7 @@ public class ArtefactosActivity extends Activity {
         inicializarMenu();
     }
 
-    private void inicializarBotonAgregar(){
+    private void inicializarBotonAgregar() {
 
         botonAgregarHabitacion = (FloatingActionButton) findViewById(R.id.agregar_artefacto_boton);
         botonAgregarHabitacion.setSize(FloatingActionButton.SIZE_NORMAL);
@@ -198,11 +198,19 @@ public class ArtefactosActivity extends Activity {
 
                         String nombreArtefacto = editText.getText().toString();
 
-                        Artefacto artefacto = new Artefacto(nombreArtefacto);
-                        ControladorBaseDatos.agregarArtefacto(idHabitacion, artefacto);
+                        if (!nombreArtefacto.isEmpty()) {
 
-                        inicializarListaArtefactosPorHabitacion();
-                        inicializarListViewArtefactos();
+                            Artefacto artefacto = new Artefacto(nombreArtefacto);
+                            ControladorBaseDatos.agregarArtefacto(idHabitacion, artefacto);
+
+                            inicializarListaArtefactosPorHabitacion();
+                            inicializarListViewArtefactos();
+
+                        } else {
+
+                            escribirNombreArtefacto();
+                            Toast.makeText(ArtefactosActivity.this, getString(R.string.nombre_vacio), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 

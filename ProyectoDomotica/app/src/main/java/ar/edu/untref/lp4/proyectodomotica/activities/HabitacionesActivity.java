@@ -345,21 +345,36 @@ public class HabitacionesActivity extends Activity {
         editText.setLayoutParams(lp);
         alertDialog.setView(editText);
 
-        alertDialog.setPositiveButton("Aceptar",
+        alertDialog.setPositiveButton(getString(R.string.aceptar),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
                         String nombreHabitacion = editText.getText().toString();
 
                         Habitacion habitacion = new Habitacion(nombreHabitacion);
+
                         controladorBaseDatos.agregarHabitacion(habitacion);
 
                         inicializarListaHabitaciones();
                         inicializarGridViewHabitaciones();
+
+//                        if (nombreHabitacionDisponible(nombreHabitacion)) {
+//
+//                            Habitacion habitacion = new Habitacion(nombreHabitacion);
+//
+//                            controladorBaseDatos.agregarHabitacion(habitacion);
+//
+//                            inicializarListaHabitaciones();
+//                            inicializarGridViewHabitaciones();
+//
+//                        } else {
+//
+//                            Toast.makeText(HabitacionesActivity.this, getString(R.string.habitacion_existente), Toast.LENGTH_SHORT).show();
+//                        }
                     }
                 });
 
-        alertDialog.setNegativeButton("Cancelar",
+        alertDialog.setNegativeButton(getString(R.string.cancelar),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -367,6 +382,21 @@ public class HabitacionesActivity extends Activity {
                 });
 
         alertDialog.show();
+    }
+
+    private boolean nombreHabitacionDisponible(String nombre){
+
+        boolean nombreDisponible = false;
+
+        for (Habitacion habitacion : habitaciones) {
+
+            if (!nombre.equals(habitacion.getNombre())) {
+
+                nombreDisponible = true;
+            }
+        }
+
+        return nombreDisponible;
     }
 }
 

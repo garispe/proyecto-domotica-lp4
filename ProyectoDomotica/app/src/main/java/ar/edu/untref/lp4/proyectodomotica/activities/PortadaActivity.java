@@ -12,7 +12,7 @@ import ar.edu.untref.lp4.proyectodomotica.R;
 
 public class PortadaActivity extends Activity {
 
-    private static final int DURACION = 3000; // 3 segundos
+    private static final int DURACION = 2500; // 2.5 segundos
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

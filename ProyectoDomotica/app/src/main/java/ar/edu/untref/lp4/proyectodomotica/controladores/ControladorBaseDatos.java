@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.orhanobut.logger.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,12 +97,12 @@ public class ControladorBaseDatos {
 
 
     // Devuelve los artefactos correspodiente a la habitacion
-    public static List<Artefacto> getArtefactosPorHabitacion(Habitacion habitacion) {
+    public static List<Artefacto> getArtefactosPorHabitacion(int idHabitacion) {
 
         List<Artefacto> listaArtefactos = new ArrayList<>();
 
         String selectQuery = "SELECT * FROM " + Constantes.TABLA_ARTEFACTOS
-                + " WHERE " + Constantes.FK_HABITACION + "=" + String.valueOf(habitacion.getId());
+                + " WHERE " + Constantes.FK_HABITACION + "=" + idHabitacion;
 
         db = baseDatos.getWritableDatabase();
 
@@ -133,12 +135,69 @@ public class ControladorBaseDatos {
     }
 
 
-    // Limpia la tabla
+    /**
+     * Agrega un artefacto a la tabla "artefactos". Si ya existe sólo actualiza su estado.
+     */
+    public static void agregarArtefacto(int idHabitacion, Artefacto artefacto) {
+
+        db = baseDatos.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        int idArtefacto = getArtefactoId(artefacto);
+
+        if (artefacto.isActivo()) {
+
+            values.put(Constantes.ESTADO, 1);
+
+        } else {
+
+            values.put(Constantes.ESTADO, 0);
+        }
+
+        if (idArtefacto == -1) {
+
+            values.put(Constantes.NOMBRE_ARTEFACTO, artefacto.getNombre());
+            values.put(Constantes.FK_HABITACION, idHabitacion);
+
+            db.insert(Constantes.TABLA_ARTEFACTOS, null, values);
+
+        } else {
+
+            String where = Constantes.ID_ARTEFACTO + "=" + idArtefacto;
+
+            db.update(Constantes.TABLA_ARTEFACTOS, values, where, null);
+        }
+
+        db.close();
+    }
+
+
+    /**
+     * Si el artefacto existe en la base de datos retorna su ID, de lo contrario, retorna -1.
+     */
+    private static int getArtefactoId(Artefacto artefacto) {
+
+        Cursor c = db.rawQuery("SELECT " + Constantes.ID_ARTEFACTO + " FROM " + Constantes.TABLA_ARTEFACTOS
+                + " WHERE " + Constantes.ID_ARTEFACTO + " = " + artefacto.getId(), null);
+
+        if (c.moveToFirst()) {
+
+            return c.getInt(c.getColumnIndex(Constantes.ID_ARTEFACTO));
+        }
+
+        return -1;
+    }
+
+    /**
+     * Limpia las tablas "habitaciones" y "artefactos".
+     */
     public static void limpiarBD() {
 
         db = baseDatos.getWritableDatabase();
 
         db.execSQL("DELETE FROM " + Constantes.TABLA_HABITACIONES);
+        db.execSQL("DELETE FROM " + Constantes.TABLA_ARTEFACTOS);
 
         db.close();
     }

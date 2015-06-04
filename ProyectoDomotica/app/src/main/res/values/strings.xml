@@ -23,12 +23,14 @@
     <string name="estableciendo_conexion">Estableciendo conexión…</string>
     <string name="conexion_no_establecida">No se pudo establecer la conexión</string>
     <string name="verificar_conexion">Verifique su conexión y vuelva a intentarlo</string>
-    <string name="cancelar">Cancelar</string>
     <string name="no_conectado">NO CONECTADO</string>
     <string name="entendido">Entendido</string>
     <string name="proximamente">PROXIMAMENTE</string>
     <string name="presione_nuevamente">Presione nuevamente para salir</string>
-
+    <string name="aceptar">Aceptar</string>
+    <string name="cancelar">Cancelar</string>
     <string name="nueva_habitacion">Nueva Habitacion</string>
     <string name="nombre_habitacion">Escriba el nombre de la habitacion</string>
+    <string name="nuevo_artefacto">Nuevo Artefacto</string>
+    <string name="nombre_artefacto">Escriba el nombre del artefacto</string>
 </resources>

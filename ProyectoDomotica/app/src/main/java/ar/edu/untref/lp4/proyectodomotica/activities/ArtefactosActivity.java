@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +38,7 @@ public class ArtefactosActivity extends Activity {
     private MenuFlotante menu;
     private FloatingActionButton botonAgregarHabitacion;
     public static String nombreHabitacion;
-    private Habitacion habitacion;
+    private int idHabitacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +49,18 @@ public class ArtefactosActivity extends Activity {
 
         nombreHabitacion = getIntent().getExtras().getString(NOMBRE_HABITACION);
 
-        int id = getIntent().getExtras().getInt(ID_HABITACION);
-
-        habitacion = ControladorBaseDatos.getHabitacion(id);
+        idHabitacion = getIntent().getExtras().getInt(ID_HABITACION);
 
         TextView habitacion = (TextView) findViewById(R.id.nombre_habitacion);
         habitacion.setText(nombreHabitacion);
+
+        inicializarBotonAgregar();
+        inicializarListaArtefactosPorHabitacion();
+        inicializarListViewArtefactos();
+        inicializarMenu();
+    }
+
+    private void inicializarBotonAgregar(){
 
         botonAgregarHabitacion = (FloatingActionButton) findViewById(R.id.agregar_artefacto_boton);
         botonAgregarHabitacion.setSize(FloatingActionButton.SIZE_NORMAL);
@@ -60,10 +68,6 @@ public class ArtefactosActivity extends Activity {
         botonAgregarHabitacion.setColorPressedResId(R.color.azul);
         botonAgregarHabitacion.setIcon(R.drawable.icono_agregar);
         botonAgregarHabitacion.setOnClickListener(agregarArtefactoListener);
-
-        inicializarListaArtefactosPorHabitacion();
-        inicializarListViewArtefactos();
-        inicializarMenu();
     }
 
     /**
@@ -72,8 +76,7 @@ public class ArtefactosActivity extends Activity {
     private void inicializarListaArtefactosPorHabitacion() {
 
         this.artefactos = new ArrayList<>();
-
-        this.artefactos.addAll(ControladorBaseDatos.getArtefactosPorHabitacion(habitacion));
+        this.artefactos.addAll(ControladorBaseDatos.getArtefactosPorHabitacion(idHabitacion));
     }
 
     /**
@@ -84,7 +87,6 @@ public class ArtefactosActivity extends Activity {
         ListView listView = (ListView) findViewById(R.id.lista_artefactos);
 
         artefactosAdapter = new ListViewArtefactosAdapter(this, artefactos);
-
         listView.setAdapter(artefactosAdapter);
     }
 
@@ -172,7 +174,45 @@ public class ArtefactosActivity extends Activity {
         @Override
         public void onClick(View v) {
 
-            // AGREGAR ARTEFACTO
+            escribirNombreArtefacto();
         }
     };
+
+    private void escribirNombreArtefacto() {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle(R.string.nuevo_artefacto);
+        alertDialog.setMessage(R.string.nombre_artefacto);
+
+        final EditText editText = new EditText(this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+
+        editText.setLayoutParams(lp);
+        alertDialog.setView(editText);
+
+        alertDialog.setPositiveButton(getString(R.string.aceptar),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        String nombreArtefacto = editText.getText().toString();
+
+                        Artefacto artefacto = new Artefacto(nombreArtefacto);
+                        ControladorBaseDatos.agregarArtefacto(idHabitacion, artefacto);
+
+                        inicializarListaArtefactosPorHabitacion();
+                        inicializarListViewArtefactos();
+                    }
+                });
+
+        alertDialog.setNegativeButton(getString(R.string.cancelar),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialog.show();
+    }
 }

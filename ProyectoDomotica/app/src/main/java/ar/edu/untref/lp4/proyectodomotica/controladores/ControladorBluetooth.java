@@ -91,7 +91,7 @@ public class ControladorBluetooth {
 
                 intentos++;
 
-                if(intentos <= 1000){
+                if(intentos <= 500){
 
                     bluetoothAdapter.enable();
                     conectar();

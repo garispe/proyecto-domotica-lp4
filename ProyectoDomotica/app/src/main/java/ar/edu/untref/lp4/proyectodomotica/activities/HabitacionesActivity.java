@@ -194,6 +194,7 @@ public class HabitacionesActivity extends Activity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 controladorBluetooth.desconectar();
+                finish();
             }
         });
 

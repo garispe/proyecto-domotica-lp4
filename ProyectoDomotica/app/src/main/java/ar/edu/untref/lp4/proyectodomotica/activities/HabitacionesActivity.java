@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -265,7 +266,14 @@ public class HabitacionesActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                abrirArtefactosActivity(habitaciones.get(position));
+                if (menu.botonAccionMenu.isOpen()) {
+
+                    menu.botonAccionMenu.close(true);
+
+                } else {
+
+                    abrirArtefactosActivity(habitaciones.get(position));
+                }
             }
         });
     }
@@ -396,12 +404,19 @@ public class HabitacionesActivity extends Activity {
 
         boolean nombreDisponible = false;
 
-        for (Habitacion habitacion : habitaciones) {
+        if (habitaciones.size() > 0) {
 
-            if (!nombre.equals(habitacion.getNombre())) {
+            for (Habitacion habitacion : habitaciones) {
 
-                nombreDisponible = true;
+                if (!nombre.equals(habitacion.getNombre())) {
+
+                    nombreDisponible = true;
+                }
             }
+
+        } else {
+
+            nombreDisponible = true;
         }
 
         return nombreDisponible;

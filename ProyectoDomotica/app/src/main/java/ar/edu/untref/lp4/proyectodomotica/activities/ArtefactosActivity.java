@@ -208,7 +208,7 @@ public class ArtefactosActivity extends Activity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
-                        controladorBaseDatos.eliminarArtefacto(artefacto);
+//                        controladorBaseDatos.eliminarArtefacto(artefacto);
 
 
                     }

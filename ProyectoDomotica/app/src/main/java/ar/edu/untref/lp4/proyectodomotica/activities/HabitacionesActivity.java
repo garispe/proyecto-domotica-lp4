@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -141,18 +140,6 @@ public class HabitacionesActivity extends Activity {
                                 });
                 AlertDialog alert = builder.create();
                 alert.show();
-            }
-        });
-
-        //BOTON ESTADISTICAS
-        menu.estadisticas.setClickable(true);
-        menu.estadisticas.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                menu.botonAccionMenu.close(true);
-                Intent intent = new Intent(HabitacionesActivity.this, EstadisticasActivity.class);
-                startActivity(intent);
             }
         });
 

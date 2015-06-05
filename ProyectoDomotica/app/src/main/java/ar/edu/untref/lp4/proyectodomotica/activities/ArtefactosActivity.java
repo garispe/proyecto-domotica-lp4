@@ -3,12 +3,10 @@ package ar.edu.untref.lp4.proyectodomotica.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,13 +18,11 @@ import com.orhanobut.logger.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.edu.untref.lp4.proyectodomotica.BuildConfig;
 import ar.edu.untref.lp4.proyectodomotica.R;
 import ar.edu.untref.lp4.proyectodomotica.adapters.ListViewArtefactosAdapter;
 import ar.edu.untref.lp4.proyectodomotica.baseDatos.BaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
-import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
 import ar.edu.untref.lp4.proyectodomotica.utils.Constantes;
 import ar.edu.untref.lp4.proyectodomotica.utils.MenuFlotante;
 
@@ -62,7 +58,7 @@ public class ArtefactosActivity extends Activity {
         inicializarBotonAgregar();
         inicializarListaArtefactosPorHabitacion();
         inicializarListViewArtefactos();
-        inicializarMenu();
+
         bd = new BaseDatos(this, Constantes.NOMBRE_BD, null, Constantes.VERSION_BD);
         controladorBaseDatos = new ControladorBaseDatos(bd);
     }
@@ -100,93 +96,17 @@ public class ArtefactosActivity extends Activity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Toast.makeText(ArtefactosActivity.this,"probando",Toast.LENGTH_SHORT).show();
+                Toast.makeText(ArtefactosActivity.this, "probando", Toast.LENGTH_SHORT).show();
                 //borrarArtefacto((Artefacto) listView.getItemAtPosition(position));
                 return true;
             }
         });
-
-
     }
 
-    public void inicializarMenu() {
-
-        menu = new MenuFlotante(this);
-
-        //BOTON LOGOFF
-        menu.logoff.setClickable(true);
-        menu.logoff.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                menu.botonAccionMenu.close(true);
-                Toast.makeText(getApplicationContext(), getString(R.string.proximamente), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        //BOTON ACERCA DE
-        menu.about.setClickable(true);
-        menu.about.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                menu.botonAccionMenu.close(true);
-                AlertDialog.Builder builder = new AlertDialog.Builder(ArtefactosActivity.this);
-                builder.setMessage(BuildConfig.VERSION_NAME)
-                        .setTitle(getString(R.string.app_name))
-                        .setCancelable(false)
-                        .setNeutralButton(getString(R.string.entendido),
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-                AlertDialog alert = builder.create();
-                alert.show();
-            }
-        });
-
-        //BOTON ESTADISTICAS
-        menu.estadisticas.setClickable(true);
-        menu.estadisticas.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                menu.botonAccionMenu.close(true);
-                Intent intent = new Intent(ArtefactosActivity.this, EstadisticasActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        //BOTON CONFIGURACION
-        menu.configuracion.setClickable(true);
-        menu.configuracion.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                menu.botonAccionMenu.close(true);
-                Intent intent = new Intent(ArtefactosActivity.this, ConfiguracionActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-    /**
-     * En caso de que el menú este cerrado, vuelve a la pantalla anterior.
-     * En caso de que el menú esté abierto, lo cierra.
-     */
     @Override
     public void onBackPressed() {
 
-        if (this.menu.botonAccionMenu.isOpen()) {
-
-            this.menu.botonAccionMenu.close(true);
-
-        } else {
-
-            finish();
-        }
+        finish();
     }
 
     private View.OnClickListener agregarArtefactoListener = new View.OnClickListener() {
@@ -209,7 +129,6 @@ public class ArtefactosActivity extends Activity {
                     public void onClick(DialogInterface dialog, int which) {
 
 //                        controladorBaseDatos.eliminarArtefacto(artefacto);
-
 
                     }
                 });

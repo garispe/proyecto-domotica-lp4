@@ -18,7 +18,6 @@ public class MenuFlotante {
 
     public ImageView logoff;
     public ImageView about;
-    public ImageView estadisticas;
     public ImageView configuracion;
 
     //Atributos publicos para que puedan ser utilizados por las Activities que implementan esta utilidad
@@ -44,13 +43,11 @@ public class MenuFlotante {
 
         //Declaro los iconos que voy a usar en el menu
         about = new ImageView(activity);
-        estadisticas = new ImageView(activity);
         configuracion = new ImageView(activity);
         logoff = new ImageView(activity);
 
         //Seteo las imagenes que contendras los iconos del sub menu
         about.setImageDrawable(activity.getResources().getDrawable(R.drawable.informacion));
-        estadisticas.setImageDrawable(activity.getResources().getDrawable(R.drawable.estadisticas));
         configuracion.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_action_settings));
         logoff.setImageDrawable(activity.getResources().getDrawable(R.drawable.logoff));
 
@@ -58,9 +55,8 @@ public class MenuFlotante {
         botonAccionMenu = new FloatingActionMenu.Builder(activity)
                 .addSubActionView(subActBuilder.setContentView(logoff).build())
                 .addSubActionView(subActBuilder.setContentView(about).build())
-                .addSubActionView(subActBuilder.setContentView(estadisticas).build())
                 .addSubActionView(subActBuilder.setContentView(configuracion).build())
-                .setRadius(150) //Define el radio de despligue del menu
+                .setRadius(100) //Define el radio de despligue del menu
                 .setStartAngle(0) //Define a donde arranca el menu que se despliega.
                 .setEndAngle(-90) //Define para donde se va a abrir el abanico de opciones.
                 .attachTo(botonMenu)

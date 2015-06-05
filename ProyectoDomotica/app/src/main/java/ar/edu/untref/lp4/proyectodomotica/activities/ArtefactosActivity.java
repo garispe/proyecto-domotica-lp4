@@ -24,7 +24,6 @@ import ar.edu.untref.lp4.proyectodomotica.baseDatos.BaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
 import ar.edu.untref.lp4.proyectodomotica.utils.Constantes;
-import ar.edu.untref.lp4.proyectodomotica.utils.MenuFlotante;
 
 public class ArtefactosActivity extends Activity {
 
@@ -34,10 +33,11 @@ public class ArtefactosActivity extends Activity {
 
     private List<Artefacto> artefactos;
     private ListViewArtefactosAdapter artefactosAdapter;
-    private MenuFlotante menu;
+
     private FloatingActionButton botonAgregarHabitacion;
     public static String nombreHabitacion;
     private int idHabitacion;
+
     private BaseDatos bd;
     private ControladorBaseDatos controladorBaseDatos;
 

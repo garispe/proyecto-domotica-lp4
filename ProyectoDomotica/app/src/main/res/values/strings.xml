@@ -35,4 +35,8 @@
     <string name="nombre_artefacto">Escriba el nombre del artefacto</string>
     <string name="habitacion_existente">Ya existe una habitación con ese nombre</string>
 
+    <string name="idioma">Idioma</string>
+    <string name="vaciar_habitacion">Vaciar Habitación</string>
+    <string name="domotica">Domótica</string>
+
 </resources>

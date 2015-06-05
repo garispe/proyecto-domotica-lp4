@@ -9,8 +9,51 @@
     tools:context="ar.edu.untref.lp4.proyectodomotica.activities.ConfiguracionActivity">
 
     <TextView
+        android:id="@+id/boton_idioma"
+        android:textSize="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/proximamente" />
+        android:text="@string/idioma"
+        />
+
+    <Button
+        android:id="@+id/boton_español"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="spa"
+        />
+
+    <Button
+        android:id="@+id/boton_ingles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="eng"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/boton_español"
+        android:layout_toStartOf="@+id/boton_español" />
+
+
+    <Button
+        android:id="@+id/boton_vaciar_bd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/boton_idioma"
+        android:layout_marginTop="30dp"
+        android:text="@string/vaciar_habitacion"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/boton_domotica"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/boton_vaciar_bd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/domotica"
+        />
+
 
 </RelativeLayout>

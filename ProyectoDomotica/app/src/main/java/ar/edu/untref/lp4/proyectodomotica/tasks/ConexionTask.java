@@ -48,10 +48,10 @@ public class ConexionTask extends AsyncTask<Void, Void, Void> {
             Toast.makeText(activity, activity.getString(R.string.conexion_no_establecida), Toast.LENGTH_SHORT).show();
         }
 
+        activity.inicializarMenu();
+        activity.inicializarBotonAgregarHabitacion();
         activity.inicializarListaHabitaciones();
         activity.quitarProgressBarConexion();
         activity.inicializarGridViewHabitaciones();
-        activity.inicializarMenu();
-        activity.inicializarBotonAgregarHabitacion();
     }
 }

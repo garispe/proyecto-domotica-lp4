@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">DomUntref</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_portada">PortadaActivity</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="title_activity_registro">RegistroActivity</string>
+    <string name="app_name" translatable="false">DomUntref</string>
+    <string name="action_settings">Configuracion</string>
+    <string name="title_activity_portada" translatable="false">PortadaActivity</string>
+    <string name="title_activity_login" translatable="false">LoginActivity</string>
+    <string name="title_activity_registro" translatable="false">RegistroActivity</string>
     <string name="title_activity_artefactos">Artefactos</string>
     <string name="title_activity_configuracion">Configuracion</string>
     <string name="title_activity_estadisticas">Estadisticas</string>
 
     <string name="titulo_dialogo_encendido">Bluetooth deshabilitado</string>
-    <string name="texto_dialogo_encendido">La aplicación requiere que el bluetooth esté habilitado.\n¿Desea habilitar el bluetooth?</string>
+    <string name="texto_dialogo_encendido">La aplicación requiere que el Bluetooth esté habilitado.\n¿Desea habilitar el Bluetooth?</string>
     <string name="salir">Salir</string>
     <string name="activar">Activar</string>
 
@@ -24,7 +23,7 @@
     <string name="conexion_no_establecida">No se pudo establecer la conexión</string>
     <string name="verificar_conexion">Verifique su conexión y vuelva a intentarlo</string>
     <string name="no_conectado">NO CONECTADO</string>
-    <string name="entendido">Entendido</string>
+    <string name="entendido" translatable="false">Ok</string>
     <string name="proximamente">PROXIMAMENTE</string>
     <string name="presione_nuevamente">Presione nuevamente para salir</string>
     <string name="aceptar">Aceptar</string>
@@ -35,4 +34,5 @@
     <string name="nombre_vacio">Ingrese un nombre</string>
     <string name="nombre_artefacto">Escriba el nombre del artefacto</string>
     <string name="habitacion_existente">Ya existe una habitación con ese nombre</string>
+
 </resources>

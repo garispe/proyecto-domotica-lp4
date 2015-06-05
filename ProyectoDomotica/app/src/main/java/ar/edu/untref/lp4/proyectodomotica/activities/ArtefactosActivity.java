@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -22,9 +23,11 @@ import java.util.List;
 import ar.edu.untref.lp4.proyectodomotica.BuildConfig;
 import ar.edu.untref.lp4.proyectodomotica.R;
 import ar.edu.untref.lp4.proyectodomotica.adapters.ListViewArtefactosAdapter;
+import ar.edu.untref.lp4.proyectodomotica.baseDatos.BaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
+import ar.edu.untref.lp4.proyectodomotica.utils.Constantes;
 import ar.edu.untref.lp4.proyectodomotica.utils.MenuFlotante;
 
 public class ArtefactosActivity extends Activity {
@@ -39,6 +42,8 @@ public class ArtefactosActivity extends Activity {
     private FloatingActionButton botonAgregarHabitacion;
     public static String nombreHabitacion;
     private int idHabitacion;
+    private BaseDatos bd;
+    private ControladorBaseDatos controladorBaseDatos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,8 @@ public class ArtefactosActivity extends Activity {
         inicializarListaArtefactosPorHabitacion();
         inicializarListViewArtefactos();
         inicializarMenu();
+        bd = new BaseDatos(this, Constantes.NOMBRE_BD, null, Constantes.VERSION_BD);
+        controladorBaseDatos = new ControladorBaseDatos(bd);
     }
 
     private void inicializarBotonAgregar() {
@@ -84,10 +91,22 @@ public class ArtefactosActivity extends Activity {
      */
     private void inicializarListViewArtefactos() {
 
-        ListView listView = (ListView) findViewById(R.id.lista_artefactos);
+        final ListView listView = (ListView) findViewById(R.id.lista_artefactos);
 
         artefactosAdapter = new ListViewArtefactosAdapter(this, artefactos);
         listView.setAdapter(artefactosAdapter);
+        listView.setLongClickable(true);
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Toast.makeText(ArtefactosActivity.this,"probando",Toast.LENGTH_SHORT).show();
+                //borrarArtefacto((Artefacto) listView.getItemAtPosition(position));
+                return true;
+            }
+        });
+
+
     }
 
     public void inicializarMenu() {
@@ -154,7 +173,7 @@ public class ArtefactosActivity extends Activity {
     }
 
     /**
-     * En caso de que el menú este cerado, vuelve a la pantalla anterior.
+     * En caso de que el menú este cerrado, vuelve a la pantalla anterior.
      * En caso de que el menú esté abierto, lo cierra.
      */
     @Override
@@ -177,6 +196,33 @@ public class ArtefactosActivity extends Activity {
             escribirNombreArtefacto();
         }
     };
+
+    private void borrarArtefacto(final Artefacto artefacto) {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Eliminacion");
+        alertDialog.setMessage("¿Desea borrar el artefacto?");
+
+
+        alertDialog.setPositiveButton(getString(R.string.aceptar),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        controladorBaseDatos.eliminarArtefacto(artefacto);
+
+
+                    }
+                });
+
+        alertDialog.setNegativeButton(getString(R.string.cancelar),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialog.show();
+    }
 
     private void escribirNombreArtefacto() {
 

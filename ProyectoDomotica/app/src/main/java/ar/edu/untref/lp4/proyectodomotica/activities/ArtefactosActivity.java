@@ -35,6 +35,7 @@ public class ArtefactosActivity extends Activity {
     private ListViewArtefactosAdapter artefactosAdapter;
 
     private FloatingActionButton botonAgregarHabitacion;
+    private FloatingActionButton botonEliminarHabitacion;
     public static String nombreHabitacion;
     private int idHabitacion;
 
@@ -56,6 +57,7 @@ public class ArtefactosActivity extends Activity {
         habitacion.setText(nombreHabitacion);
 
         inicializarBotonAgregar();
+        inicializarBotonEliminar();
         inicializarListaArtefactosPorHabitacion();
         inicializarListViewArtefactos();
 
@@ -71,6 +73,16 @@ public class ArtefactosActivity extends Activity {
         botonAgregarHabitacion.setColorPressedResId(R.color.azul);
         botonAgregarHabitacion.setIcon(R.drawable.icono_agregar);
         botonAgregarHabitacion.setOnClickListener(agregarArtefactoListener);
+    }
+
+    private void inicializarBotonEliminar() {
+
+        botonEliminarHabitacion = (FloatingActionButton) findViewById(R.id.eliminar_artefacto_boton);
+        botonEliminarHabitacion.setSize(FloatingActionButton.SIZE_NORMAL);
+        botonEliminarHabitacion.setColorNormalResId(R.color.gris);
+        botonEliminarHabitacion.setColorPressedResId(R.color.azul);
+        botonEliminarHabitacion.setIcon(R.drawable.icono_quitar);
+        botonEliminarHabitacion.setOnClickListener(agregarArtefactoListener);
     }
 
     /**

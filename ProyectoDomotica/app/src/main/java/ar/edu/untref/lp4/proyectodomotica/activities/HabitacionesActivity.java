@@ -113,7 +113,7 @@ public class HabitacionesActivity extends Activity {
         botonEliminarHabitacion.setColorNormalResId(R.color.gris);
         botonEliminarHabitacion.setColorPressedResId(R.color.azul);
         botonEliminarHabitacion.setIcon(R.drawable.icono_quitar);
-        botonEliminarHabitacion.setOnClickListener(agregarHabitacionListener);
+        botonEliminarHabitacion.setOnClickListener(eliminarHabitacionListener);
 
     }
 
@@ -338,6 +338,15 @@ public class HabitacionesActivity extends Activity {
 //                String log = "Id: " + hb.getId() + " ,Nombre: " + hb.getNombre();
 //                Logger.e("Nombre: " + log);
 //            }
+        }
+    };
+
+    private View.OnClickListener eliminarHabitacionListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+
+
         }
     };
 

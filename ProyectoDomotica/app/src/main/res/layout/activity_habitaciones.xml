@@ -41,6 +41,4 @@
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/agregar_habitacion_boton" />
 
-
-
 </RelativeLayout>

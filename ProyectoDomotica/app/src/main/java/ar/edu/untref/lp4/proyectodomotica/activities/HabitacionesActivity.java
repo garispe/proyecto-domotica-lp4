@@ -43,6 +43,7 @@ public class HabitacionesActivity extends Activity {
     private ProgressDialog progressDialog;
     private TextView textoConexion;
     private FloatingActionButton botonAgregarHabitacion;
+    private FloatingActionButton botonEliminarHabitacion;
 
     private GridHabitacionesAdapter adapter;
     private GridView gridview;
@@ -62,6 +63,9 @@ public class HabitacionesActivity extends Activity {
 
         botonAgregarHabitacion = (FloatingActionButton) findViewById(R.id.agregar_habitacion_boton);
         botonAgregarHabitacion.setVisibility(View.INVISIBLE);
+
+        botonEliminarHabitacion = (FloatingActionButton) findViewById(R.id.eliminar_habitacion_boton);
+        botonEliminarHabitacion.setVisibility(View.INVISIBLE);
 
         Logger.init(TAG);
         Logger.i("onCreate");
@@ -100,6 +104,17 @@ public class HabitacionesActivity extends Activity {
         botonAgregarHabitacion.setColorPressedResId(R.color.azul);
         botonAgregarHabitacion.setIcon(R.drawable.icono_agregar);
         botonAgregarHabitacion.setOnClickListener(agregarHabitacionListener);
+    }
+
+    public void inicializarBotonEliminarHabitacion() {
+
+        botonEliminarHabitacion.setVisibility(View.VISIBLE);
+        botonEliminarHabitacion.setSize(FloatingActionButton.SIZE_NORMAL);
+        botonEliminarHabitacion.setColorNormalResId(R.color.gris);
+        botonEliminarHabitacion.setColorPressedResId(R.color.azul);
+        botonEliminarHabitacion.setIcon(R.drawable.icono_quitar);
+        botonEliminarHabitacion.setOnClickListener(agregarHabitacionListener);
+
     }
 
     /**

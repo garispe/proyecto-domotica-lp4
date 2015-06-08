@@ -93,21 +93,10 @@ public class ArtefactosActivity extends Activity {
 
         artefactosAdapter = new ListViewArtefactosAdapter(this, artefactos);
         listView.setAdapter(artefactosAdapter);
-        listView.setLongClickable(true);
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Toast.makeText(ArtefactosActivity.this, "probando", Toast.LENGTH_SHORT).show();
-                //borrarArtefacto((Artefacto) listView.getItemAtPosition(position));
-                return true;
-            }
-        });
     }
 
     @Override
     public void onBackPressed() {
-
         finish();
     }
 

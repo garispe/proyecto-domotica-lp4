@@ -21,7 +21,7 @@
 
     <string name="estableciendo_conexion">Estableciendo conexión…</string>
     <string name="conexion_no_establecida">No se pudo establecer la conexión</string>
-    <string name="verificar_conexion">Verifique su conexión y vuelva a intentarlo</string>
+    <string name="verificar_conexion">No se pueden realizar cambios. Verifique su conexión y vuelva a intentarlo</string>
     <string name="no_conectado">NO CONECTADO</string>
     <string name="entendido" translatable="false">Ok</string>
     <string name="proximamente">PROXIMAMENTE</string>

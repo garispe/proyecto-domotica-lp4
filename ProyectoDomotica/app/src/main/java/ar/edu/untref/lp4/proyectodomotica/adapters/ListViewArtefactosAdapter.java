@@ -2,10 +2,12 @@ package ar.edu.untref.lp4.proyectodomotica.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,7 +57,8 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
 
             convertView = LayoutInflater.from(context).inflate(R.layout.item_list_artefactos, null);
             viewHolder.texto = (TextView) convertView.findViewById(R.id.item_text);
-            viewHolder.boton = (ImageButton) convertView.findViewById(R.id.item_boton);
+//            viewHolder.boton = (ImageButton) convertView.findViewById(R.id.item_boton);
+            viewHolder.switchArtefacto = (Switch) convertView.findViewById(R.id.switch_artefacto);
 
             convertView.setTag(viewHolder);
 
@@ -64,48 +67,42 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.texto.setText(getItem(position).getNombre());
+        final Artefacto artefacto = getItem(position);
 
-        // SE CONSULTA EL ESTADO ALMACENADO PARA CARGAR LA IMAGEN AL CREAR LA ACTIVIDAD
-        if (DUPreferences.getBoolean(context, ArtefactosActivity.nombreHabitacion + "_" + getItem(position).getNombre(), false)) {
+        viewHolder.texto.setText(artefacto.getNombre());
 
-            viewHolder.boton.setImageResource(R.drawable.imagen_on);
+        boolean estadoAlmacenado = DUPreferences.getBoolean(context, ArtefactosActivity.nombreHabitacion + "_" + artefacto.getNombre(), false);
+        viewHolder.switchArtefacto.setChecked(estadoAlmacenado);
+
+        if (controladorBluetooth.estaConectado()) {
+
+            viewHolder.switchArtefacto.setEnabled(true);
 
         } else {
 
-            viewHolder.boton.setImageResource(R.drawable.imagen_off);
+            viewHolder.switchArtefacto.setEnabled(false);
+            Toast.makeText(context, context.getString(R.string.verificar_conexion), Toast.LENGTH_SHORT).show();
         }
 
-        viewHolder.boton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        viewHolder.switchArtefacto.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
 
-                if (controladorBluetooth.estaConectado()) {
+                  if(viewHolder.switchArtefacto.isChecked()){
 
-                    Artefacto artefacto = getItem(position);
+                      controladorBluetooth.enviarDato("0");
 
-                    if (!artefacto.isActivo()) {
+                  } else {
 
-                        artefacto.setActivo(true);
-                        controladorBluetooth.enviarDato("1");
+                      controladorBluetooth.enviarDato("1");
+                  }
 
-                    } else {
+                  artefacto.setActivo(viewHolder.switchArtefacto.isChecked());
 
-                        artefacto.setActivo(false);
-                        controladorBluetooth.enviarDato("0");
-                    }
-
-                    setEstadoImagen(artefacto, viewHolder.boton);
-
-                    // SE ALMACENA EL VALOR EN LAS PREFERENCIAS
-                    DUPreferences.guardarBoolean(context, ArtefactosActivity.nombreHabitacion + "_" + artefacto.getNombre(), artefacto.isActivo());
-
-                } else {
-
-                    Toast.makeText(context, context.getString(R.string.verificar_conexion), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+                  DUPreferences.guardarBoolean(context, ArtefactosActivity.nombreHabitacion + "_" + artefacto.getNombre(), artefacto.isActivo());
+              }
+          }
+        );
 
         return convertView;
     }
@@ -130,5 +127,6 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
 
         TextView texto;
         ImageButton boton;
+        Switch switchArtefacto;
     }
 }

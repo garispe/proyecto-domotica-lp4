@@ -44,7 +44,6 @@ public class HabitacionesActivity extends Activity {
     private ProgressDialog progressDialog;
     private TextView textoConexion;
     private FloatingActionButton botonAgregarHabitacion;
-    private FloatingActionButton botonEliminarHabitacion;
 
     private GridHabitacionesAdapter adapter;
     private GridView gridview;
@@ -64,7 +63,7 @@ public class HabitacionesActivity extends Activity {
 
         botonAgregarHabitacion = (FloatingActionButton) findViewById(R.id.agregar_habitacion_boton);
         botonAgregarHabitacion.setVisibility(View.INVISIBLE);
-
+        
         Logger.init(TAG);
         Logger.i("onCreate");
 
@@ -103,6 +102,7 @@ public class HabitacionesActivity extends Activity {
         botonAgregarHabitacion.setIcon(R.drawable.icono_agregar);
         botonAgregarHabitacion.setOnClickListener(agregarHabitacionListener);
     }
+    
 
     /**
      * Crea el Menu con sus diferentes opciones
@@ -266,14 +266,44 @@ public class HabitacionesActivity extends Activity {
             }
         });
 
+        gridview.setLongClickable(true);
         gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-                escribirNombreHabitacion();
+                int posicion=position;
+                borrarHabitacion((Habitacion) gridview.getItemAtPosition(position));
                 return true;
             }
         });
+    }
+
+    private void borrarHabitacion(final Habitacion habitacion) {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Eliminacion");
+        alertDialog.setMessage("¿Desea borrar la habitación?");
+
+
+        alertDialog.setPositiveButton(getString(R.string.aceptar),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        controladorBaseDatos.eliminarHabitacion(habitacion);
+                        inicializarListaHabitaciones();
+                        inicializarGridViewHabitaciones();
+
+                    }
+                });
+
+        alertDialog.setNegativeButton(getString(R.string.cancelar),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialog.show();
+
     }
 
     private void abrirArtefactosActivity(Habitacion habitacion) {
@@ -329,6 +359,7 @@ public class HabitacionesActivity extends Activity {
             escribirNombreHabitacion();
         }
     };
+
 
     private void escribirNombreHabitacion() {
 

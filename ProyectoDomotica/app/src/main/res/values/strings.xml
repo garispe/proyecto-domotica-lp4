@@ -34,6 +34,7 @@
     <string name="nombre_vacio">Ingrese un nombre</string>
     <string name="nombre_artefacto">Escriba el nombre del artefacto</string>
     <string name="habitacion_existente">Ya existe una habitación con ese nombre</string>
+    <string name="artefacto_existente">Ya existe un artefacto con ese nombre</string>
 
     <string name="idioma">Idioma</string>
     <string name="vaciar_habitacion">- Vaciar Datos</string>

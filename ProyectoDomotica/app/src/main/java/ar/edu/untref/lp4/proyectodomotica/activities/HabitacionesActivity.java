@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -64,9 +65,6 @@ public class HabitacionesActivity extends Activity {
         botonAgregarHabitacion = (FloatingActionButton) findViewById(R.id.agregar_habitacion_boton);
         botonAgregarHabitacion.setVisibility(View.INVISIBLE);
 
-        botonEliminarHabitacion = (FloatingActionButton) findViewById(R.id.eliminar_habitacion_boton);
-        botonEliminarHabitacion.setVisibility(View.INVISIBLE);
-
         Logger.init(TAG);
         Logger.i("onCreate");
 
@@ -104,17 +102,6 @@ public class HabitacionesActivity extends Activity {
         botonAgregarHabitacion.setColorPressedResId(R.color.azul);
         botonAgregarHabitacion.setIcon(R.drawable.icono_agregar);
         botonAgregarHabitacion.setOnClickListener(agregarHabitacionListener);
-    }
-
-    public void inicializarBotonEliminarHabitacion() {
-
-        botonEliminarHabitacion.setVisibility(View.VISIBLE);
-        botonEliminarHabitacion.setSize(FloatingActionButton.SIZE_NORMAL);
-        botonEliminarHabitacion.setColorNormalResId(R.color.gris);
-        botonEliminarHabitacion.setColorPressedResId(R.color.azul);
-        botonEliminarHabitacion.setIcon(R.drawable.icono_quitar);
-        botonEliminarHabitacion.setOnClickListener(eliminarHabitacionListener);
-
     }
 
     /**
@@ -278,6 +265,15 @@ public class HabitacionesActivity extends Activity {
                 }
             }
         });
+
+        gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                escribirNombreHabitacion();
+                return true;
+            }
+        });
     }
 
     private void abrirArtefactosActivity(Habitacion habitacion) {
@@ -330,23 +326,7 @@ public class HabitacionesActivity extends Activity {
     private View.OnClickListener agregarHabitacionListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
             escribirNombreHabitacion();
-
-//            for (Habitacion hb : bd.getTodasHabitaciones()) {
-//
-//                String log = "Id: " + hb.getId() + " ,Nombre: " + hb.getNombre();
-//                Logger.e("Nombre: " + log);
-//            }
-        }
-    };
-
-    private View.OnClickListener eliminarHabitacionListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-
-
         }
     };
 
@@ -357,6 +337,7 @@ public class HabitacionesActivity extends Activity {
         alertDialog.setMessage(R.string.nombre_habitacion);
 
         final EditText editText = new EditText(this);
+        editText.setGravity(Gravity.CENTER);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
@@ -390,25 +371,8 @@ public class HabitacionesActivity extends Activity {
 
                                 escribirNombreHabitacion();
                                 Toast.makeText(HabitacionesActivity.this, getString(R.string.habitacion_existente), Toast.LENGTH_SHORT).show();
-
                             }
-
                         }
-/*
-                        if (nombreHabitacionDisponible(nombreHabitacion)) {
-
-                            Habitacion habitacion = new Habitacion(nombreHabitacion);
-
-                            controladorBaseDatos.agregarHabitacion(habitacion);
-
-                            inicializarListaHabitaciones();
-                            inicializarGridViewHabitaciones();
-
-                        } else {
-
-                            Toast.makeText(HabitacionesActivity.this, getString(R.string.habitacion_existente), Toast.LENGTH_SHORT).show();
-                        }
-*/
                     }
                 });
 
@@ -435,7 +399,6 @@ public class HabitacionesActivity extends Activity {
                     nombreDisponible = false;
                 }
             }
-
         }
 
         return nombreDisponible;

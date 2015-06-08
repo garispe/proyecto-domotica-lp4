@@ -14,7 +14,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <!-- Idioma -->
@@ -23,42 +23,42 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/idioma"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <View
                 android:id="@+id/separador1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/text_idioma"
                 android:background="@color/negro" />
 
             <RelativeLayout
                 android:id="@+id/relative_idioma"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/separador1">
+                android:layout_marginTop="10dp">
 
+                <View
+                    android:id="@+id/separador_vertical_idiomas"
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="5dp" />
 
                 <ImageButton
                     android:id="@+id/boton_espanol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:background="@android:color/transparent"
-                    android:text="spa" />
+                    android:layout_toLeftOf="@+id/separador_vertical_idiomas"
+                    android:background="@android:color/transparent" />
 
                 <ImageButton
                     android:id="@+id/boton_ingles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="15dp"
-                    android:layout_toRightOf="@+id/boton_espanol"
-                    android:background="@android:color/transparent"
-                    android:text="eng" />
+                    android:layout_toRightOf="@id/separador_vertical_idiomas"
+                    android:background="@android:color/transparent" />
 
             </RelativeLayout>
 
@@ -67,15 +67,14 @@
                 android:id="@+id/text_configuracion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/relative_idioma"
+                android:layout_marginTop="15dp"
                 android:text="@string/configuracion"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <View
                 android:id="@+id/separador2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/text_vaciarBD"
                 android:background="@color/negro" />
 
 
@@ -83,16 +82,15 @@
                 android:id="@+id/relative_bd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/separador2">
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/text_vaciarBD"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="30dp"
                     android:text="@string/vaciar_habitacion"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
                 <ImageButton
                     android:id="@+id/boton_vaciar_bd"
@@ -100,7 +98,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginTop="15dp"
                     android:background="@android:color/transparent"
                     android:text="@string/vaciar_habitacion" />
 
@@ -111,37 +108,34 @@
                 android:id="@+id/text_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/relative_bd"
+                android:layout_marginTop="15dp"
                 android:text="@string/informacion"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <View
                 android:id="@+id/separador3"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/text_info"
                 android:background="@color/negro" />
 
             <RelativeLayout
                 android:id="@+id/relative_domotica"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/separador3">
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/text_domotica"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginTop="15dp"
                     android:text="@string/domotica"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
                 <ImageButton
                     android:id="@+id/boton_domotica"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:background="@android:color/transparent" />

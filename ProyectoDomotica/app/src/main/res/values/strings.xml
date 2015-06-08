@@ -36,12 +36,12 @@
     <string name="habitacion_existente">Ya existe una habitación con ese nombre</string>
 
     <string name="idioma">Idioma</string>
-    <string name="vaciar_habitacion">Vaciar Datos</string>
-    <string name="domotica">Domótica</string>
-    <string name="informacion">Informacion</string>
+    <string name="vaciar_habitacion">- Vaciar Datos</string>
+    <string name="domotica">- Domótica</string>
+    <string name="informacion">Información</string>
     <string name="espanol">Español</string>
     <string name="ingles">Ingles</string>
-    <string name="configuracion">Configuracion</string>
+    <string name="configuracion">Configuración</string>
 
 
 

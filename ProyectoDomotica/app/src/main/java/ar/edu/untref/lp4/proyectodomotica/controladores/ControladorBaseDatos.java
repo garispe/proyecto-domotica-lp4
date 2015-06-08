@@ -57,7 +57,7 @@ public class ControladorBaseDatos {
             habitacion = new Habitacion(cursor.getString(1));
         }
 
-        // CORREGIR, NO ESTA DEVOLVIENDO MAL LA HABITACION
+        // CORREGIR, ESTA DEVOLVIENDO MAL LA HABITACION
 
 
         cursor.close();

@@ -34,11 +34,4 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true" />
 
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/eliminar_habitacion_boton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/agregar_habitacion_boton" />
-
 </RelativeLayout>

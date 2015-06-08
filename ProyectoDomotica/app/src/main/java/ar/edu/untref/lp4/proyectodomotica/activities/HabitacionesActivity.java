@@ -43,7 +43,7 @@ public class HabitacionesActivity extends Activity {
     private ProgressDialog progressDialog;
     private TextView textoConexion;
     private FloatingActionButton botonAgregarHabitacion;
-    private FloatingActionButton botonEliminarHabitacion;
+    //private FloatingActionButton botonEliminarHabitacion;
 
     private GridHabitacionesAdapter adapter;
     private GridView gridview;
@@ -63,9 +63,6 @@ public class HabitacionesActivity extends Activity {
 
         botonAgregarHabitacion = (FloatingActionButton) findViewById(R.id.agregar_habitacion_boton);
         botonAgregarHabitacion.setVisibility(View.INVISIBLE);
-
-        botonEliminarHabitacion = (FloatingActionButton) findViewById(R.id.eliminar_habitacion_boton);
-        botonEliminarHabitacion.setVisibility(View.INVISIBLE);
 
         Logger.init(TAG);
         Logger.i("onCreate");
@@ -104,17 +101,6 @@ public class HabitacionesActivity extends Activity {
         botonAgregarHabitacion.setColorPressedResId(R.color.azul);
         botonAgregarHabitacion.setIcon(R.drawable.icono_agregar);
         botonAgregarHabitacion.setOnClickListener(agregarHabitacionListener);
-    }
-
-    public void inicializarBotonEliminarHabitacion() {
-
-        botonEliminarHabitacion.setVisibility(View.VISIBLE);
-        botonEliminarHabitacion.setSize(FloatingActionButton.SIZE_NORMAL);
-        botonEliminarHabitacion.setColorNormalResId(R.color.gris);
-        botonEliminarHabitacion.setColorPressedResId(R.color.azul);
-        botonEliminarHabitacion.setIcon(R.drawable.icono_quitar);
-        botonEliminarHabitacion.setOnClickListener(eliminarHabitacionListener);
-
     }
 
     /**
@@ -278,6 +264,45 @@ public class HabitacionesActivity extends Activity {
                 }
             }
         });
+
+        gridview.setLongClickable(true);
+        gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                int posicion=position;
+                borrarHabitacion((Habitacion) gridview.getItemAtPosition(position));
+                return true;
+            }
+        });
+    }
+
+    private void borrarHabitacion(final Habitacion habitacion) {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Eliminacion");
+        alertDialog.setMessage("¿Desea borrar la habitación?");
+
+
+        alertDialog.setPositiveButton(getString(R.string.aceptar),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        controladorBaseDatos.eliminarHabitacion(habitacion);
+                        inicializarListaHabitaciones();
+                        inicializarGridViewHabitaciones();
+
+                    }
+                });
+
+        alertDialog.setNegativeButton(getString(R.string.cancelar),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialog.show();
+
     }
 
     private void abrirArtefactosActivity(Habitacion habitacion) {
@@ -341,14 +366,6 @@ public class HabitacionesActivity extends Activity {
         }
     };
 
-    private View.OnClickListener eliminarHabitacionListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-
-
-        }
-    };
 
     private void escribirNombreHabitacion() {
 

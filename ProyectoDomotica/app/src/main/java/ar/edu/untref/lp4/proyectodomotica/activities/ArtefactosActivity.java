@@ -62,9 +62,12 @@ public class ArtefactosActivity extends Activity {
         bd = new BaseDatos(this, Constantes.NOMBRE_BD, null, Constantes.VERSION_BD);
         controladorBaseDatos = new ControladorBaseDatos(bd);
 
-        if(!artefactosAdapter.getEstaConectado()){
+        if (!artefactosAdapter.getEstaConectado()) {
 
-            Toast.makeText(ArtefactosActivity.this, ArtefactosActivity.this.getString(R.string.verificar_conexion), Toast.LENGTH_SHORT).show();
+            if (ControladorBaseDatos.getArtefactosPorHabitacion(idHabitacion).size() > 0) {
+
+                Toast.makeText(ArtefactosActivity.this, ArtefactosActivity.this.getString(R.string.verificar_conexion), Toast.LENGTH_SHORT).show();
+            }
 
         }
     }
@@ -177,6 +180,7 @@ public class ArtefactosActivity extends Activity {
                                 inicializarListViewArtefactos();
 
                             } else {
+
 
                                 Toast.makeText(ArtefactosActivity.this, getString(R.string.artefacto_existente), Toast.LENGTH_SHORT).show();
                             }

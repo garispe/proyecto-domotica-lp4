@@ -403,5 +403,13 @@ public class HabitacionesActivity extends Activity {
 
         return nombreDisponible;
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        inicializarListaHabitaciones();
+        inicializarGridViewHabitaciones();
+    }
 }
 

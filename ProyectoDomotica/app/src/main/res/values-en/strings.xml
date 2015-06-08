@@ -1,2 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">DomUntref</string>
+    <string name="aceptar">Accept</string>
+    <string name="action_settings">Configuration</string>
+    <string name="activar">Activate</string>
+    <string name="artefacto_existente">A device already exists with that name</string>
+    <string name="cancelar">Cancel</string>
+    <string name="configuracion">Configuration</string>
+    <string name="domotica"></string>
+    <string name="espanol">Spanish</string>
+    <string name="idioma">Language</string>
+    <string name="informacion">Information</string>
+    <string name="ingles">English</string>
+    <string name="nueva_habitacion">New Room</string>
+    <string name="nuevo_artefacto">New Device</string>
+    <string name="proximamente">Cooming Soon</string>
+    <string name="salir">Exit</string>
+    <string name="salir_y_desactivar">Exit and disable</string>
+    <string name="no_conectado">NOT CONECTED</string>
+    <string name="title_activity_configuracion">Configuration</string>
+    <string name="title_activity_artefactos">Devices</string>
+    <string name="title_activity_estadisticas">Estadistics</string>
+    <string name="titulo_dialogo_salir">Exit</string>
+    <string name="nombre_vacio">Enter a name</string>
+    <string name="conexion_no_establecida">Could not connect</string>
+    <string name="datos_bd">The data have been removed</string>
+    <string name="estableciendo_conexion">Establishing connection...</string>
+    <string name="habitacion_existente">A room with that name already exists</string>
+    <string name="mensaje_domotica">Home automation is the residential extension of building automation. It is automation of the home, housework or household activity. Home automation may include centralized control of lighting, HVAC (heating, ventilation and air conditioning), appliances, security locks of gates and doors and other systems, to provide improved convenience, comfort, energy efficiency and security. Home automation for the elderly and disabled can provide increased quality of life for persons who might otherwise require caregivers or institutional care.</string>
+    <string name="nombre_artefacto">Type the name of the device</string>
+    <string name="nombre_habitacion">Type the name of the room</string>
+    <string name="presione_nuevamente">Press again to exit</string>
+    <string name="texto_dialogo_encendido">The application requires a Bluetooth-enabled Do you want to have Bluetooth?</string>
+    <string name="texto_dialogo_salir">Do you want to disable Bluetooth when you leave?</string>
+    <string name="vaciar_habitacion">- Empty Data</string>
+    <string name="verificar_conexion">Check your connection and try again</string>
+</resources>

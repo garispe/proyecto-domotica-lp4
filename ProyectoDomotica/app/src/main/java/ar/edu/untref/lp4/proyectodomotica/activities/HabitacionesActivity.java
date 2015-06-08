@@ -63,7 +63,7 @@ public class HabitacionesActivity extends Activity {
 
         botonAgregarHabitacion = (FloatingActionButton) findViewById(R.id.agregar_habitacion_boton);
         botonAgregarHabitacion.setVisibility(View.INVISIBLE);
-        
+
         Logger.init(TAG);
         Logger.i("onCreate");
 
@@ -102,7 +102,7 @@ public class HabitacionesActivity extends Activity {
         botonAgregarHabitacion.setIcon(R.drawable.icono_agregar);
         botonAgregarHabitacion.setOnClickListener(agregarHabitacionListener);
     }
-    
+
 
     /**
      * Crea el Menu con sus diferentes opciones
@@ -270,7 +270,7 @@ public class HabitacionesActivity extends Activity {
         gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                int posicion=position;
+
                 borrarHabitacion((Habitacion) gridview.getItemAtPosition(position));
                 return true;
             }
@@ -280,8 +280,8 @@ public class HabitacionesActivity extends Activity {
     private void borrarHabitacion(final Habitacion habitacion) {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("Eliminacion");
-        alertDialog.setMessage("¿Desea borrar la habitación?");
+        alertDialog.setTitle(getString(R.string.eliminar_habitacion_titulo));
+        alertDialog.setMessage(getString(R.string.eliminar_habitacion_mensaje));
 
 
         alertDialog.setPositiveButton(getString(R.string.aceptar),

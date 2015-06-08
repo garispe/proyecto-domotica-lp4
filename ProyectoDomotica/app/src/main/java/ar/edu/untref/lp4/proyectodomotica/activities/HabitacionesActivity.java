@@ -62,7 +62,6 @@ public class HabitacionesActivity extends Activity {
         textoConexion.setVisibility(View.GONE);
 
         botonAgregarHabitacion = (FloatingActionButton) findViewById(R.id.agregar_habitacion_boton);
-        botonAgregarHabitacion.setVisibility(View.INVISIBLE);
 
         Logger.init(TAG);
         Logger.i("onCreate");
@@ -97,9 +96,7 @@ public class HabitacionesActivity extends Activity {
 
         botonAgregarHabitacion.setVisibility(View.VISIBLE);
         botonAgregarHabitacion.setSize(FloatingActionButton.SIZE_NORMAL);
-        botonAgregarHabitacion.setColorNormalResId(R.color.gris);
-        botonAgregarHabitacion.setColorPressedResId(R.color.azul);
-        botonAgregarHabitacion.setIcon(R.drawable.icono_agregar);
+        botonAgregarHabitacion.setIcon(R.drawable.cruz);
         botonAgregarHabitacion.setOnClickListener(agregarHabitacionListener);
     }
 
@@ -325,6 +322,7 @@ public class HabitacionesActivity extends Activity {
     private View.OnClickListener agregarHabitacionListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
             escribirNombreHabitacion();
         }
     };

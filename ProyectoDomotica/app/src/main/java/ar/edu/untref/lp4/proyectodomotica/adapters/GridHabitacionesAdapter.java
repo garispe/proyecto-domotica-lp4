@@ -8,7 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import ar.edu.untref.lp4.proyectodomotica.R;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
@@ -70,6 +72,42 @@ public class GridHabitacionesAdapter extends BaseAdapter {
 
     private int getImagenAleatoria() {
 
-        return R.drawable.cuadro128;
+
+        Double color = Math.random() * 10;
+        int id = 0;
+
+        if (color.intValue() > 0 && color.intValue() <= 6) {
+
+            switch (color.intValue()) {
+
+                case 1:
+                    id = R.drawable.color_amarillo;
+                    break;
+                case 2:
+                    id = R.drawable.color_azul;
+                    break;
+
+                case 3:
+                    id = R.drawable.color_gris;
+                    break;
+
+                case 4:
+                    id = R.drawable.color_purpura;
+                    break;
+
+                case 5:
+                    id = R.drawable.color_rojo;
+                    break;
+
+                case 6:
+                    id = R.drawable.color_verde;
+                    break;
+            }
+        } else {
+
+            id = R.drawable.color_verde;
+        }
+
+        return id;
     }
 }

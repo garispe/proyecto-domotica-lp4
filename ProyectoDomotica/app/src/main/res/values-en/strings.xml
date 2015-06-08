@@ -35,4 +35,6 @@
     <string name="texto_dialogo_salir">Do you want to disable Bluetooth when you leave?</string>
     <string name="vaciar_habitacion">- Empty Data</string>
     <string name="verificar_conexion">Check your connection and try again</string>
+    <string name="mensaje_confirmacion">Are you sure you want to delete all data?</string>
+    <string name="titulo_dialogo_encendido">Bluetooth disabled</string>
 </resources>

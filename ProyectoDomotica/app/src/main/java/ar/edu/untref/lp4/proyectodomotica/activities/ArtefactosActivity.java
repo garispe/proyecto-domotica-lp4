@@ -62,20 +62,21 @@ public class ArtefactosActivity extends Activity {
         bd = new BaseDatos(this, Constantes.NOMBRE_BD, null, Constantes.VERSION_BD);
         controladorBaseDatos = new ControladorBaseDatos(bd);
 
-        if (!artefactosAdapter.getEstaConectado()) {
+        if(!artefactosAdapter.getEstaConectado()){
 
             Toast.makeText(ArtefactosActivity.this, ArtefactosActivity.this.getString(R.string.verificar_conexion), Toast.LENGTH_SHORT).show();
 
         }
     }
 
+    /**
+     * Inicializa solo el boton de agregar
+     */
     private void inicializarBotonAgregar() {
 
         botonAgregarHabitacion = (FloatingActionButton) findViewById(R.id.agregar_artefacto_boton);
         botonAgregarHabitacion.setSize(FloatingActionButton.SIZE_NORMAL);
-        botonAgregarHabitacion.setColorNormalResId(R.color.gris);
-        botonAgregarHabitacion.setColorPressedResId(R.color.azul);
-        botonAgregarHabitacion.setIcon(R.drawable.icono_agregar);
+        botonAgregarHabitacion.setIcon(R.drawable.cruz);
         botonAgregarHabitacion.setOnClickListener(agregarArtefactoListener);
     }
 

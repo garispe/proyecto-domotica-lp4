@@ -4,16 +4,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import ar.edu.untref.lp4.proyectodomotica.R;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBaseDatos;
-import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
 
 public class ConfiguracionActivity extends ActionBarActivity {
 
@@ -40,6 +36,7 @@ public class ConfiguracionActivity extends ActionBarActivity {
 
         baseLlena();
 
+        // Comportamiento boton domotica
         bDomotica.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -59,6 +56,7 @@ public class ConfiguracionActivity extends ActionBarActivity {
             }
         });
 
+        // Comportamiento boton vaciar datos
         bVaciarBD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,6 +92,7 @@ public class ConfiguracionActivity extends ActionBarActivity {
             }
         });
 
+        // Comportamiento boton español
         bEspanol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,6 +102,7 @@ public class ConfiguracionActivity extends ActionBarActivity {
             }
         });
 
+        // Comportamiento boton ingles
         bIngles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

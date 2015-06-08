@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -57,7 +58,6 @@ public class ArtefactosActivity extends Activity {
         habitacion.setText(nombreHabitacion);
 
         inicializarBotonAgregar();
-        inicializarBotonEliminar();
         inicializarListaArtefactosPorHabitacion();
         inicializarListViewArtefactos();
 
@@ -73,16 +73,6 @@ public class ArtefactosActivity extends Activity {
         botonAgregarHabitacion.setColorPressedResId(R.color.azul);
         botonAgregarHabitacion.setIcon(R.drawable.icono_agregar);
         botonAgregarHabitacion.setOnClickListener(agregarArtefactoListener);
-    }
-
-    private void inicializarBotonEliminar() {
-
-        botonEliminarHabitacion = (FloatingActionButton) findViewById(R.id.eliminar_artefacto_boton);
-        botonEliminarHabitacion.setSize(FloatingActionButton.SIZE_NORMAL);
-        botonEliminarHabitacion.setColorNormalResId(R.color.gris);
-        botonEliminarHabitacion.setColorPressedResId(R.color.azul);
-        botonEliminarHabitacion.setIcon(R.drawable.icono_quitar);
-        botonEliminarHabitacion.setOnClickListener(agregarArtefactoListener);
     }
 
     /**
@@ -162,6 +152,7 @@ public class ArtefactosActivity extends Activity {
         alertDialog.setMessage(R.string.nombre_artefacto);
 
         final EditText editText = new EditText(this);
+        editText.setGravity(Gravity.CENTER);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
@@ -175,18 +166,26 @@ public class ArtefactosActivity extends Activity {
 
                         String nombreArtefacto = editText.getText().toString();
 
-                        if (!nombreArtefacto.isEmpty()) {
-
-                            Artefacto artefacto = new Artefacto(nombreArtefacto);
-                            ControladorBaseDatos.agregarArtefacto(idHabitacion, artefacto);
-
-                            inicializarListaArtefactosPorHabitacion();
-                            inicializarListViewArtefactos();
-
-                        } else {
+                        if (nombreArtefacto.isEmpty()) {
 
                             escribirNombreArtefacto();
                             Toast.makeText(ArtefactosActivity.this, getString(R.string.nombre_vacio), Toast.LENGTH_SHORT).show();
+
+                        } else {
+
+                            if (nombreArtefactoDisponible(nombreArtefacto)) {
+
+                                Artefacto artefacto = new Artefacto(nombreArtefacto);
+
+                                ControladorBaseDatos.agregarArtefacto(idHabitacion, artefacto);
+
+                                inicializarListaArtefactosPorHabitacion();
+                                inicializarListViewArtefactos();
+
+                            } else {
+
+                                Toast.makeText(ArtefactosActivity.this, getString(R.string.artefacto_existente), Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 });
@@ -199,5 +198,23 @@ public class ArtefactosActivity extends Activity {
                 });
 
         alertDialog.show();
+    }
+
+    private boolean nombreArtefactoDisponible(String nombre) {
+
+        boolean nombreDisponible = true;
+
+        if (artefactos.size() > 0) {
+
+            for (Artefacto artefacto : artefactos) {
+
+                if (nombre.equals(artefacto.getNombre())) {
+
+                    nombreDisponible = false;
+                }
+            }
+        }
+
+        return nombreDisponible;
     }
 }

@@ -64,7 +64,7 @@ public class ConfiguracionActivity extends ActionBarActivity {
                 if (baseLlena()) {
 
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(ConfiguracionActivity.this);
-                    alertDialog.setTitle(R.string.nueva_habitacion);
+                    alertDialog.setTitle(R.string.eliminar_datos_bd);
                     alertDialog.setMessage(R.string.nombre_habitacion);
                     alertDialog.setMessage(R.string.mensaje_confirmacion);
 
@@ -92,7 +92,7 @@ public class ConfiguracionActivity extends ActionBarActivity {
             }
         });
 
-        // Comportamiento boton español
+        // Comportamiento boton espaÃ±ol
         bEspanol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

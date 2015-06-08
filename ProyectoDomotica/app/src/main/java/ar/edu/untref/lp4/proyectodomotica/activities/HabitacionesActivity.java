@@ -100,6 +100,7 @@ public class HabitacionesActivity extends Activity {
         botonAgregarHabitacion.setOnClickListener(agregarHabitacionListener);
     }
 
+
     /**
      * Crea el Menu con sus diferentes opciones
      */
@@ -262,14 +263,44 @@ public class HabitacionesActivity extends Activity {
             }
         });
 
+        gridview.setLongClickable(true);
         gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                escribirNombreHabitacion();
+                borrarHabitacion((Habitacion) gridview.getItemAtPosition(position));
                 return true;
             }
         });
+    }
+
+    private void borrarHabitacion(final Habitacion habitacion) {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle(getString(R.string.eliminar_habitacion_titulo));
+        alertDialog.setMessage(getString(R.string.eliminar_habitacion_mensaje));
+
+
+        alertDialog.setPositiveButton(getString(R.string.aceptar),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        controladorBaseDatos.eliminarHabitacion(habitacion);
+                        inicializarListaHabitaciones();
+                        inicializarGridViewHabitaciones();
+
+                    }
+                });
+
+        alertDialog.setNegativeButton(getString(R.string.cancelar),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialog.show();
+
     }
 
     private void abrirArtefactosActivity(Habitacion habitacion) {
@@ -326,6 +357,7 @@ public class HabitacionesActivity extends Activity {
             escribirNombreHabitacion();
         }
     };
+
 
     private void escribirNombreHabitacion() {
 

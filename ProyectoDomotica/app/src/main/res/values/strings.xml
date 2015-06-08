@@ -38,13 +38,13 @@
 
     <string name="idioma">Idioma</string>
     <string name="vaciar_habitacion">- Vaciar Datos</string>
-    <string name="domotica">- Domótica</string>
+    <string name="domotica" translatable="false">- Domótica</string>
     <string name="informacion">Información</string>
     <string name="espanol">Español</string>
     <string name="ingles">Ingles</string>
     <string name="configuracion">Configuración</string>
     <string name="mensaje_domotica">Se llama domótica al conjunto de sistemas capaces de automatizar una vivienda, aportando servicios de gestión energética, seguridad, bienestar y comunicación, y que pueden estar integrados por medio de redes interiores y exteriores de comunicación, cableadas o inalámbricas, y cuyo control goza de cierta ubicuidad, desde dentro y fuera del hogar. Se podría definir como la integración de la tecnología en el diseño inteligente de un recinto cerrado.</string>
-
+    <string name="datos_bd">Los datos han sido eliminados</string>
 
 
 </resources>

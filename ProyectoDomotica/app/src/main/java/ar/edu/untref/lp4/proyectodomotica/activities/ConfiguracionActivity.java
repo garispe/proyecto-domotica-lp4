@@ -1,25 +1,14 @@
 package ar.edu.untref.lp4.proyectodomotica.activities;
 
 import android.content.DialogInterface;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.util.Locale;
-
-import ar.edu.untref.lp4.proyectodomotica.BuildConfig;
 import ar.edu.untref.lp4.proyectodomotica.R;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBaseDatos;
-import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
 
 public class ConfiguracionActivity extends ActionBarActivity {
 
@@ -27,8 +16,7 @@ public class ConfiguracionActivity extends ActionBarActivity {
     private ImageButton bDomotica;
     private ImageButton bEspanol;
     private ImageButton bIngles;
-
-    private boolean tachoLleno = false;
+    private boolean lleno = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +32,8 @@ public class ConfiguracionActivity extends ActionBarActivity {
         bIngles.setImageResource(R.drawable.bandera_ing);
         bVaciarBD.setImageResource(R.drawable.tacho);
         bDomotica.setImageResource(R.drawable.info_domotica);
+
+        baseLlena();
 
         bDomotica.setOnClickListener(new View.OnClickListener() {
 
@@ -68,16 +58,13 @@ public class ConfiguracionActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                // Borra la base de datos y cambia la imagen
-                if (!tachoLleno) {
+                if (baseLlena()) {
 
-                    bVaciarBD.setImageResource(R.drawable.tacho_lleno);
-                    tachoLleno = true;
-
-                } else {
-
+                    ControladorBaseDatos.limpiarBD();
                     bVaciarBD.setImageResource(R.drawable.tacho);
-                    tachoLleno = false;
+                    lleno = false;
+                    Toast.makeText(ConfiguracionActivity.this, R.string.datos_bd, Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -98,6 +85,24 @@ public class ConfiguracionActivity extends ActionBarActivity {
                 Toast.makeText(ConfiguracionActivity.this, "Proximamente lenguaje en ingles", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    // Consulta si hay alguna habitacion agregada
+    private boolean baseLlena() {
+
+        if (ControladorBaseDatos.getTodasHabitaciones().size() > 0) {
+
+            bVaciarBD.setImageResource(R.drawable.tacho_lleno);
+            lleno = true;
+
+        } else {
+
+            bVaciarBD.setImageResource(R.drawable.tacho);
+            lleno = false;
+        }
+
+        return lleno;
+
     }
 
     @Override

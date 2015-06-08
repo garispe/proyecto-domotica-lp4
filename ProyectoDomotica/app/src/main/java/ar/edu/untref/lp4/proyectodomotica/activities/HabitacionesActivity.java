@@ -44,7 +44,6 @@ public class HabitacionesActivity extends Activity {
     private ProgressDialog progressDialog;
     private TextView textoConexion;
     private FloatingActionButton botonAgregarHabitacion;
-    private FloatingActionButton botonEliminarHabitacion;
 
     private GridHabitacionesAdapter adapter;
     private GridView gridview;

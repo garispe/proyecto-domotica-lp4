@@ -24,6 +24,7 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
     private Context context;
     private List<Artefacto> artefactos;
     private ControladorBluetooth controladorBluetooth = ControladorBluetooth.getInstance();
+    private boolean estaConectado = false;
 
     public ListViewArtefactosAdapter(Context context, List<Artefacto> artefactos) {
 
@@ -76,11 +77,13 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
         if (controladorBluetooth.estaConectado()) {
 
             viewHolder.switchArtefacto.setEnabled(true);
+            this.estaConectado = true;
 
         } else {
 
             viewHolder.switchArtefacto.setEnabled(false);
-            Toast.makeText(context, context.getString(R.string.verificar_conexion), Toast.LENGTH_SHORT).show();
+            this.estaConectado = false;
+
         }
 
         viewHolder.switchArtefacto.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +107,11 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
         );
 
         return convertView;
+    }
+
+    public boolean getEstaConectado(){
+
+        return this.estaConectado;
     }
 
     private class ViewHolder {

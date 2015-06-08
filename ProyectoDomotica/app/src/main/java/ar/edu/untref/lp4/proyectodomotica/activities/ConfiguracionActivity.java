@@ -1,14 +1,19 @@
 package ar.edu.untref.lp4.proyectodomotica.activities;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import ar.edu.untref.lp4.proyectodomotica.R;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBaseDatos;
+import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
 
 public class ConfiguracionActivity extends ActionBarActivity {
 
@@ -60,11 +65,31 @@ public class ConfiguracionActivity extends ActionBarActivity {
 
                 if (baseLlena()) {
 
-                    ControladorBaseDatos.limpiarBD();
-                    bVaciarBD.setImageResource(R.drawable.tacho);
-                    lleno = false;
-                    Toast.makeText(ConfiguracionActivity.this, R.string.datos_bd, Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(ConfiguracionActivity.this);
+                    alertDialog.setTitle(R.string.nueva_habitacion);
+                    alertDialog.setMessage(R.string.nombre_habitacion);
+                    alertDialog.setMessage(R.string.mensaje_confirmacion);
 
+                    alertDialog.setPositiveButton(getString(R.string.aceptar),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    ControladorBaseDatos.limpiarBD();
+                                    bVaciarBD.setImageResource(R.drawable.tacho);
+                                    lleno = false;
+                                    Toast.makeText(ConfiguracionActivity.this, R.string.datos_bd, Toast.LENGTH_SHORT).show();
+
+                                }
+                            });
+
+                    alertDialog.setNegativeButton(getString(R.string.cancelar),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    alertDialog.show();
                 }
             }
         });

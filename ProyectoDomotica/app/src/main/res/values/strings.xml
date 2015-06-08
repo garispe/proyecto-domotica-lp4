@@ -44,7 +44,8 @@
     <string name="ingles">Inglés</string>
     <string name="configuracion">Configuración</string>
     <string name="mensaje_domotica">Se llama domótica al conjunto de sistemas capaces de automatizar una vivienda, aportando servicios de gestión energética, seguridad, bienestar y comunicación, y que pueden estar integrados por medio de redes interiores y exteriores de comunicación, cableadas o inalámbricas, y cuyo control goza de cierta ubicuidad, desde dentro y fuera del hogar. Se podría definir como la integración de la tecnología en el diseño inteligente de un recinto cerrado.</string>
-    <string name="datos_bd">Los datos han sido eliminados</string>
+    <string name="datos_bd">Los datos han sido eliminados correctamente</string>
+    <string name="mensaje_confirmacion">¿Está seguro que quiere eliminar todos los datos?</string>
 
 
 </resources>

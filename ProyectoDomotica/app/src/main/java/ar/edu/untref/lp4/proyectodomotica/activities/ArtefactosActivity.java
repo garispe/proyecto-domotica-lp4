@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -36,7 +35,6 @@ public class ArtefactosActivity extends Activity {
     private ListViewArtefactosAdapter artefactosAdapter;
 
     private FloatingActionButton botonAgregarHabitacion;
-    private FloatingActionButton botonEliminarHabitacion;
     public static String nombreHabitacion;
     private int idHabitacion;
 
@@ -63,6 +61,12 @@ public class ArtefactosActivity extends Activity {
 
         bd = new BaseDatos(this, Constantes.NOMBRE_BD, null, Constantes.VERSION_BD);
         controladorBaseDatos = new ControladorBaseDatos(bd);
+
+        if (!artefactosAdapter.getEstaConectado()) {
+
+            Toast.makeText(ArtefactosActivity.this, ArtefactosActivity.this.getString(R.string.verificar_conexion), Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     private void inicializarBotonAgregar() {

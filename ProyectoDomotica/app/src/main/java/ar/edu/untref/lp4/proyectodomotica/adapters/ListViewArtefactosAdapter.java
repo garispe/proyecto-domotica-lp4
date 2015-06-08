@@ -57,7 +57,6 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
 
             convertView = LayoutInflater.from(context).inflate(R.layout.item_list_artefactos, null);
             viewHolder.texto = (TextView) convertView.findViewById(R.id.item_text);
-//            viewHolder.boton = (ImageButton) convertView.findViewById(R.id.item_boton);
             viewHolder.switchArtefacto = (Switch) convertView.findViewById(R.id.switch_artefacto);
 
             convertView.setTag(viewHolder);
@@ -107,26 +106,9 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private void setEstadoImagen(Artefacto artefacto, ImageButton boton) {
-
-        int imagen;
-
-        if (artefacto.isActivo()) {
-
-            imagen = R.drawable.imagen_on;
-            boton.setImageResource(imagen);
-
-        } else {
-
-            imagen = R.drawable.imagen_off;
-            boton.setImageResource(imagen);
-        }
-    }
-
     private class ViewHolder {
 
         TextView texto;
-        ImageButton boton;
         Switch switchArtefacto;
     }
 }

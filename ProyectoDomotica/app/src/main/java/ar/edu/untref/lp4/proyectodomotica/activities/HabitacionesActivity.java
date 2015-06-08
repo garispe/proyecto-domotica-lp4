@@ -19,6 +19,7 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import ar.edu.untref.lp4.proyectodomotica.BuildConfig;
@@ -331,13 +332,7 @@ public class HabitacionesActivity extends Activity {
         @Override
         public void onClick(View v) {
 
-            escribirNombreHabitacion();
-
-//            for (Habitacion hb : bd.getTodasHabitaciones()) {
-//
-//                String log = "Id: " + hb.getId() + " ,Nombre: " + hb.getNombre();
-//                Logger.e("Nombre: " + log);
-//            }
+            escribirNombreHabitacion(getString(R.string.nueva_habitacion));
         }
     };
 
@@ -345,15 +340,46 @@ public class HabitacionesActivity extends Activity {
         @Override
         public void onClick(View v) {
 
-
+            //mensaje();
+            escribirNombreHabitacion(getString(R.string.eliminar_habitacion));
 
         }
     };
 
-    private void escribirNombreHabitacion() {
+    private void mensaje() {
+        Toast.makeText(HabitacionesActivity.this, getString(R.string.proximamente), Toast.LENGTH_SHORT).show();
+    }
+
+    private void agregarHabitacion (String nombreHabitacion) {
+        Habitacion habitacion = new Habitacion(nombreHabitacion);
+
+        controladorBaseDatos.agregarHabitacion(habitacion);
+
+        inicializarListaHabitaciones();
+        inicializarGridViewHabitaciones();
+    }
+
+    private void eliminarHabitacion (String nombreHabitacion) {
+
+        if (habitaciones.size() > 0) {
+
+            for (Habitacion habitacion : habitaciones) {
+
+                if (nombreHabitacion.equals(habitacion.getNombre())) {
+
+                    controladorBaseDatos.eliminarHabitacion(habitacion);
+                }
+            }
+        }
+        inicializarListaHabitaciones();
+        inicializarGridViewHabitaciones();
+
+    }
+
+    private void escribirNombreHabitacion(final String titulo) {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle(R.string.nueva_habitacion);
+        alertDialog.setTitle(titulo);
         alertDialog.setMessage(R.string.nombre_habitacion);
 
         final EditText editText = new EditText(this);
@@ -372,43 +398,30 @@ public class HabitacionesActivity extends Activity {
 
                         if (nombreHabitacion.isEmpty()) {
 
-                            escribirNombreHabitacion();
+                            escribirNombreHabitacion(titulo);
                             Toast.makeText(HabitacionesActivity.this, getString(R.string.nombre_vacio), Toast.LENGTH_SHORT).show();
 
                         } else {
 
-                            if (nombreHabitacionDisponible(nombreHabitacion)) {
+                            if (nombreHabitacionDisponible(nombreHabitacion) && (getString(R.string.nueva_habitacion) == titulo)) {
 
-                                Habitacion habitacion = new Habitacion(nombreHabitacion);
-
-                                controladorBaseDatos.agregarHabitacion(habitacion);
-
-                                inicializarListaHabitaciones();
-                                inicializarGridViewHabitaciones();
+                                agregarHabitacion(nombreHabitacion);
 
                             } else {
 
-                                escribirNombreHabitacion();
-                                Toast.makeText(HabitacionesActivity.this, getString(R.string.habitacion_existente), Toast.LENGTH_SHORT).show();
+                                if (getString(R.string.eliminar_habitacion) == titulo) {
+
+                                    eliminarHabitacion(nombreHabitacion);
+
+                                } else {
+
+                                    escribirNombreHabitacion(titulo);
+                                    Toast.makeText(HabitacionesActivity.this, getString(R.string.habitacion_existente), Toast.LENGTH_SHORT).show();
+                                }
 
                             }
 
                         }
-/*
-                        if (nombreHabitacionDisponible(nombreHabitacion)) {
-
-                            Habitacion habitacion = new Habitacion(nombreHabitacion);
-
-                            controladorBaseDatos.agregarHabitacion(habitacion);
-
-                            inicializarListaHabitaciones();
-                            inicializarGridViewHabitaciones();
-
-                        } else {
-
-                            Toast.makeText(HabitacionesActivity.this, getString(R.string.habitacion_existente), Toast.LENGTH_SHORT).show();
-                        }
-*/
                     }
                 });
 

@@ -29,6 +29,7 @@
     <string name="aceptar">Aceptar</string>
     <string name="cancelar">Cancelar</string>
     <string name="nueva_habitacion">Nueva Habitacion</string>
+    <string name="eliminar_habitacion">Eliminar Habitacion</string>
     <string name="nombre_habitacion">Escriba el nombre de la habitacion</string>
     <string name="nuevo_artefacto">Nuevo Artefacto</string>
     <string name="nombre_vacio">Ingrese un nombre</string>

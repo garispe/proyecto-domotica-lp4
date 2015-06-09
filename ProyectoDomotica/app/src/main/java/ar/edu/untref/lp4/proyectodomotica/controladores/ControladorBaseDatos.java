@@ -234,7 +234,6 @@ public class ControladorBaseDatos {
     public static void actualizarEstadoArtefacto(Artefacto artefacto) {
 
         db = baseDatos.getWritableDatabase();
-
         ContentValues values = new ContentValues();
 
         int idArtefacto = getArtefactoId(artefacto);
@@ -256,7 +255,39 @@ public class ControladorBaseDatos {
         }
 
         db.close();
+    }
 
+    public static void actualizarEstadoHabitacion(Habitacion habitacion) {
+
+        db = baseDatos.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        int idHabitacion = getHabitacionId(habitacion);
+
+        values.put(Constantes.NOMBRE_HABITACION, habitacion.getNombre());
+
+        if (idHabitacion != -1) {
+
+            String where = Constantes.ID_HABITACION + "=" + idHabitacion;
+
+            db.update(Constantes.TABLA_HABITACIONES, values, where, null);
+        }
+
+        db.close();
+
+    }
+
+    private static int getHabitacionId(Habitacion habitacion) {
+
+        Cursor c = db.rawQuery("SELECT " + Constantes.ID_HABITACION + " FROM " + Constantes.TABLA_HABITACIONES
+                + " WHERE " + Constantes.ID_HABITACION + " = " + habitacion.getId(), null);
+
+        if (c.moveToFirst()) {
+
+            return c.getInt(c.getColumnIndex(Constantes.ID_ARTEFACTO));
+        }
+
+        return -1;
     }
 
     /**

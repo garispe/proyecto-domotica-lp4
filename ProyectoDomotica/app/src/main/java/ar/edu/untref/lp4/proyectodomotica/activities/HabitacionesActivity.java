@@ -325,6 +325,8 @@ public class HabitacionesActivity extends Activity {
 
                             habitacion.setNombre(nombreHabitacion);
 
+                            controladorBaseDatos.actualizarEstadoHabitacion(habitacion);
+
                             inicializarListaHabitaciones();
                             inicializarGridViewHabitaciones();
 

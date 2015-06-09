@@ -37,4 +37,14 @@
     <string name="verificar_conexion">Check your connection and try again</string>
     <string name="mensaje_confirmacion">Are you sure you want to delete all data?</string>
     <string name="titulo_dialogo_encendido">Bluetooth disabled</string>
+    <string name="eliminar">Remove</string>
+    <string name="editar">Change name</string>
+    <string name="apagar_todo">Switch off all</string>
+    <string name="eliminar_artefacto_mensaje">Are you sure you want to delete this device?</string>
+    <string name="eliminar_artefacto_titulo">Removing device...</string>
+    <string name="eliminar_datos_bd">Removing data...</string>
+    <string name="eliminar_habitacion_mensaje">Are you sure you want to delete this room?</string>
+    <string name="eliminar_habitacion_titulo">Removing toom...</string>
+    <string name="nuevo_nombre_habitacion">Type the new name of the room</string>
+    <string name="opcion">Options</string>
 </resources>

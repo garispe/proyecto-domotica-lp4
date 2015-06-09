@@ -51,10 +51,10 @@
     <string name="eliminar_habitacion_titulo">Eliminando habitación…</string>
     <string name="eliminar_habitacion_mensaje">¿Está seguro que desea eliminar esta habitación?</string>
     <string name="eliminar_artefacto_titulo">Eliminando artefacto…</string>
-    <string name="eliminar_artefacto_mensaje">¿Está seguro que desea eliminar este artefacto?</string>
+    <string name="eliminar_artefacto_mensaje">¿Está seguro que desea eliminar éste artefacto?</string>
     <string name="editar">Cambiar Nombre</string>
     <string name="eliminar">Eliminar</string>
-    <string name="apagar_todo">Apagar / Prender todo</string>
+    <string name="apagar_todo">Apagar todo</string>
     <string name="opcion">Opciones</string>
 
 

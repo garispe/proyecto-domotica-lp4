@@ -35,6 +35,7 @@
     <string name="nombre_artefacto">Escriba el nombre del artefacto</string>
     <string name="habitacion_existente">Ya existe una habitación con ese nombre</string>
     <string name="artefacto_existente">Ya existe un artefacto con ese nombre</string>
+    <string name="nuevo_nombre_habitacion">Escriba el nuevo nombre de la habitación</string>
 
     <string name="idioma">Idioma</string>
     <string name="vaciar_habitacion">- Vaciar Datos</string>
@@ -51,6 +52,10 @@
     <string name="eliminar_habitacion_mensaje">¿Está seguro que desea eliminar esta habitación?</string>
     <string name="eliminar_artefacto_titulo">Eliminando artefacto…</string>
     <string name="eliminar_artefacto_mensaje">¿Está seguro que desea eliminar este artefacto?</string>
+    <string name="editar">Cambiar Nombre</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="apagar_todo">Apagar / Prender todo</string>
+    <string name="opcion">Opciones</string>
 
 
 </resources>

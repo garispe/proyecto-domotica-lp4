@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cocosw.bottomsheet.BottomSheet;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.orhanobut.logger.Logger;
 
@@ -271,13 +272,81 @@ public class HabitacionesActivity extends Activity {
         gridview.setLongClickable(true);
         gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                borrarHabitacion((Habitacion) gridview.getItemAtPosition(position));
+                final int pos = position;
+
+                new BottomSheet.Builder(HabitacionesActivity.this).title(R.string.opcion).sheet(R.menu.menu_editar).listener(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+
+                            case R.id.eliminar:
+                                borrarHabitacion((Habitacion) gridview.getItemAtPosition(pos));
+                                break;
+
+                            case R.id.editar:
+                                editarHabitacion((Habitacion) gridview.getItemAtPosition(pos));
+                                break;
+
+                            case R.id.apagar:
+                                Toast.makeText(HabitacionesActivity.this, "Apaga todos los componentes", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    }
+                }).show();
                 return true;
             }
         });
     }
+
+    private void editarHabitacion(final Habitacion habitacion) {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle(R.string.editar);
+        alertDialog.setMessage(R.string.nuevo_nombre_habitacion);
+
+        final EditText editText = new EditText(this);
+        editText.setGravity(Gravity.CENTER);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+
+        editText.setLayoutParams(lp);
+        alertDialog.setView(editText);
+
+        alertDialog.setPositiveButton(getString(R.string.aceptar),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        String nombreHabitacion = editText.getText().toString();
+
+                        if (nombreHabitacionDisponible(nombreHabitacion)) {
+
+                            habitacion.setNombre(nombreHabitacion);
+
+                            inicializarListaHabitaciones();
+                            inicializarGridViewHabitaciones();
+
+                        } else {
+
+                            escribirNombreHabitacion();
+                            Toast.makeText(HabitacionesActivity.this, getString(R.string.habitacion_existente), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+        alertDialog.setNegativeButton(getString(R.string.cancelar),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialog.show();
+
+    }
+
 
     private void borrarHabitacion(final Habitacion habitacion) {
 

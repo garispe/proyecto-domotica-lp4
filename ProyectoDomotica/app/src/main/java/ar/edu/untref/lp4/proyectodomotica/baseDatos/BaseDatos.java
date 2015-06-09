@@ -21,7 +21,8 @@ public class BaseDatos extends SQLiteOpenHelper {
 
         String CREAR_TABLA_ARTEFACTO = "CREATE TABLE " + Constantes.TABLA_ARTEFACTOS + "("
                 + Constantes.ID_ARTEFACTO + " INTEGER PRIMARY KEY AUTOINCREMENT, " + Constantes.NOMBRE_ARTEFACTO
-                + " TEXT, " + Constantes.ESTADO + " INTEGER, " + Constantes.FK_HABITACION + " INTEGER" + ")";
+                + " TEXT, " + Constantes.ESTADO + " INTEGER, " + Constantes.FK_HABITACION + " INTEGER, "
+                +  Constantes.ID_PIN + " INTEGER )";
 
         db.execSQL(CREAR_TABLA_HABITACION);
         db.execSQL(CREAR_TABLA_ARTEFACTO);

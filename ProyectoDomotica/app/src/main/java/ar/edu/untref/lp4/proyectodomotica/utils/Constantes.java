@@ -4,7 +4,7 @@ public class Constantes {
 
     // Nombre de la Base de Datos
     public static final String NOMBRE_BD = "DOMUNTREF";
-    public static final int VERSION_BD = 3;
+    public static final int VERSION_BD = 4;
 
 
     // HABITACIONES

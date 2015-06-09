@@ -28,8 +28,6 @@ import ar.edu.untref.lp4.proyectodomotica.utils.Constantes;
 public class ArtefactosActivity extends Activity {
 
     private static final String TAG = ArtefactosActivity.class.getSimpleName();
-    private static final String ID_HABITACION = "id_habitacion";
-    public static final String NOMBRE_HABITACION = "nombre_habitacion";
 
     private List<Artefacto> artefactos;
     private ListViewArtefactosAdapter artefactosAdapter;
@@ -47,9 +45,9 @@ public class ArtefactosActivity extends Activity {
 
         Logger.init(TAG);
 
-        nombreHabitacion = getIntent().getExtras().getString(NOMBRE_HABITACION);
+        nombreHabitacion = getIntent().getExtras().getString(Constantes.NOMBRE_HABITACION);
 
-        idHabitacion = getIntent().getExtras().getInt(ID_HABITACION);
+        idHabitacion = getIntent().getExtras().getInt(Constantes.ID_HABITACION);
 
         TextView habitacion = (TextView) findViewById(R.id.nombre_habitacion);
         habitacion.setText(nombreHabitacion);

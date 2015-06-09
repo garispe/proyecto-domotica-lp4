@@ -31,4 +31,7 @@ dependencies {
 
     //Floating Button
     compile 'com.getbase:floatingactionbutton:1.9.0'
+
+    // Bottom Sheet
+    compile 'com.cocosw:bottomsheet:1.+@aar'
 }

@@ -1,52 +1,62 @@
 #include <SoftwareSerial.h>
 
-SoftwareSerial BT(10, 11); // Receptor, Tramsmisor.
+SoftwareSerial BT(12, 13); // Receptor, Tramsmisor.
+int pin;
+int dato;
 
 void setup(){
 
-  pinMode(13, OUTPUT); // Se utiliza para pruebas.
-
-  /*
-  
-  Serial se utiliza para debug.
-  El Pin 9 para configuracion.
-  
-  */
-
   pinMode(9, OUTPUT); // Se utiliza para configuracion del modulo a traves de comandos AT.
   digitalWrite(9, HIGH);
-
+  
   Serial.begin(9600);
-  Serial.println("Ingrese comando AT:");
-
+  
   BT.begin(9600); // Se utiliza esta velocidad para recibir bien los caracteres enviados desde el telefono.
 }
-
+  
 void loop() {
-
+  
   if (BT.available()) {
-
-    char dato = BT.read();
-    Serial.println(dato);
-    delay(5);
-
-    switch(dato){
-
-    case '0':
-      digitalWrite(13, LOW);
-      break; 
-
-    case '1':
-      digitalWrite(13, HIGH);
-      break;
-
-    default:
-      Serial.println("Comando incorrecto");
-      break;
-    }
+  
+  procesarDatos();
+  prenderLed(pin, dato);
+  
   }
 }
 
+void procesarDatos(){
+
+  int decena = BT.read();
+  delay(5);
+  
+  int unidad = BT.read();
+  delay(5);
+  
+  dato = BT.read();
+  delay(5);
+  
+  decena = decena - 48;
+  unidad = unidad - 48;
+  dato = dato - 48;
+
+  pin = (decena*10) + unidad;
+}
 
 
+void prenderLed(int pin, int dato){
 
+  switch(dato){
+  
+    case 0:
+    digitalWrite(pin, LOW);
+    break;
+    
+    case 1:
+    digitalWrite(pin, HIGH);
+    break;
+    
+    default:
+    Serial.println("Comando incorrecto");
+    break;
+  }
+}

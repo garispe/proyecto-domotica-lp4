@@ -36,8 +36,7 @@ import ar.edu.untref.lp4.proyectodomotica.utils.MenuFlotante;
 public class HabitacionesActivity extends Activity {
 
     private static final String TAG = HabitacionesActivity.class.getSimpleName();
-    private static final String ID_HABITACION = "id_habitacion";
-    private static final String NOMBRE_HABITACION = "nombre_habitacion";
+
     private ControladorBluetooth controladorBluetooth = ControladorBluetooth.getInstance();
     private long backPressed;
 
@@ -100,7 +99,6 @@ public class HabitacionesActivity extends Activity {
         botonAgregarHabitacion.setOnClickListener(agregarHabitacionListener);
     }
 
-
     /**
      * Crea el Menu con sus diferentes opciones
      */
@@ -108,17 +106,24 @@ public class HabitacionesActivity extends Activity {
 
         menu = new MenuFlotante(this);
 
-        //BOTON LOGOFF
-        menu.logoff.setClickable(true);
-        menu.logoff.setOnClickListener(new View.OnClickListener() {
+        //BOTON REFRESH
+        menu.refresh.setClickable(true);
+        menu.refresh.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 menu.botonAccionMenu.close(true);
-                Toast.makeText(getApplicationContext(), getString(R.string.proximamente), Toast.LENGTH_SHORT).show();
+
+                if (!controladorBluetooth.estaConectado()) {
+
+                    realizarConexion();
+
+                } else {
+
+                    Toast.makeText(HabitacionesActivity.this, "Ya se encuentra conectado", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
 
         //BOTON ACERCA DE
         menu.about.setClickable(true);
@@ -306,8 +311,8 @@ public class HabitacionesActivity extends Activity {
     private void abrirArtefactosActivity(Habitacion habitacion) {
 
         Intent intent = new Intent(HabitacionesActivity.this, ArtefactosActivity.class);
-        intent.putExtra(ID_HABITACION, habitacion.getId());
-        intent.putExtra(NOMBRE_HABITACION, habitacion.getNombre());
+        intent.putExtra(Constantes.ID_HABITACION, habitacion.getId());
+        intent.putExtra(Constantes.NOMBRE_HABITACION, habitacion.getNombre());
         startActivity(intent);
     }
 
@@ -357,7 +362,6 @@ public class HabitacionesActivity extends Activity {
             escribirNombreHabitacion();
         }
     };
-
 
     private void escribirNombreHabitacion() {
 

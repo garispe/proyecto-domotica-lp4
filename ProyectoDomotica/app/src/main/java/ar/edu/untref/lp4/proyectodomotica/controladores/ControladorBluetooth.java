@@ -43,7 +43,6 @@ public class ControladorBluetooth {
     public static ControladorBluetooth getInstance(){
 
         return instance;
-
     }
 
     public BluetoothAdapter getBluetoothAdapter(){

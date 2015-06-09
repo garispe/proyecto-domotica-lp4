@@ -1,17 +1,13 @@
 package ar.edu.untref.lp4.proyectodomotica.adapters;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -20,7 +16,6 @@ import ar.edu.untref.lp4.proyectodomotica.activities.ArtefactosActivity;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
-import ar.edu.untref.lp4.proyectodomotica.utils.DUPreferences;
 
 public class ListViewArtefactosAdapter extends BaseAdapter {
 

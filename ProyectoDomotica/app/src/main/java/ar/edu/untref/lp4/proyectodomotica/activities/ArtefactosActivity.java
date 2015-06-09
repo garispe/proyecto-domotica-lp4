@@ -64,8 +64,13 @@ public class ArtefactosActivity extends Activity {
 
                 Toast.makeText(ArtefactosActivity.this, ArtefactosActivity.this.getString(R.string.verificar_conexion), Toast.LENGTH_SHORT).show();
             }
-
         }
+    }
+
+    public void refresh(){
+
+        inicializarListaArtefactosPorHabitacion();
+        inicializarListViewArtefactos();
     }
 
     /**
@@ -112,32 +117,6 @@ public class ArtefactosActivity extends Activity {
         }
     };
 
-    private void borrarArtefacto(final Artefacto artefacto) {
-
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle(getString(R.string.eliminar_artefacto_titulo));
-        alertDialog.setMessage(getString(R.string.eliminar_artefacto_mensaje));
-
-
-        alertDialog.setPositiveButton(getString(R.string.aceptar),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        ControladorBaseDatos.eliminarArtefacto(artefacto);
-
-                    }
-                });
-
-        alertDialog.setNegativeButton(getString(R.string.cancelar),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-        alertDialog.show();
-    }
-
     private void escribirNombreArtefacto() {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -172,8 +151,7 @@ public class ArtefactosActivity extends Activity {
 
                                 ControladorBaseDatos.agregarArtefacto(idHabitacion, artefacto);
 
-                                inicializarListaArtefactosPorHabitacion();
-                                inicializarListViewArtefactos();
+                                refresh();
 
                             } else {
 

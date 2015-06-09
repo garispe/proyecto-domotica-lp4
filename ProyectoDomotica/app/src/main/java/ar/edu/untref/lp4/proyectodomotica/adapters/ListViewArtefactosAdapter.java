@@ -1,6 +1,8 @@
 package ar.edu.untref.lp4.proyectodomotica.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,20 +17,21 @@ import java.util.List;
 
 import ar.edu.untref.lp4.proyectodomotica.R;
 import ar.edu.untref.lp4.proyectodomotica.activities.ArtefactosActivity;
+import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
 import ar.edu.untref.lp4.proyectodomotica.utils.DUPreferences;
 
 public class ListViewArtefactosAdapter extends BaseAdapter {
 
-    private Context context;
+    private ArtefactosActivity artefactosActivity;
     private List<Artefacto> artefactos;
     private ControladorBluetooth controladorBluetooth = ControladorBluetooth.getInstance();
     private boolean estaConectado = false;
 
-    public ListViewArtefactosAdapter(Context context, List<Artefacto> artefactos) {
+    public ListViewArtefactosAdapter(ArtefactosActivity artefactosActivity, List<Artefacto> artefactos) {
 
-        this.context = context;
+        this.artefactosActivity = artefactosActivity;
         this.artefactos = artefactos;
     }
 
@@ -56,7 +59,7 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
 
             viewHolder = new ViewHolder();
 
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_list_artefactos, null);
+            convertView = LayoutInflater.from(artefactosActivity).inflate(R.layout.item_list_artefactos, null);
             viewHolder.texto = (TextView) convertView.findViewById(R.id.item_text);
             viewHolder.switchArtefacto = (Switch) convertView.findViewById(R.id.switch_artefacto);
 
@@ -70,8 +73,16 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
         final Artefacto artefacto = getItem(position);
 
         viewHolder.texto.setText(artefacto.getNombre());
+        viewHolder.texto.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
 
-        boolean estadoAlmacenado = DUPreferences.getBoolean(context, ArtefactosActivity.nombreHabitacion + "_" + artefacto.getNombre(), false);
+                borrarArtefacto(artefacto);
+                return true;
+            }
+        });
+
+        boolean estadoAlmacenado = DUPreferences.getBoolean(artefactosActivity, ArtefactosActivity.nombreHabitacion + "_" + artefacto.getNombre(), false);
         viewHolder.switchArtefacto.setChecked(estadoAlmacenado);
 
         if (controladorBluetooth.estaConectado()) {
@@ -101,7 +112,7 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
 
                   artefacto.setActivo(viewHolder.switchArtefacto.isChecked());
 
-                  DUPreferences.guardarBoolean(context, ArtefactosActivity.nombreHabitacion + "_" + artefacto.getNombre(), artefacto.isActivo());
+                  DUPreferences.guardarBoolean(artefactosActivity, ArtefactosActivity.nombreHabitacion + "_" + artefacto.getNombre(), artefacto.isActivo());
               }
           }
         );
@@ -112,6 +123,32 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
     public boolean getEstaConectado(){
 
         return this.estaConectado;
+    }
+
+    private void borrarArtefacto(final Artefacto artefacto) {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(artefactosActivity);
+        alertDialog.setTitle(artefactosActivity.getString(R.string.eliminar_artefacto_titulo));
+        alertDialog.setMessage(artefactosActivity.getString(R.string.eliminar_artefacto_mensaje));
+
+
+        alertDialog.setPositiveButton(artefactosActivity.getString(R.string.aceptar),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        ControladorBaseDatos.eliminarArtefacto(artefacto);
+                        artefactosActivity.refresh();
+                    }
+                });
+
+        alertDialog.setNegativeButton(artefactosActivity.getString(R.string.cancelar),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialog.show();
     }
 
     private class ViewHolder {

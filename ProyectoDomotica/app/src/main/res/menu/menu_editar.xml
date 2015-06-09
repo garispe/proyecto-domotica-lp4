@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:id="@+id/editar" android:title="@string/editar" android:icon="@drawable/color_azul"/>
-    <item android:id="@+id/eliminar" android:title="@string/eliminar" android:icon="@drawable/color_gris"/>
-    <item android:id="@+id/apagar" android:title="@string/apagar_todo" android:icon="@drawable/color_rojo"/>
-
-</menu>

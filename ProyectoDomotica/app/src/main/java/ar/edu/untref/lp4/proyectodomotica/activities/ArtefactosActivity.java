@@ -39,7 +39,6 @@ public class ArtefactosActivity extends Activity {
     private int idHabitacion;
 
     private BaseDatos bd;
-    private ControladorBaseDatos controladorBaseDatos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +57,6 @@ public class ArtefactosActivity extends Activity {
         inicializarBotonAgregar();
         inicializarListaArtefactosPorHabitacion();
         inicializarListViewArtefactos();
-
-        bd = new BaseDatos(this, Constantes.NOMBRE_BD, null, Constantes.VERSION_BD);
-        controladorBaseDatos = new ControladorBaseDatos(bd);
 
         if (!artefactosAdapter.getEstaConectado()) {
 
@@ -119,15 +115,15 @@ public class ArtefactosActivity extends Activity {
     private void borrarArtefacto(final Artefacto artefacto) {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("Eliminacion");
-        alertDialog.setMessage("¿Desea borrar el artefacto?");
+        alertDialog.setTitle(getString(R.string.eliminar_artefacto_titulo));
+        alertDialog.setMessage(getString(R.string.eliminar_artefacto_mensaje));
 
 
         alertDialog.setPositiveButton(getString(R.string.aceptar),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
-//                        controladorBaseDatos.eliminarArtefacto(artefacto);
+                        ControladorBaseDatos.eliminarArtefacto(artefacto);
 
                     }
                 });

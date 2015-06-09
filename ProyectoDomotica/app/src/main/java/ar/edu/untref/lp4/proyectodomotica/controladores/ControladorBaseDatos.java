@@ -106,6 +106,18 @@ public class ControladorBaseDatos {
         db.close();
     }
 
+    /**
+     * Elimina el artefacto que se pasa por parametro.
+     */
+    public static void eliminarArtefacto(Artefacto artefacto) {
+
+        db = baseDatos.getWritableDatabase();
+
+        db.delete(Constantes.TABLA_ARTEFACTOS, Constantes.ID_ARTEFACTO + " = ?",
+                new String[]{String.valueOf(artefacto.getId())});
+
+        db.close();
+    }
 
     /**
      * Devuelve los artefactos correspodiente a la habitacion.

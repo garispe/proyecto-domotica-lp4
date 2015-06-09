@@ -44,7 +44,7 @@ public class ConfiguracionActivity extends ActionBarActivity {
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(ConfiguracionActivity.this);
                 builder.setMessage(R.string.mensaje_domotica)
                         .setTitle(getString(R.string.domotica))
-                        .setCancelable(false)
+                        .setCancelable(true)
                         .setNeutralButton(getString(R.string.entendido),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {

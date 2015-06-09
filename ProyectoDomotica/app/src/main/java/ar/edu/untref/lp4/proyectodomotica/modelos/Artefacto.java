@@ -5,6 +5,7 @@ public class Artefacto {
     private int id;
     private String nombre;
     private boolean activo;
+    private int idPin;
 
     public Artefacto() {
     }
@@ -23,6 +24,9 @@ public class Artefacto {
         return this.id;
     }
 
+    public int getIdPin() {
+        return idPin;
+    }
     public String getNombre() {
         return nombre;
     }
@@ -38,4 +42,6 @@ public class Artefacto {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+
+
 }

@@ -4,7 +4,7 @@ public class Constantes {
 
     // Nombre de la Base de Datos
     public static final String NOMBRE_BD = "DOMUNTREF";
-    public static final int VERSION_BD = 2;
+    public static final int VERSION_BD = 3;
 
 
     // HABITACIONES
@@ -22,6 +22,7 @@ public class Constantes {
     public static final String NOMBRE_ARTEFACTO = "nombre";
     public static final String ESTADO = "estado";
     public static final String FK_HABITACION = "id_habitacion";
+    public static final String ID_PIN = "id_pin";
 
     public static final String TABLA_ARTEFACTOS = "artefactos";
 }

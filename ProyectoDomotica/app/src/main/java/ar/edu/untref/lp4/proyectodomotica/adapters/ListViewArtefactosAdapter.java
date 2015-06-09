@@ -82,7 +82,7 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
             }
         });
 
-        boolean estadoAlmacenado = DUPreferences.getBoolean(artefactosActivity, ArtefactosActivity.nombreHabitacion + "_" + artefacto.getNombre(), false);
+        boolean estadoAlmacenado = ControladorBaseDatos.getEstadoArtefacto(artefacto);
         viewHolder.switchArtefacto.setChecked(estadoAlmacenado);
 
         if (controladorBluetooth.estaConectado()) {
@@ -101,18 +101,28 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
               @Override
               public void onClick(View v) {
 
+                  // FixMe:
+                  // ACA NO LEE BIEN LOS DATOS DEL getIdPin()
+                  Integer pin = artefacto.getIdPin();
+                  String dato = pin.toString();
+
+                  if(pin < 10){
+
+                      dato = "0" + dato;
+                  }
+
                   if(viewHolder.switchArtefacto.isChecked()){
 
-                      controladorBluetooth.enviarDato("0");
+                      controladorBluetooth.enviarDato(dato + "1");
 
                   } else {
 
-                      controladorBluetooth.enviarDato("1");
+                      controladorBluetooth.enviarDato(dato + "0");
                   }
 
                   artefacto.setActivo(viewHolder.switchArtefacto.isChecked());
 
-                  DUPreferences.guardarBoolean(artefactosActivity, ArtefactosActivity.nombreHabitacion + "_" + artefacto.getNombre(), artefacto.isActivo());
+                  ControladorBaseDatos.actualizarEstadoArtefacto(artefacto);
               }
           }
         );

@@ -4,15 +4,13 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.orhanobut.logger.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
-import ar.edu.untref.lp4.proyectodomotica.utils.Constantes;
 import ar.edu.untref.lp4.proyectodomotica.baseDatos.BaseDatos;
+import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
+import ar.edu.untref.lp4.proyectodomotica.utils.Constantes;
 
 public class ControladorBaseDatos {
 
@@ -169,8 +167,6 @@ public class ControladorBaseDatos {
 
         ContentValues values = new ContentValues();
 
-        int idArtefacto = getArtefactoId(artefacto);
-
         if (artefacto.isActivo()) {
 
             values.put(Constantes.ESTADO, 1);
@@ -180,23 +176,44 @@ public class ControladorBaseDatos {
             values.put(Constantes.ESTADO, 0);
         }
 
-        if (idArtefacto == -1) {
+        values.put(Constantes.NOMBRE_ARTEFACTO, artefacto.getNombre());
+        values.put(Constantes.FK_HABITACION, idHabitacion);
 
-            values.put(Constantes.NOMBRE_ARTEFACTO, artefacto.getNombre());
-            values.put(Constantes.FK_HABITACION, idHabitacion);
+        if (getArtefactosPorHabitacion(idHabitacion).size() > 0) {
 
-            db.insert(Constantes.TABLA_ARTEFACTOS, null, values);
+            values.put(Constantes.ID_PIN, getUltimoPin() + 1);
 
-        } else {
-
-            String where = Constantes.ID_ARTEFACTO + "=" + idArtefacto;
-
-            db.update(Constantes.TABLA_ARTEFACTOS, values, where, null);
         }
 
+        db.insert(Constantes.TABLA_ARTEFACTOS, null, values);
         db.close();
     }
 
+    private static int getUltimoPin() {
+
+        int pin = 0;
+        int max = 0;
+
+        Cursor c = db.rawQuery("SELECT " + Constantes.ID_PIN + " FROM "
+                + Constantes.TABLA_ARTEFACTOS, null);
+
+        if (c.moveToFirst()) {
+
+            while (c.moveToNext()) {
+
+                pin = c.getInt(c.getColumnIndex(Constantes.ID_PIN));
+
+                if (pin > max) {
+
+                    max = pin;
+                }
+            }
+        }
+
+        c.close();
+
+        return max;
+    }
 
     /**
      * Si el artefacto existe en la base de datos retorna su ID, de lo contrario, retorna -1.
@@ -214,6 +231,34 @@ public class ControladorBaseDatos {
         return -1;
     }
 
+    public static void actualizarEstadoArtefacto(Artefacto artefacto) {
+
+        db = baseDatos.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        int idArtefacto = getArtefactoId(artefacto);
+
+        if (artefacto.isActivo()) {
+
+            values.put(Constantes.ESTADO, 1);
+
+        } else {
+
+            values.put(Constantes.ESTADO, 0);
+        }
+
+        if (idArtefacto != -1) {
+
+            String where = Constantes.ID_ARTEFACTO + "=" + idArtefacto;
+
+            db.update(Constantes.TABLA_ARTEFACTOS, values, where, null);
+        }
+
+        db.close();
+
+    }
+
     /**
      * Limpia las tablas "habitaciones" y "artefactos".
      */
@@ -227,5 +272,24 @@ public class ControladorBaseDatos {
         db.close();
     }
 
-    
+    public static boolean getEstadoArtefacto(Artefacto artefacto) {
+
+        db = baseDatos.getWritableDatabase();
+
+        Cursor c = db.rawQuery("SELECT " + Constantes.ESTADO + " FROM " + Constantes.TABLA_ARTEFACTOS
+                + " WHERE " + Constantes.ID_ARTEFACTO + " = " + artefacto.getId(), null);
+
+        int estado;
+
+        if (c.moveToFirst()) {
+
+            estado = c.getInt(c.getColumnIndex(Constantes.ESTADO));
+
+            if (estado == 1) {
+
+                return true;
+            }
+        }
+        return false;
+    }
 }

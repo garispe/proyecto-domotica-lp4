@@ -57,10 +57,13 @@
     <string name="apagar_todo">Apagar todo</string>
     <string name="opcion">Opciones</string>
     <string name="nuevo_nombre_artefacto">Escriba el nuevo nombre del artefacto</string>
+    <string name="mensaje_showcase_habitacion">Ingresa a la habitación creada y agrega nuevos artefactos.\nMantené presionado en una habitación para obtener opciones de la misma.</string>
+    <string name="habitacion">Habitación</string>
+    <string name="agregar_habitacion">Agregar Habitación</string>
+    <string name="mensaje_agregar_habitacion_showcase">Agrega nuevas habitaciones adaptando DomUntref a tus necesidades</string>
     <string name="no_hay_artefactos">No contiene artefactos dentro de la habitacion</string>
     <string name="prender_todo">Prender todo</string>
-    <string name="artefactos_apagados">Todos los artefactos se han apagados</string>
+    <string name="artefactos_apagados">Todos los artefactos se han apagado</string>
     <string name="artefactos_encendidos">Todos los artefactos se han encendido</string>
-
 
 </resources>

@@ -53,5 +53,6 @@ public class ConexionTask extends AsyncTask<Void, Void, Void> {
         activity.inicializarListaHabitaciones();
         activity.quitarProgressBarConexion();
         activity.inicializarGridViewHabitaciones();
+        activity.mostrarShowcaseInicial();
     }
 }

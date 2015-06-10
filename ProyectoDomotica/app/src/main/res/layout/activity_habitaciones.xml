@@ -5,6 +5,15 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
+    <View
+        android:id="@+id/cuadro_showcase"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="60dp"
+        android:visibility="invisible" />
+
+
     <TextView
         android:id="@+id/texto_conexion"
         android:layout_width="match_parent"
@@ -32,7 +41,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        />
+        android:layout_alignParentRight="true" />
 
 </RelativeLayout>

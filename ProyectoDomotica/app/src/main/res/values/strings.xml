@@ -56,6 +56,7 @@
     <string name="eliminar">Eliminar</string>
     <string name="apagar_todo">Apagar todo</string>
     <string name="opcion">Opciones</string>
+    <string name="nuevo_nombre_artefacto">Escriba el nuevo nombre del artefacto</string>
 
 
 </resources>

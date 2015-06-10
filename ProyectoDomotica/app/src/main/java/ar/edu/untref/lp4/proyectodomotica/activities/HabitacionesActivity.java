@@ -276,7 +276,7 @@ public class HabitacionesActivity extends Activity {
 
                 final int pos = position;
 
-                new BottomSheet.Builder(HabitacionesActivity.this).title(R.string.opcion).sheet(R.menu.menu_opciones).listener(new DialogInterface.OnClickListener() {
+                new BottomSheet.Builder(HabitacionesActivity.this).title(R.string.opcion).sheet(R.menu.menu_opciones_habitacion).listener(new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
@@ -325,7 +325,7 @@ public class HabitacionesActivity extends Activity {
 
                             habitacion.setNombre(nombreHabitacion);
 
-                            controladorBaseDatos.actualizarEstadoHabitacion(habitacion);
+                            controladorBaseDatos.actualizarNombreHabitacion(habitacion);
 
                             inicializarListaHabitaciones();
                             inicializarGridViewHabitaciones();

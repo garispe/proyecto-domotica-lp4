@@ -257,7 +257,27 @@ public class ControladorBaseDatos {
         db.close();
     }
 
-    public static void actualizarEstadoHabitacion(Habitacion habitacion) {
+    public static void actualizarNombreArtefacto(Artefacto artefacto) {
+
+        db = baseDatos.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        int idArtefacto = getArtefactoId(artefacto);
+
+        values.put(Constantes.NOMBRE_ARTEFACTO, artefacto.getNombre());
+
+        if (idArtefacto != -1) {
+
+            String where = Constantes.ID_ARTEFACTO + "=" + idArtefacto;
+
+            db.update(Constantes.TABLA_ARTEFACTOS, values, where, null);
+        }
+
+        db.close();
+
+    }
+
+    public static void actualizarNombreHabitacion(Habitacion habitacion) {
 
         db = baseDatos.getWritableDatabase();
         ContentValues values = new ContentValues();

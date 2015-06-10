@@ -65,7 +65,7 @@ public class ArtefactosActivity extends Activity {
         }
     }
 
-    public void refresh(){
+    public void refresh() {
 
         inicializarListaArtefactosPorHabitacion();
         inicializarListViewArtefactos();
@@ -115,7 +115,7 @@ public class ArtefactosActivity extends Activity {
         }
     };
 
-    private void escribirNombreArtefacto() {
+    public void escribirNombreArtefacto() {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle(R.string.nuevo_artefacto);
@@ -170,7 +170,7 @@ public class ArtefactosActivity extends Activity {
         alertDialog.show();
     }
 
-    private boolean nombreArtefactoDisponible(String nombre) {
+    public boolean nombreArtefactoDisponible(String nombre) {
 
         boolean nombreDisponible = true;
 
@@ -186,5 +186,79 @@ public class ArtefactosActivity extends Activity {
         }
 
         return nombreDisponible;
+    }
+
+    public void borrarArtefacto(final Artefacto artefacto) {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle(getString(R.string.eliminar_artefacto_titulo));
+        alertDialog.setMessage(getString(R.string.eliminar_artefacto_mensaje));
+
+
+        alertDialog.setPositiveButton(getString(R.string.aceptar),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        ControladorBaseDatos.eliminarArtefacto(artefacto);
+                        refresh();
+                    }
+                });
+
+        alertDialog.setNegativeButton(getString(R.string.cancelar),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialog.show();
+    }
+
+    public void editarArtefacto(final Artefacto artefacto) {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle(R.string.editar);
+        alertDialog.setMessage(R.string.nuevo_nombre_artefacto);
+
+        final EditText editText = new EditText(this);
+        editText.setGravity(Gravity.CENTER);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+
+        editText.setLayoutParams(lp);
+        alertDialog.setView(editText);
+
+        alertDialog.setPositiveButton(getString(R.string.aceptar),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        String nombreArtefacto = editText.getText().toString();
+
+                        if (nombreArtefactoDisponible(nombreArtefacto)) {
+
+                            artefacto.setNombre(nombreArtefacto);
+
+                            ControladorBaseDatos.actualizarNombreArtefacto(artefacto);
+
+                            refresh();
+
+                        } else {
+
+                            escribirNombreArtefacto();
+                            Toast.makeText(ArtefactosActivity.this, getString(R.string.artefacto_existente), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+        alertDialog.setNegativeButton(getString(R.string.cancelar),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialog.show();
+
     }
 }

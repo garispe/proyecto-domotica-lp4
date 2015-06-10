@@ -34,7 +34,6 @@ public class GridHabitacionesAdapter extends BaseAdapter {
         return nombresHabitaciones.size();
     }
 
-    //modifique este metodo para que no devuelva null
     @Override
     public Object getItem(int position) {
         return nombresHabitaciones.get(position);

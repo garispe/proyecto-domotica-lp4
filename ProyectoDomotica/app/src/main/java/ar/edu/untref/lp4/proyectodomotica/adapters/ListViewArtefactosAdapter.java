@@ -1,6 +1,5 @@
 package ar.edu.untref.lp4.proyectodomotica.adapters;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import com.cocosw.bottomsheet.BottomSheet;
 
 import java.util.List;
 
@@ -72,7 +73,24 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
             @Override
             public boolean onLongClick(View v) {
 
-                borrarArtefacto(artefacto);
+                final int pos = position;
+
+                new BottomSheet.Builder(artefactosActivity).title(R.string.opcion).sheet(R.menu.menu_opciones_artefacto).listener(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+
+                            case R.id.eliminar:
+                                artefactosActivity.borrarArtefacto(artefacto);
+                                break;
+
+                            case R.id.editar:
+                                artefactosActivity.editarArtefacto(artefacto);
+                                break;
+                        }
+                    }
+                }).show();
+
                 return true;
             }
         });
@@ -93,68 +111,43 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
         }
 
         viewHolder.switchArtefacto.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
+                                                          @Override
+                                                          public void onClick(View v) {
 
-                  // FixMe:
-                  // ACA NO LEE BIEN LOS DATOS DEL getIdPin()
-                  Integer pin = artefacto.getIdPin();
-                  String dato = pin.toString();
+                                                              // FixMe:
+                                                              // ACA NO LEE BIEN LOS DATOS DEL getIdPin()
+                                                              Integer pin = artefacto.getIdPin();
+                                                              String dato = pin.toString();
 
-                  if(pin < 10){
+                                                              if (pin < 10) {
 
-                      dato = "0" + dato;
-                  }
+                                                                  dato = "0" + dato;
+                                                              }
 
-                  if(viewHolder.switchArtefacto.isChecked()){
+                                                              if (viewHolder.switchArtefacto.isChecked()) {
 
-                      controladorBluetooth.enviarDato(dato + "1");
+                                                                  controladorBluetooth.enviarDato(dato + "1");
 
-                  } else {
+                                                              } else {
 
-                      controladorBluetooth.enviarDato(dato + "0");
-                  }
+                                                                  controladorBluetooth.enviarDato(dato + "0");
+                                                              }
 
-                  artefacto.setActivo(viewHolder.switchArtefacto.isChecked());
+                                                              artefacto.setActivo(viewHolder.switchArtefacto.isChecked());
 
-                  ControladorBaseDatos.actualizarEstadoArtefacto(artefacto);
-              }
-          }
+                                                              ControladorBaseDatos.actualizarEstadoArtefacto(artefacto);
+                                                          }
+                                                      }
         );
 
         return convertView;
     }
 
-    public boolean getEstaConectado(){
+    public boolean getEstaConectado() {
 
         return this.estaConectado;
     }
 
-    private void borrarArtefacto(final Artefacto artefacto) {
-
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(artefactosActivity);
-        alertDialog.setTitle(artefactosActivity.getString(R.string.eliminar_artefacto_titulo));
-        alertDialog.setMessage(artefactosActivity.getString(R.string.eliminar_artefacto_mensaje));
-
-
-        alertDialog.setPositiveButton(artefactosActivity.getString(R.string.aceptar),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        ControladorBaseDatos.eliminarArtefacto(artefacto);
-                        artefactosActivity.refresh();
-                    }
-                });
-
-        alertDialog.setNegativeButton(artefactosActivity.getString(R.string.cancelar),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-        alertDialog.show();
-    }
 
     private class ViewHolder {
 

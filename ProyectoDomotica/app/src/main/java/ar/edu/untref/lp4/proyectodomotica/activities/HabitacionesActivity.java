@@ -407,11 +407,12 @@ public class HabitacionesActivity extends Activity {
 
                     artefacto.setActivo(false);
                     controladorBaseDatos.actualizarEstadoArtefacto(artefacto);
+                    Toast.makeText(HabitacionesActivity.this, R.string.artefactos_apagados, Toast.LENGTH_SHORT).show();
                 }
             }
         } else {
 
-            Toast.makeText(HabitacionesActivity.this, R.string.artefactos_apagados, Toast.LENGTH_SHORT).show();
+            Toast.makeText(HabitacionesActivity.this, R.string.no_hay_artefactos, Toast.LENGTH_SHORT).show();
         }
     }
 

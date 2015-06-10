@@ -20,9 +20,7 @@ import android.widget.Toast;
 
 import com.cocosw.bottomsheet.BottomSheet;
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
 import com.github.amlcurran.showcaseview.ShowcaseView;
-import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.orhanobut.logger.Logger;
 
@@ -128,8 +126,8 @@ public class HabitacionesActivity extends Activity {
 
                 if (!controladorBluetooth.estaConectado()) {
 
+                    // Deberia actualizar el texto de NO CONECTADO
                     realizarConexion();
-                    controladorBluetooth.setEstaConectado(true);
 
                 } else {
 
@@ -287,36 +285,46 @@ public class HabitacionesActivity extends Activity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                showcaseIngresarHabitacion.hide();
+                menuOpciones(position);
 
-                final int pos = position;
-
-                new BottomSheet.Builder(HabitacionesActivity.this).title(R.string.opcion).sheet(R.menu.menu_opciones_habitacion).listener(new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-
-                            case R.id.eliminar:
-                                borrarHabitacion((Habitacion) gridview.getItemAtPosition(pos));
-                                break;
-
-                            case R.id.editar:
-                                editarHabitacion((Habitacion) gridview.getItemAtPosition(pos));
-                                break;
-
-                            case R.id.apagar:
-                                apagarTodo((Habitacion) gridview.getItemAtPosition(pos));
-                                break;
-
-                            case R.id.prender:
-                                prenderTodo((Habitacion) gridview.getItemAtPosition(pos));
-                                break;
-                        }
-                    }
-                }).show();
                 return true;
             }
         });
+    }
+
+    /**
+     * Despliega el menu opciones de las habitaciones
+     */
+    private void menuOpciones(int position){
+
+        showcaseIngresarHabitacion.hide();
+
+        final int pos = position;
+
+        new BottomSheet.Builder(HabitacionesActivity.this).title(R.string.opcion).sheet(R.menu.menu_opciones_habitacion).listener(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+
+                    case R.id.eliminar:
+                        borrarHabitacion((Habitacion) gridview.getItemAtPosition(pos));
+                        break;
+
+                    case R.id.editar:
+                        editarHabitacion((Habitacion) gridview.getItemAtPosition(pos));
+                        break;
+
+                    case R.id.apagar:
+                        apagarTodo((Habitacion) gridview.getItemAtPosition(pos));
+                        break;
+
+                    case R.id.prender:
+                        prenderTodo((Habitacion) gridview.getItemAtPosition(pos));
+                        break;
+                }
+            }
+        }).show();
+
     }
 
     /**
@@ -415,8 +423,14 @@ public class HabitacionesActivity extends Activity {
 
                 if (artefacto.isActivo()) {
 
+                    Integer pin = ControladorBaseDatos.getPinArtefacto(artefacto);
+                    String dato = pin.toString();
+
                     artefacto.setActivo(false);
+
                     controladorBaseDatos.actualizarEstadoArtefacto(artefacto);
+                    controladorBluetooth.enviarDato(dato + "0");
+
                     Toast.makeText(HabitacionesActivity.this, R.string.artefactos_apagados, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -438,8 +452,14 @@ public class HabitacionesActivity extends Activity {
 
                 if (!artefacto.isActivo()) {
 
+                    Integer pin = ControladorBaseDatos.getPinArtefacto(artefacto);
+                    String dato = pin.toString();
+
                     artefacto.setActivo(true);
+
                     controladorBaseDatos.actualizarEstadoArtefacto(artefacto);
+                    controladorBluetooth.enviarDato(dato + "1");
+
                     Toast.makeText(HabitacionesActivity.this, R.string.artefactos_encendidos, Toast.LENGTH_SHORT).show();
                 }
             }

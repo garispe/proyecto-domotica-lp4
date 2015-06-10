@@ -68,6 +68,20 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
 
         final Artefacto artefacto = getItem(position);
 
+        mantenerPresionado(viewHolder, artefacto, position);
+
+        habilitacionArtefactos(viewHolder, artefacto);
+
+        enviarDatos(viewHolder, artefacto);
+
+        return convertView;
+    }
+
+    /**
+     * Modela el comportamiento al mantener presionado el texto de un artefacto
+     */
+    private void mantenerPresionado(final ViewHolder viewHolder, final Artefacto artefacto, final int position){
+
         viewHolder.texto.setText(artefacto.getNombre());
         viewHolder.texto.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -95,6 +109,13 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
             }
         });
 
+    }
+
+    /**
+     * Habilita los artefactos si hay una conexion establecida con el BT
+     */
+    private void habilitacionArtefactos(ViewHolder viewHolder, Artefacto artefacto){
+
         boolean estadoAlmacenado = ControladorBaseDatos.getEstadoArtefacto(artefacto);
         viewHolder.switchArtefacto.setChecked(estadoAlmacenado);
 
@@ -107,17 +128,20 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
 
             viewHolder.switchArtefacto.setEnabled(false);
             this.estaConectado = false;
-
         }
+    }
+
+    /**
+     * Envia los datos correspodientes al estado del artefacto
+     */
+    private void enviarDatos(final ViewHolder viewHolder,final Artefacto artefacto){
 
         viewHolder.switchArtefacto.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        // FixMe:
-                        // ACA NO LEE BIEN LOS DATOS DEL getIdPin()
-                        Integer pin = artefacto.getIdPin();
+                        Integer pin = ControladorBaseDatos.getPinArtefacto(artefacto);
                         String dato = pin.toString();
 
                         if (pin < 10) {
@@ -140,15 +164,7 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
                     }
                 }
         );
-
-        return convertView;
     }
-
-    public boolean getEstaConectado() {
-
-        return this.estaConectado;
-    }
-
 
     private class ViewHolder {
 

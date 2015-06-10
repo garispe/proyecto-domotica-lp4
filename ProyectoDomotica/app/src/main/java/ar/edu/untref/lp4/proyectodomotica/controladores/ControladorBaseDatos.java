@@ -188,6 +188,9 @@ public class ControladorBaseDatos {
         db.close();
     }
 
+    /**
+     * Devuelve el max pin
+     */
     private static int getUltimoPin() {
 
         int pin = 0;
@@ -214,6 +217,21 @@ public class ControladorBaseDatos {
         return max;
     }
 
+    public static int getPinArtefacto(Artefacto artefacto) {
+
+        db = baseDatos.getWritableDatabase();
+
+        Cursor c = db.rawQuery("SELECT " + Constantes.ID_PIN + " FROM " + Constantes.TABLA_ARTEFACTOS
+                + " WHERE " + Constantes.ID_ARTEFACTO + " = " + artefacto.getId(), null);
+
+        if (c.moveToFirst()) {
+
+            return c.getInt(c.getColumnIndex(Constantes.ID_PIN));
+        }
+
+        return -1;
+    }
+
     /**
      * Si el artefacto existe en la base de datos retorna su ID, de lo contrario, retorna -1.
      */
@@ -230,6 +248,9 @@ public class ControladorBaseDatos {
         return -1;
     }
 
+    /**
+     * Actualiza el estado del artefacto de prendido y apagado
+     */
     public static void actualizarEstadoArtefacto(Artefacto artefacto) {
 
         db = baseDatos.getWritableDatabase();
@@ -256,6 +277,9 @@ public class ControladorBaseDatos {
         db.close();
     }
 
+    /**
+     * Actualiza el nombre del artefacto para cuando èste se edita
+     */
     public static void actualizarNombreArtefacto(Artefacto artefacto) {
 
         db = baseDatos.getWritableDatabase();
@@ -276,6 +300,9 @@ public class ControladorBaseDatos {
 
     }
 
+    /**
+     * Actualiza el nombre de la habitacion para cuando èsta se edita
+     */
     public static void actualizarNombreHabitacion(Habitacion habitacion) {
 
         db = baseDatos.getWritableDatabase();
@@ -296,6 +323,9 @@ public class ControladorBaseDatos {
 
     }
 
+    /**
+     * Devuelve el id de la habitacion
+     */
     private static int getHabitacionId(Habitacion habitacion) {
 
         Cursor c = db.rawQuery("SELECT " + Constantes.ID_HABITACION + " FROM " + Constantes.TABLA_HABITACIONES
@@ -322,6 +352,9 @@ public class ControladorBaseDatos {
         db.close();
     }
 
+    /**
+     * Devuelve si el artefacto esta prendido o apagado
+     */
     public static boolean getEstadoArtefacto(Artefacto artefacto) {
 
         db = baseDatos.getWritableDatabase();

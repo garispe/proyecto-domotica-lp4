@@ -32,6 +32,10 @@ dependencies {
     //Floating Button
     compile 'com.getbase:floatingactionbutton:1.9.0'
 
-    // Bottom Sheet
+    //Bottom Sheet
     compile 'com.cocosw:bottomsheet:1.+@aar'
+
+    //ShowcaseView
+    compile 'com.github.amlcurran.showcaseview:library:5.0.0'
+
 }

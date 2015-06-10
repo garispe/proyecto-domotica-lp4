@@ -9,15 +9,21 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cocosw.bottomsheet.BottomSheet;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -53,6 +59,9 @@ public class HabitacionesActivity extends Activity {
     private List<Habitacion> habitaciones;
     private MenuFlotante menu;
 
+    private ShowcaseView showcaseAgregarHabitacion;
+    private ShowcaseView showcaseIngresarHabitacion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +79,7 @@ public class HabitacionesActivity extends Activity {
         controladorBaseDatos = new ControladorBaseDatos(bd);
 
         realizarConexion();
+
     }
 
     /**
@@ -264,6 +274,7 @@ public class HabitacionesActivity extends Activity {
 
                 } else {
 
+                    showcaseIngresarHabitacion.hide();
                     abrirArtefactosActivity(habitaciones.get(position));
                 }
             }
@@ -273,6 +284,8 @@ public class HabitacionesActivity extends Activity {
         gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                showcaseIngresarHabitacion.hide();
 
                 final int pos = position;
 
@@ -348,7 +361,6 @@ public class HabitacionesActivity extends Activity {
         alertDialog.show();
 
     }
-
 
     private void borrarHabitacion(final Habitacion habitacion) {
 
@@ -430,6 +442,7 @@ public class HabitacionesActivity extends Activity {
         @Override
         public void onClick(View v) {
 
+            showcaseAgregarHabitacion.hide();
             escribirNombreHabitacion();
         }
     };
@@ -470,6 +483,9 @@ public class HabitacionesActivity extends Activity {
 
                                 inicializarListaHabitaciones();
                                 inicializarGridViewHabitaciones();
+
+                                mostrarShowcaseHabitacion();
+
 
                             } else {
 
@@ -514,6 +530,49 @@ public class HabitacionesActivity extends Activity {
 
         inicializarListaHabitaciones();
         inicializarGridViewHabitaciones();
+    }
+
+    public void mostrarShowcaseInicial() {
+
+        RelativeLayout.LayoutParams paramsBotonAgregar = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        paramsBotonAgregar.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        paramsBotonAgregar.addRule(RelativeLayout.CENTER_VERTICAL);
+
+        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
+
+        paramsBotonAgregar.setMargins(margin, margin, margin, margin);
+
+        ViewTarget targetBotonAgregar = new ViewTarget(R.id.agregar_habitacion_boton, this);
+
+        showcaseAgregarHabitacion = new ShowcaseView.Builder(this)
+                .setTarget(targetBotonAgregar)
+                .setContentTitle(getString(R.string.agregar_habitacion))
+                .setContentText(getString(R.string.mensaje_agregar_habitacion_showcase))
+                .build();
+
+        showcaseAgregarHabitacion.setButtonPosition(paramsBotonAgregar);
+    }
+
+    private void mostrarShowcaseHabitacion() {
+
+        RelativeLayout.LayoutParams paramsHabitacion = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        paramsHabitacion.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        paramsHabitacion.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+
+        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
+
+        paramsHabitacion.setMargins(margin, margin, margin, margin);
+
+        ViewTarget targetGridView = new ViewTarget(R.id.cuadro_showcase, HabitacionesActivity.this);
+
+        showcaseIngresarHabitacion = new ShowcaseView.Builder(HabitacionesActivity.this)
+                .setTarget(targetGridView)
+                .setContentTitle(getString(R.string.habitacion))
+                .setContentText(getString(R.string.mensaje_showcase_habitacion))
+                .build();
+
+        showcaseIngresarHabitacion.setButtonPosition(paramsHabitacion);
+
     }
 }
 

@@ -306,6 +306,9 @@ public class HabitacionesActivity extends Activity {
         });
     }
 
+    /**
+     * Cambia el nombre de la habitacion y actualiza en la BD
+     */
     private void editarHabitacion(final Habitacion habitacion) {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -355,6 +358,9 @@ public class HabitacionesActivity extends Activity {
 
     }
 
+    /**
+     * Elimina la habitacion seleccionada y actualiza la BD
+     */
     private void borrarHabitacion(final Habitacion habitacion) {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -384,6 +390,10 @@ public class HabitacionesActivity extends Activity {
 
     }
 
+    /**
+     * Apaga todos los artefactos que se encuentren encendidos
+     * en la habitacion y actualiza en la BD
+     */
     private void apagarTodo(Habitacion habitacion) {
 
         if (getListaArtefactos(habitacion).size() > 0) {
@@ -402,6 +412,10 @@ public class HabitacionesActivity extends Activity {
         }
     }
 
+    /**
+     * Prende todos los artefactos que se encuentren apagados
+     * en la habitacion y actualiza en la BD
+     */
     private void prenderTodo(Habitacion habitacion) {
 
         if (getListaArtefactos(habitacion).size() > 0) {
@@ -421,7 +435,9 @@ public class HabitacionesActivity extends Activity {
         }
     }
 
-
+    /**
+     * Devuelve la lista de artefactos de una habitacion obtenida desde la BD
+     */
     private List<Artefacto> getListaArtefactos(Habitacion  habitacion){
 
         List<Artefacto> lista = new ArrayList<>();
@@ -430,6 +446,9 @@ public class HabitacionesActivity extends Activity {
         return lista;
     }
 
+    /**
+     * Abre una Activity asignandole el id de la habitacion
+     */
     private void abrirArtefactosActivity(Habitacion habitacion) {
 
         Intent intent = new Intent(HabitacionesActivity.this, ArtefactosActivity.class);
@@ -438,6 +457,9 @@ public class HabitacionesActivity extends Activity {
         startActivity(intent);
     }
 
+    /**
+     * Muestra un cartelito si no esta enlazado con el BT
+     */
     public void mostrarTextoConexion(boolean mostrar) {
 
         if (mostrar) {
@@ -485,6 +507,11 @@ public class HabitacionesActivity extends Activity {
         }
     };
 
+    /**
+     * Verifica que el nombre sea distinto de vacio y a su vez que no haya
+     * una habitacion con ese nombre.
+     * Si es correcto agrega una habitacion con ese nombre y actualiza la BD
+     */
     private void escribirNombreHabitacion() {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -541,6 +568,9 @@ public class HabitacionesActivity extends Activity {
         alertDialog.show();
     }
 
+    /**
+     * Devuelve si el nombre esta disponible para la habitacion
+     */
     private boolean nombreHabitacionDisponible(String nombre) {
 
         boolean nombreDisponible = true;

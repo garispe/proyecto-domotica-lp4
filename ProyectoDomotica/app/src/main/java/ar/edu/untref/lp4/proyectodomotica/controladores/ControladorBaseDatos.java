@@ -157,7 +157,6 @@ public class ControladorBaseDatos {
         return listaArtefactos;
     }
 
-
     /**
      * Agrega un artefacto a la tabla "artefactos". Si ya existe sólo actualiza su estado.
      */

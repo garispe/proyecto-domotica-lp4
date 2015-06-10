@@ -57,6 +57,10 @@
     <string name="apagar_todo">Apagar todo</string>
     <string name="opcion">Opciones</string>
     <string name="nuevo_nombre_artefacto">Escriba el nuevo nombre del artefacto</string>
+    <string name="no_hay_artefactos">No contiene artefactos dentro de la habitacion</string>
+    <string name="prender_todo">Prender todo</string>
+    <string name="artefactos_apagados">Todos los artefactos se han apagados</string>
+    <string name="artefactos_encendidos">Todos los artefactos se han encendido</string>
 
 
 </resources>

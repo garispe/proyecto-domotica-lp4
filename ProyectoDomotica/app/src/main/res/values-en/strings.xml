@@ -47,4 +47,9 @@
     <string name="eliminar_habitacion_titulo">Removing toom...</string>
     <string name="nuevo_nombre_habitacion">Type the new name of the room</string>
     <string name="opcion">Options</string>
+    <string name="artefactos_apagados">All devices has been turned off</string>
+    <string name="artefactos_encendidos">All devices has been turned on</string>
+    <string name="prender_todo">Turn on all</string>
+    <string name="no_hay_artefactos">No devices inside the room</string>
+    <string name="nuevo_nombre_artefacto">Type the new name of the device</string>
 </resources>

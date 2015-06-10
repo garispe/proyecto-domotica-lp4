@@ -615,6 +615,9 @@ public class HabitacionesActivity extends Activity {
         inicializarGridViewHabitaciones();
     }
 
+    /**
+     * Inicia un tutorial
+     */
     public void mostrarShowcaseInicial() {
 
         RelativeLayout.LayoutParams paramsBotonAgregar = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

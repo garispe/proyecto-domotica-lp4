@@ -55,16 +55,11 @@ public class ArtefactosActivity extends Activity {
         inicializarBotonAgregar();
         inicializarListaArtefactosPorHabitacion();
         inicializarListViewArtefactos();
-
-        if (!artefactosAdapter.getEstaConectado()) {
-
-            if (ControladorBaseDatos.getArtefactosPorHabitacion(idHabitacion).size() > 0) {
-
-                Toast.makeText(ArtefactosActivity.this, ArtefactosActivity.this.getString(R.string.verificar_conexion), Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
+    /**
+     * Actualiza la lista de artefactos
+     */
     public void refresh() {
 
         inicializarListaArtefactosPorHabitacion();

@@ -41,7 +41,6 @@ public class ControladorBluetooth {
     }
 
     public static ControladorBluetooth getInstance(){
-
         return instance;
     }
 
@@ -108,6 +107,11 @@ public class ControladorBluetooth {
 
     public boolean estaConectado(){
         return estaConectado;
+    }
+
+    public void setEstaConectado(boolean conectado){
+
+        this.estaConectado = conectado;
     }
 
     /**

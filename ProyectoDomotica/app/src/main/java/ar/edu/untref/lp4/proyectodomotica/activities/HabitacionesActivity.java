@@ -35,6 +35,7 @@ import ar.edu.untref.lp4.proyectodomotica.adapters.GridHabitacionesAdapter;
 import ar.edu.untref.lp4.proyectodomotica.baseDatos.BaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
+import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
 import ar.edu.untref.lp4.proyectodomotica.tasks.ConexionTask;
 import ar.edu.untref.lp4.proyectodomotica.utils.Constantes;
@@ -128,6 +129,7 @@ public class HabitacionesActivity extends Activity {
                 if (!controladorBluetooth.estaConectado()) {
 
                     realizarConexion();
+                    controladorBluetooth.setEstaConectado(true);
 
                 } else {
 
@@ -303,7 +305,11 @@ public class HabitacionesActivity extends Activity {
                                 break;
 
                             case R.id.apagar:
-                                Toast.makeText(HabitacionesActivity.this, "Apaga todos los componentes", Toast.LENGTH_SHORT).show();
+                                apagarTodo((Habitacion) gridview.getItemAtPosition(pos));
+                                break;
+
+                            case R.id.prender:
+                                prenderTodo((Habitacion) gridview.getItemAtPosition(pos));
                                 break;
                         }
                     }
@@ -389,6 +395,52 @@ public class HabitacionesActivity extends Activity {
 
         alertDialog.show();
 
+    }
+
+    private void apagarTodo(Habitacion habitacion) {
+
+        if (getListaArtefactos(habitacion).size() > 0) {
+
+            for (Artefacto artefacto : getListaArtefactos(habitacion)) {
+
+                if (artefacto.isActivo()) {
+
+                    artefacto.setActivo(false);
+                    controladorBaseDatos.actualizarEstadoArtefacto(artefacto);
+                }
+            }
+        } else {
+
+            Toast.makeText(HabitacionesActivity.this, R.string.artefactos_apagados, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void prenderTodo(Habitacion habitacion) {
+
+        if (getListaArtefactos(habitacion).size() > 0) {
+
+            for (Artefacto artefacto : getListaArtefactos(habitacion)) {
+
+                if (!artefacto.isActivo()) {
+
+                    artefacto.setActivo(true);
+                    controladorBaseDatos.actualizarEstadoArtefacto(artefacto);
+                    Toast.makeText(HabitacionesActivity.this, R.string.artefactos_encendidos, Toast.LENGTH_SHORT).show();
+                }
+            }
+        } else {
+
+            Toast.makeText(HabitacionesActivity.this, R.string.no_hay_artefactos, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private List<Artefacto> getListaArtefactos(Habitacion  habitacion){
+
+        List<Artefacto> lista = new ArrayList<>();
+        lista.addAll(ControladorBaseDatos.getArtefactosPorHabitacion(habitacion.getId()));
+
+        return lista;
     }
 
     private void abrirArtefactosActivity(Habitacion habitacion) {

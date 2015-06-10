@@ -110,34 +110,35 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
 
         }
 
-        viewHolder.switchArtefacto.setOnClickListener(new View.OnClickListener() {
-                                                          @Override
-                                                          public void onClick(View v) {
+        viewHolder.switchArtefacto.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                                                              // FixMe:
-                                                              // ACA NO LEE BIEN LOS DATOS DEL getIdPin()
-                                                              Integer pin = artefacto.getIdPin();
-                                                              String dato = pin.toString();
+                        // FixMe:
+                        // ACA NO LEE BIEN LOS DATOS DEL getIdPin()
+                        Integer pin = artefacto.getIdPin();
+                        String dato = pin.toString();
 
-                                                              if (pin < 10) {
+                        if (pin < 10) {
 
-                                                                  dato = "0" + dato;
-                                                              }
+                            dato = "0" + dato;
+                        }
 
-                                                              if (viewHolder.switchArtefacto.isChecked()) {
+                        if (viewHolder.switchArtefacto.isChecked()) {
 
-                                                                  controladorBluetooth.enviarDato(dato + "1");
+                            controladorBluetooth.enviarDato(dato + "1");
 
-                                                              } else {
+                        } else {
 
-                                                                  controladorBluetooth.enviarDato(dato + "0");
-                                                              }
+                            controladorBluetooth.enviarDato(dato + "0");
+                        }
 
-                                                              artefacto.setActivo(viewHolder.switchArtefacto.isChecked());
+                        artefacto.setActivo(viewHolder.switchArtefacto.isChecked());
 
-                                                              ControladorBaseDatos.actualizarEstadoArtefacto(artefacto);
-                                                          }
-                                                      }
+                        ControladorBaseDatos.actualizarEstadoArtefacto(artefacto);
+                    }
+                }
         );
 
         return convertView;

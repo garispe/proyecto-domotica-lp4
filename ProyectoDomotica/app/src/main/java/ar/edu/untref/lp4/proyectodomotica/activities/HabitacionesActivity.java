@@ -274,7 +274,9 @@ public class HabitacionesActivity extends Activity {
 
                 } else {
 
-                    showcaseIngresarHabitacion.hide();
+                    if (showcaseIngresarHabitacion.isShown()) {
+                        showcaseIngresarHabitacion.hide();
+                    }
                     abrirArtefactosActivity(habitaciones.get(position));
                 }
             }
@@ -295,9 +297,11 @@ public class HabitacionesActivity extends Activity {
     /**
      * Despliega el menu opciones de las habitaciones
      */
-    private void menuOpciones(int position){
+    private void menuOpciones(int position) {
 
-        showcaseIngresarHabitacion.hide();
+        if (showcaseIngresarHabitacion.isShown()) {
+            showcaseIngresarHabitacion.hide();
+        }
 
         final int pos = position;
 
@@ -417,7 +421,7 @@ public class HabitacionesActivity extends Activity {
      */
     private void apagarTodo(Habitacion habitacion) {
 
-        if (getListaArtefactos(habitacion).size() > 0) {
+        if (getListaArtefactos(habitacion).size() > 0 && controladorBluetooth.estaConectado()) {
 
             for (Artefacto artefacto : getListaArtefactos(habitacion)) {
 
@@ -434,9 +438,13 @@ public class HabitacionesActivity extends Activity {
                     Toast.makeText(HabitacionesActivity.this, R.string.artefactos_apagados, Toast.LENGTH_SHORT).show();
                 }
             }
-        } else {
+        } else if (getListaArtefactos(habitacion).size() == 0) {
 
             Toast.makeText(HabitacionesActivity.this, R.string.no_hay_artefactos, Toast.LENGTH_SHORT).show();
+
+        } else if (!controladorBluetooth.estaConectado()) {
+
+            Toast.makeText(HabitacionesActivity.this, R.string.verificar_conexion, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -446,7 +454,7 @@ public class HabitacionesActivity extends Activity {
      */
     private void prenderTodo(Habitacion habitacion) {
 
-        if (getListaArtefactos(habitacion).size() > 0) {
+        if (getListaArtefactos(habitacion).size() > 0 && controladorBluetooth.estaConectado()) {
 
             for (Artefacto artefacto : getListaArtefactos(habitacion)) {
 
@@ -463,16 +471,20 @@ public class HabitacionesActivity extends Activity {
                     Toast.makeText(HabitacionesActivity.this, R.string.artefactos_encendidos, Toast.LENGTH_SHORT).show();
                 }
             }
-        } else {
+        } else if (getListaArtefactos(habitacion).size() == 0) {
 
             Toast.makeText(HabitacionesActivity.this, R.string.no_hay_artefactos, Toast.LENGTH_SHORT).show();
+
+        } else if (!controladorBluetooth.estaConectado()) {
+
+            Toast.makeText(HabitacionesActivity.this, R.string.verificar_conexion, Toast.LENGTH_SHORT).show();
         }
     }
 
     /**
      * Devuelve la lista de artefactos de una habitacion obtenida desde la BD
      */
-    private List<Artefacto> getListaArtefactos(Habitacion  habitacion){
+    private List<Artefacto> getListaArtefactos(Habitacion habitacion) {
 
         List<Artefacto> lista = new ArrayList<>();
         lista.addAll(ControladorBaseDatos.getArtefactosPorHabitacion(habitacion.getId()));

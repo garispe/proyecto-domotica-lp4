@@ -3,8 +3,10 @@ package ar.edu.untref.lp4.proyectodomotica.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -61,6 +63,9 @@ public class HabitacionesActivity extends Activity {
     private ShowcaseView showcaseAgregarHabitacion;
     private ShowcaseView showcaseIngresarHabitacion;
 
+    private SharedPreferences preferences;
+    private boolean mostrarTutorial;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,11 +79,13 @@ public class HabitacionesActivity extends Activity {
         Logger.init(TAG);
         Logger.i("onCreate");
 
+        preferences = getSharedPreferences("du_preferences", Context.MODE_PRIVATE);
+        mostrarTutorial = preferences.getBoolean("mostrar_tutorial", true);
+
         bd = new BaseDatos(this, Constantes.NOMBRE_BD, null, Constantes.VERSION_BD);
         controladorBaseDatos = new ControladorBaseDatos(bd);
 
         realizarConexion();
-
     }
 
     /**
@@ -268,13 +275,15 @@ public class HabitacionesActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                preferences.edit().putBoolean("mostrar_tutorial", false).apply();
+
                 if (menu.botonAccionMenu.isOpen()) {
 
                     menu.botonAccionMenu.close(true);
 
                 } else {
 
-                    if (showcaseIngresarHabitacion.isShown()) {
+                    if (showcaseIngresarHabitacion != null) {
                         showcaseIngresarHabitacion.hide();
                     }
                     abrirArtefactosActivity(habitaciones.get(position));
@@ -549,7 +558,9 @@ public class HabitacionesActivity extends Activity {
         @Override
         public void onClick(View v) {
 
-            showcaseAgregarHabitacion.hide();
+            if (showcaseAgregarHabitacion != null) {
+                showcaseAgregarHabitacion.hide();
+            }
             escribirNombreHabitacion();
         }
     };
@@ -596,8 +607,9 @@ public class HabitacionesActivity extends Activity {
                                 inicializarListaHabitaciones();
                                 inicializarGridViewHabitaciones();
 
-                                mostrarShowcaseHabitacion();
-
+                                if(mostrarTutorial) {
+                                    mostrarShowcaseHabitacion();
+                                }
 
                             } else {
 
@@ -666,6 +678,14 @@ public class HabitacionesActivity extends Activity {
                 .setTarget(targetBotonAgregar)
                 .setContentTitle(getString(R.string.agregar_habitacion))
                 .setContentText(getString(R.string.mensaje_agregar_habitacion_showcase))
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        showcaseAgregarHabitacion.hide();
+                        escribirNombreHabitacion();
+                    }
+                })
                 .build();
 
         showcaseAgregarHabitacion.setButtonPosition(paramsBotonAgregar);
@@ -687,6 +707,13 @@ public class HabitacionesActivity extends Activity {
                 .setTarget(targetGridView)
                 .setContentTitle(getString(R.string.habitacion))
                 .setContentText(getString(R.string.mensaje_showcase_habitacion))
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        preferences.edit().putBoolean("mostrar_tutorial", false).apply();
+                        showcaseIngresarHabitacion.hide();
+                    }
+                })
                 .build();
 
         showcaseIngresarHabitacion.setButtonPosition(paramsHabitacion);

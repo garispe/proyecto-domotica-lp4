@@ -1,5 +1,7 @@
 package ar.edu.untref.lp4.proyectodomotica.tasks;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -53,6 +55,12 @@ public class ConexionTask extends AsyncTask<Void, Void, Void> {
         activity.inicializarListaHabitaciones();
         activity.quitarProgressBarConexion();
         activity.inicializarGridViewHabitaciones();
-        activity.mostrarShowcaseInicial();
+
+        SharedPreferences preferences = activity.getSharedPreferences("du_preferences", Context.MODE_PRIVATE);
+        boolean mostrarTutorial = preferences.getBoolean("mostrar_tutorial", true);
+
+        if(mostrarTutorial) {
+            activity.mostrarShowcaseInicial();
+        }
     }
 }

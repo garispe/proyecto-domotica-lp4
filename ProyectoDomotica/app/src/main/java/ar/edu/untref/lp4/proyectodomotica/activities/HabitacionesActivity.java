@@ -36,6 +36,7 @@ import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
 import ar.edu.untref.lp4.proyectodomotica.tasks.ConexionTask;
+import ar.edu.untref.lp4.proyectodomotica.utils.ComandoDeVoz;
 import ar.edu.untref.lp4.proyectodomotica.utils.Constantes;
 import ar.edu.untref.lp4.proyectodomotica.utils.MenuFlotante;
 
@@ -49,6 +50,7 @@ public class HabitacionesActivity extends Activity {
     private ProgressDialog progressDialog;
     private TextView textoConexion;
     private FloatingActionButton botonAgregarHabitacion;
+    private FloatingActionButton botonHablar;
 
     private GridHabitacionesAdapter adapter;
     private GridView gridview;
@@ -57,6 +59,8 @@ public class HabitacionesActivity extends Activity {
     private ControladorBaseDatos controladorBaseDatos;
     private List<Habitacion> habitaciones;
     private MenuFlotante menu;
+
+    private ComandoDeVoz comandoDeVoz;
 
     private ShowcaseView showcaseAgregarHabitacion;
     private ShowcaseView showcaseIngresarHabitacion;
@@ -107,6 +111,15 @@ public class HabitacionesActivity extends Activity {
         botonAgregarHabitacion.setSize(FloatingActionButton.SIZE_NORMAL);
         botonAgregarHabitacion.setIcon(R.drawable.cruz);
         botonAgregarHabitacion.setOnClickListener(agregarHabitacionListener);
+    }
+
+    public void inicializarBotonHablar() {
+
+        this.comandoDeVoz = new ComandoDeVoz(this);
+        botonHablar = (FloatingActionButton) findViewById(R.id.boton_hablar);
+        botonHablar.setSize(FloatingActionButton.SIZE_NORMAL);
+        botonHablar.setIcon(R.drawable.microfono);
+        botonHablar.setOnClickListener(hablar);
     }
 
     /**
@@ -692,5 +705,18 @@ public class HabitacionesActivity extends Activity {
         showcaseIngresarHabitacion.setButtonPosition(paramsHabitacion);
 
     }
+
+    private View.OnClickListener hablar = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            if (comandoDeVoz.verificarExisteReconocimientoVoz()) {
+                comandoDeVoz.empezarReconocimientoDeVoz();
+
+            } else {
+                Toast.makeText(HabitacionesActivity.this, getString(R.string.no_esta_presente), Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 }
 

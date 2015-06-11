@@ -282,4 +282,5 @@ public class ArtefactosActivity extends Activity {
             }
         }
     };
+
 }

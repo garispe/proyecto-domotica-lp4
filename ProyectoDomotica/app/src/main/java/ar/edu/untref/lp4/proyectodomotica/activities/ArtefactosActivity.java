@@ -3,14 +3,9 @@ package ar.edu.untref.lp4.proyectodomotica.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -29,11 +24,11 @@ import ar.edu.untref.lp4.proyectodomotica.baseDatos.BaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
 import ar.edu.untref.lp4.proyectodomotica.utils.Constantes;
+import ar.edu.untref.lp4.proyectodomotica.utils.ComandoDeVoz;
 
 public class ArtefactosActivity extends Activity {
 
     private static final String TAG = ArtefactosActivity.class.getSimpleName();
-    private static final int REQUEST_CODE = 1234;
 
     private List<Artefacto> artefactos;
     private ListViewArtefactosAdapter artefactosAdapter;
@@ -42,6 +37,8 @@ public class ArtefactosActivity extends Activity {
     private FloatingActionButton botonHablar;
     public static String nombreHabitacion;
     private int idHabitacion;
+
+    private ComandoDeVoz comandoDeVoz;
 
     private BaseDatos bd;
 
@@ -63,6 +60,7 @@ public class ArtefactosActivity extends Activity {
         inicializarBotonHablar();
         inicializarListaArtefactosPorHabitacion();
         inicializarListViewArtefactos();
+        comandoDeVoz = new ComandoDeVoz(this);
     }
 
     /**
@@ -277,31 +275,11 @@ public class ArtefactosActivity extends Activity {
         @Override
         public void onClick(View v) {
 
-            if (verificarExisteReconocimientoVoz()) {
-                empezarReconocimientoDeVoz();
+            if (comandoDeVoz.verificarExisteReconocimientoVoz()) {
+                comandoDeVoz.empezarReconocimientoDeVoz();
             } else {
                 Toast.makeText(ArtefactosActivity.this, getString(R.string.no_esta_presente), Toast.LENGTH_SHORT).show();
             }
         }
     };
-
-    // Verifica que este instalado en el celular el paquete de reconocimiento de voz. En caso contrario, devuelve false.
-    private boolean verificarExisteReconocimientoVoz () {
-        PackageManager pm = getPackageManager();
-        List<ResolveInfo> activities = pm.queryIntentActivities(
-                new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
-        if (activities.size() == 0) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    private void empezarReconocimientoDeVoz()
-    {
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Nombre artefacto + encender/apagar");
-        startActivityForResult(intent, REQUEST_CODE);
-    }
 }

@@ -65,5 +65,6 @@
     <string name="prender_todo">Prender todo</string>
     <string name="artefactos_apagados">Todos los artefactos se han apagado</string>
     <string name="artefactos_encendidos">Todos los artefactos se han encendido</string>
+    <string name="no_esta_presente">No se enceuntra presente el reconocimiento de voz</string>
 
 </resources>

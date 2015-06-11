@@ -3,9 +3,14 @@ package ar.edu.untref.lp4.proyectodomotica.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -28,11 +33,13 @@ import ar.edu.untref.lp4.proyectodomotica.utils.Constantes;
 public class ArtefactosActivity extends Activity {
 
     private static final String TAG = ArtefactosActivity.class.getSimpleName();
+    private static final int REQUEST_CODE = 1234;
 
     private List<Artefacto> artefactos;
     private ListViewArtefactosAdapter artefactosAdapter;
 
     private FloatingActionButton botonAgregarHabitacion;
+    private FloatingActionButton botonHablar;
     public static String nombreHabitacion;
     private int idHabitacion;
 
@@ -53,6 +60,7 @@ public class ArtefactosActivity extends Activity {
         habitacion.setText(nombreHabitacion);
 
         inicializarBotonAgregar();
+        inicializarBotonHablar();
         inicializarListaArtefactosPorHabitacion();
         inicializarListViewArtefactos();
     }
@@ -75,6 +83,14 @@ public class ArtefactosActivity extends Activity {
         botonAgregarHabitacion.setSize(FloatingActionButton.SIZE_NORMAL);
         botonAgregarHabitacion.setIcon(R.drawable.cruz);
         botonAgregarHabitacion.setOnClickListener(agregarArtefactoListener);
+    }
+
+    private void inicializarBotonHablar() {
+
+        botonHablar = (FloatingActionButton) findViewById(R.id.boton_hablar);
+        botonHablar.setSize(FloatingActionButton.SIZE_NORMAL);
+        botonHablar.setIcon(R.drawable.microfono);
+        botonHablar.setOnClickListener(hablar);
     }
 
     /**
@@ -255,5 +271,37 @@ public class ArtefactosActivity extends Activity {
 
         alertDialog.show();
 
+    }
+
+    private View.OnClickListener hablar = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            if (verificarExisteReconocimientoVoz()) {
+                empezarReconocimientoDeVoz();
+            } else {
+                Toast.makeText(ArtefactosActivity.this, getString(R.string.no_esta_presente), Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+    // Verifica que este instalado en el celular el paquete de reconocimiento de voz. En caso contrario, devuelve false.
+    private boolean verificarExisteReconocimientoVoz () {
+        PackageManager pm = getPackageManager();
+        List<ResolveInfo> activities = pm.queryIntentActivities(
+                new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
+        if (activities.size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void empezarReconocimientoDeVoz()
+    {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Nombre artefacto + encender/apagar");
+        startActivityForResult(intent, REQUEST_CODE);
     }
 }

@@ -3,7 +3,11 @@ package ar.edu.untref.lp4.proyectodomotica.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -24,7 +28,6 @@ import ar.edu.untref.lp4.proyectodomotica.baseDatos.BaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
 import ar.edu.untref.lp4.proyectodomotica.utils.Constantes;
-import ar.edu.untref.lp4.proyectodomotica.utils.ComandoDeVoz;
 
 public class ArtefactosActivity extends Activity {
 
@@ -37,8 +40,6 @@ public class ArtefactosActivity extends Activity {
     private FloatingActionButton botonHablar;
     public static String nombreHabitacion;
     private int idHabitacion;
-
-    private ComandoDeVoz comandoDeVoz;
 
     private BaseDatos bd;
 
@@ -60,7 +61,6 @@ public class ArtefactosActivity extends Activity {
         inicializarBotonHablar();
         inicializarListaArtefactosPorHabitacion();
         inicializarListViewArtefactos();
-        comandoDeVoz = new ComandoDeVoz(this);
     }
 
     /**
@@ -271,16 +271,28 @@ public class ArtefactosActivity extends Activity {
 
     }
 
+    public boolean verificarExisteReconocimientoVoz () {
+        PackageManager pm = getPackageManager();
+        List<ResolveInfo> activities = pm.queryIntentActivities(
+                new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
+        if (activities.size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     private View.OnClickListener hablar = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
-            if (comandoDeVoz.verificarExisteReconocimientoVoz()) {
-                comandoDeVoz.empezarReconocimientoDeVoz();
+            if (verificarExisteReconocimientoVoz()) {
+
             } else {
                 Toast.makeText(ArtefactosActivity.this, getString(R.string.no_esta_presente), Toast.LENGTH_SHORT).show();
             }
         }
     };
+
 
 }

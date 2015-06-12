@@ -14,11 +14,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +39,6 @@ import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
 import ar.edu.untref.lp4.proyectodomotica.tasks.ConexionTask;
-import ar.edu.untref.lp4.proyectodomotica.utils.ComandoDeVoz;
 import ar.edu.untref.lp4.proyectodomotica.utils.Constantes;
 import ar.edu.untref.lp4.proyectodomotica.utils.MenuFlotante;
 
@@ -122,12 +119,10 @@ public class HabitacionesActivity extends Activity {
 
     public void inicializarBotonHablar() {
 
-        //this.comandoDeVoz = new ComandoDeVoz(this);
         botonHablar = (FloatingActionButton) findViewById(R.id.boton_hablar);
         botonHablar.setSize(FloatingActionButton.SIZE_NORMAL);
         botonHablar.setIcon(R.drawable.microfono);
         botonHablar.setOnClickListener(hablar);
-        //listaDePalabras=(ListView) findViewById(R.id.list);
     }
 
     /**
@@ -777,7 +772,6 @@ public class HabitacionesActivity extends Activity {
     public String getPalabra(){
         return palabra;
     }
-
 
 }
 

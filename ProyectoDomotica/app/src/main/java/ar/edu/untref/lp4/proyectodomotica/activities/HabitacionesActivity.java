@@ -65,15 +65,11 @@ public class HabitacionesActivity extends Activity {
     private List<Habitacion> habitaciones;
     private MenuFlotante menu;
 
-    //private ComandoDeVoz comandoDeVoz;
-
     private ShowcaseView showcaseAgregarHabitacion;
     private ShowcaseView showcaseIngresarHabitacion;
 
     //a partir de acá son atributos pegados directamente desde ComandoDeVoz
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
-    //Activity activity;
-    //private ListView listaDePalabras;
     public String palabra="vacio";
 
     @Override
@@ -718,7 +714,6 @@ public class HabitacionesActivity extends Activity {
 
     }
 
-    // en este metodo se sacaron todos los comandosDeVoz.metodo() y se dejo metodo() nada mas
     private View.OnClickListener hablar = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -737,8 +732,6 @@ public class HabitacionesActivity extends Activity {
             }
         }
     };
-
-    //a partir de aquí empiezo a pegar la claseComandoDeVoz en esta clase
 
     // Verifica que este instalado en el celular el paquete de reconocimiento de voz. En caso contrario, devuelve false.
     public boolean verificarExisteReconocimientoVoz () {
@@ -760,19 +753,14 @@ public class HabitacionesActivity extends Activity {
         startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
     }
 
-    /*
-    El metodo de abajo es el que no logro entender como funciona ni como usarlo...
-     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == VOICE_RECOGNITION_REQUEST_CODE && resultCode == RESULT_OK)
         {
-            // Populate the wordsList with the String values the recognition engine thought it heard
             ArrayList<String> matches = data.getStringArrayListExtra(
                     RecognizerIntent.EXTRA_RESULTS);
-            //listaDePalabras.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, matches));
             if(matches.size()>0){
                 palabra=matches.get(0).toString();
             }

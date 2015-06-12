@@ -327,6 +327,10 @@ public class HabitacionesActivity extends Activity {
                         editarHabitacion((Habitacion) gridview.getItemAtPosition(pos));
                         break;
 
+                    case R.id.agregar_foto:
+                        agregarFoto((Habitacion) gridview.getItemAtPosition(pos));
+                        break;
+
                     case R.id.apagar:
                         apagarTodo((Habitacion) gridview.getItemAtPosition(pos));
                         break;
@@ -488,6 +492,16 @@ public class HabitacionesActivity extends Activity {
 
             Toast.makeText(HabitacionesActivity.this, R.string.verificar_conexion, Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    /**
+     * Permite tomar una foto con la camara y setearsela a la habitación seleccionada
+     */
+    private void agregarFoto(final Habitacion habitacion) {
+
+        Toast.makeText(HabitacionesActivity.this, R.string.proximamente, Toast.LENGTH_SHORT).show();
+
     }
 
     /**

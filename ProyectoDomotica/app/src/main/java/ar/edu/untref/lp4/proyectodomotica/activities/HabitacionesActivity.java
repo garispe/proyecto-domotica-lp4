@@ -715,12 +715,6 @@ public class HabitacionesActivity extends Activity {
 
             if (verificarExisteReconocimientoVoz()) {
                 empezarReconocimientoDeVoz();
-                if(getPalabra()!="default"&&getPalabra().length()!=0){
-                    Toast.makeText(HabitacionesActivity.this, getPalabra(),Toast.LENGTH_LONG).show();
-                }
-                else {
-                    Toast.makeText(HabitacionesActivity.this, "fallo" + getPalabra(),Toast.LENGTH_LONG).show();
-                }
 
             } else {
                 Toast.makeText(HabitacionesActivity.this, getString(R.string.no_esta_presente), Toast.LENGTH_SHORT).show();
@@ -758,6 +752,7 @@ public class HabitacionesActivity extends Activity {
                     RecognizerIntent.EXTRA_RESULTS);
             if(matches.size()>0){
                 palabra=matches.get(0).toString();
+                entrarHabitacionPorComandoDeVoz(palabra);
             }
             else{
                 palabra="default";
@@ -773,5 +768,18 @@ public class HabitacionesActivity extends Activity {
         return palabra;
     }
 
+    private void entrarHabitacionPorComandoDeVoz (String nombreHabitacion) {
+
+        if (habitaciones.size() > 0) {
+
+            for (Habitacion habitacion : habitaciones) {
+
+                if (nombreHabitacion.equals(habitacion.getNombre())) {
+
+                    abrirArtefactosActivity(habitacion);
+                }
+            }
+        }
+    }
 }
 

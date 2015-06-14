@@ -1,7 +1,9 @@
 package ar.edu.untref.lp4.proyectodomotica.activities;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -23,10 +25,14 @@ public class ConfiguracionActivity extends ActionBarActivity {
     private ImageButton bIngles;
     private boolean lleno = false;
 
+    private SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracion);
+
+        preferences = getSharedPreferences("du_preferences", Context.MODE_PRIVATE);
 
         bVaciarBD = (ImageButton) findViewById(R.id.boton_vaciar_bd);
         bDomotica = (ImageButton) findViewById(R.id.boton_domotica);
@@ -107,6 +113,7 @@ public class ConfiguracionActivity extends ActionBarActivity {
                 conf.locale = new Locale(Locale.getDefault().getLanguage());
                 res.updateConfiguration(conf, dm);
 
+                preferences.edit().putString("idioma", "espaniol").apply();
                 Toast.makeText(ConfiguracionActivity.this, getString(R.string.cambio_idioma), Toast.LENGTH_SHORT).show();
 
                 finish();
@@ -124,6 +131,7 @@ public class ConfiguracionActivity extends ActionBarActivity {
                 conf.locale = new Locale(Locale.US.getLanguage());
                 res.updateConfiguration(conf, dm);
 
+                preferences.edit().putString("idioma", "ingles").apply();
                 Toast.makeText(ConfiguracionActivity.this, getString(R.string.cambio_idioma_ingles), Toast.LENGTH_SHORT).show();
 
                 finish();

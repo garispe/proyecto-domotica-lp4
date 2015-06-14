@@ -308,7 +308,7 @@ public class HabitacionesActivity extends Activity {
      */
     private void menuOpciones(int position) {
 
-        if (showcaseIngresarHabitacion.isShown()) {
+        if (showcaseIngresarHabitacion != null) {
             showcaseIngresarHabitacion.hide();
         }
 

@@ -929,6 +929,45 @@ public class HabitacionesActivity extends Activity {
             }
     }
 
+    private void encnderTodoHabitacion (String lugar, String todo) {
+        if (controladorBluetooth.estaConectado()) {
+            Habitacion aux = null;
+            for (Habitacion habitacion : habitaciones) {
+                if (lugar.equals(habitacion.getNombre())) {
+                    aux = habitacion;
+                }
+            }
+            List<Artefacto> lista = getListaArtefactos(aux);
+            if (lista.size() > 0) {
+                if (todo.equals("todo")) {
+                    for (Artefacto aparato : lista) {
+                            if (!aparato.isActivo()) {
+
+                                Integer pin = ControladorBaseDatos.getPinArtefacto(aparato);
+                                String dato = pin.toString();
+
+                                aparato.setActivo(true);
+
+                                controladorBaseDatos.actualizarEstadoArtefacto(aparato);
+                                controladorBluetooth.enviarDato(dato + "1");
+
+                                Toast.makeText(HabitacionesActivity.this, R.string.artefactos_encendidos, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    } else {
+                    Toast.makeText(HabitacionesActivity.this, "Error n comando, Repita orden", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "No hay artefactos cargados", Toast.LENGTH_LONG).show();
+            }
+
+        } else {
+            Toast.makeText(this, "No esta conectado", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+
     private void encenderArtefacto (String lugar, String artefacto){
         if (controladorBluetooth.estaConectado()) {
             Habitacion aux = null;
@@ -995,12 +1034,15 @@ public class HabitacionesActivity extends Activity {
             if (nombreHabitacionDisponible(palabra2)){
                 Toast.makeText(this, "no existe dicha habitacion", Toast.LENGTH_LONG).show();
             } else {
-                if (palabra3.equals("encender")) {
-                    encenderArtefacto(palabra2, palabra4);
+                if (palabra3.equals("encender") && palabra4.equals("todo")) {
+                    encnderTodoHabitacion(palabra2,palabra4);
+                } else {
+                    if (palabra3.equals("encender")) {
+                        encenderArtefacto(palabra2, palabra4);
+                    }
                 }
             }
         }
-
     }
 
     public void analizarOrden(List<Habitacion> habitaciones) {

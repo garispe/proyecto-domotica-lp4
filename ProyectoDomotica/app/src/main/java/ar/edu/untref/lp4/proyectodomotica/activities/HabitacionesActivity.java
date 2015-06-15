@@ -759,11 +759,11 @@ public class HabitacionesActivity extends Activity {
 
             }
             else{
-                palabra="default";
+                Toast.makeText(this, "Orden vacia, repita la orden", Toast.LENGTH_LONG).show();
             }
         }
         else{
-            palabra="default";
+            Toast.makeText(this, "Error en el reconocimiento de las palbras. Repita la orden", Toast.LENGTH_LONG).show();
         }
 
     }

@@ -1,9 +1,12 @@
 package ar.edu.untref.lp4.proyectodomotica.controladores;
 
 import android.app.Activity;
+import android.os.CountDownTimer;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +31,8 @@ public class ControladorOrdenesDeVoz {
      */
     public ControladorOrdenesDeVoz(Activity activity) {
         this.activity = activity;
+        habitacionesActivity = new HabitacionesActivity();
+        artefactosActivity = new ArtefactosActivity();
         palabra1 = palabra2 = palabra3 = palabra4 = "";
     }
 
@@ -51,47 +56,6 @@ public class ControladorOrdenesDeVoz {
         Toast.makeText(this.activity, "Sobran o faltan palabras", Toast.LENGTH_LONG).show();
         Toast.makeText(this.activity, "Reiterar orden", Toast.LENGTH_LONG).show();
     }
-
-    /**
-     * Caraga las palabras del comando de voz en cuatro strings
-     */
-    /*
-    public void cargarPalabras(String comando){
-        int posicionActual=0;
-        String [] cadena = new String[4];
-        String palabraActual="";
-        for (int i= 0; i<cadena.length; i++) { //hola la la la la la la
-            cadena[i] = "";
-        }
-        for (int i = 0; i<comando.length() && posicionActual<cadena.length; i++) {
-            char c = comando.charAt(i);
-            if (c == ' ' ){
-                cadena[posicionActual]=palabraActual;
-                palabraActual="";
-                posicionActual++;
-            }
-            else{
-                palabraActual=palabraActual + c;
-            }
-        }
-        //Cargo la cantidad de palaras que voy a tener cargadas
-        cantidadPalabras = posicionActual++;
-        for (int i=0; !cadena[i].equals("") && i<cadena.length; i++)
-            switch (i) {
-                case 0:
-                    palabra1 = cadena[i];
-                    break;
-                case 1: palabra2 = cadena[i];
-                    break;
-                case 2: palabra3 = cadena[i];
-                    break;
-                case 3: palabra4 = cadena[i];
-                    break;
-                default:
-                    break;
-            }
-    }
-    */
 
     /**
      * Separa la orden obtenida en palabras
@@ -149,27 +113,29 @@ public class ControladorOrdenesDeVoz {
      */
     public void guardarOrden (String cadena){
         cargarPalabras(obtenerPalabras(cadena));
-        String prueba = palabra1 + ' ' + palabra2 + ' ' +  palabra3 + ' ' +  palabra4;
-        Toast.makeText(this.activity, prueba, Toast.LENGTH_LONG).show();
     }
     /**
      * La palabra que se pasa por parametro es el nombre de la habitacion
      * Siempre sera la segunda palabra.
      */
     private void abrirHabitacion (List<Habitacion> habitaciones, String palabra){
-        if (habitaciones.size() > 0) {
-            if (!habitacionesActivity.nombreHabitacionDisponible(palabra)) {
+            if (habitaciones.size() > 0) {
                 for (Habitacion habitacion : habitaciones) {
-                    habitacionesActivity.abrirArtefactosActivity(habitacion);
+                    if (palabra.equals(habitacion.getNombre())) {
+                        habitacionesActivity.abrirArtefactosActivity(habitacion);
+                    }
                 }
             } else {
-                Toast.makeText(this.activity, "No existe habitacion con dicho nombre", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.activity, "No se cargo ninguna habitacion", Toast.LENGTH_LONG).show();
             }
-        } else {
-            Toast.makeText(this.activity, "No se cargo ninguna habitacion", Toast.LENGTH_LONG).show();
-        }
     }
 
+    private List<Artefacto> obtenerListaArtefactos (Habitacion habitacion) {
+
+        List<Artefacto> lista = new ArrayList<>();
+        lista.addAll(ControladorBaseDatos.getArtefactosPorHabitacion(artefactosActivity.getIdHabitacion()));
+        return lista;
+    }
     /**
      * La palabra que se pasa por parametro es el nombre del artefacto
      * Si la orden es de dos palabras, sera la segunda. Si es de cuatro, la cuarta
@@ -263,6 +229,7 @@ public class ControladorOrdenesDeVoz {
     }
 
     private void apagarTodoHabitacion (List<Habitacion> habitaciones) {
+        //Ya estoy adentro del activity ArtefactosHabitacion, por eso puedo hacer el llamado... no?
         String nombre = artefactosActivity.getNombreHabitacion();
         if (habitaciones.size() > 0) {
             for (Habitacion habitacion : habitaciones) {
@@ -273,7 +240,7 @@ public class ControladorOrdenesDeVoz {
         }
     }
 
-    private void realizarOrdenDosPalabras (List<Habitacion> habitaciones, List<Artefacto> artefactos, String palabra1, String palabra2) {
+    private void realizarOrdenDosPalabras (List<Habitacion> habitaciones, String palabra1, String palabra2) {
         switch (palabra1){
             case "abrir": abrirHabitacion(habitaciones, palabra2);
                 break;
@@ -281,7 +248,7 @@ public class ControladorOrdenesDeVoz {
                 if (palabra2.equals("todo")){
                     encenderTodoHabitacion(habitaciones);
                 } else {
-                    encenderArtefacto(artefactos, palabra2);
+                    //encenderArtefacto(artefactos, palabra2);
                 }
             }
                 break;
@@ -289,7 +256,7 @@ public class ControladorOrdenesDeVoz {
                 if (palabra2.equals("todo")) {
                     apagarTodoHabitacion(habitaciones);
                 } else {
-                    apagarArtefacto(artefactos, palabra2);
+                    //apagarArtefacto(artefactos, palabra2);
                 }
             }
                 break;
@@ -322,14 +289,14 @@ public class ControladorOrdenesDeVoz {
         }
     }
 
-    public void analizarOrden(List<Habitacion> habitaciones, List<Artefacto> artefactos) {
+    public void analizarOrden(List<Habitacion> habitaciones) {
         switch (cantidadPalabras) {
             case 0:
                 noHayOrdenes();
                 break;
             case 1: unaPalabra();
                 break;
-            case 2: realizarOrdenDosPalabras(habitaciones, artefactos, palabra1, palabra2);
+            case 2: realizarOrdenDosPalabras(habitaciones, palabra1, palabra2);
                 break;
             case 3: realizarOrdenTresPalabras(habitaciones,palabra1,palabra2,palabra3);
                 break;

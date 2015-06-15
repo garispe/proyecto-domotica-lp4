@@ -28,6 +28,8 @@ import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import ar.edu.untref.lp4.proyectodomotica.BuildConfig;
@@ -70,6 +72,10 @@ public class HabitacionesActivity extends Activity {
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
     public String palabra="vacio";
     private ControladorOrdenesDeVoz controlVoz;
+    //Variables temporales
+    String palabra1, palabra2, palabra3, palabra4;
+    int cantidadPalabras;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -514,7 +520,6 @@ public class HabitacionesActivity extends Activity {
      * Abre una Activity asignandole el id de la habitacion
      */
     public void abrirArtefactosActivity(Habitacion habitacion) {
-
         Intent intent = new Intent(HabitacionesActivity.this, ArtefactosActivity.class);
         intent.putExtra(Constantes.ID_HABITACION, habitacion.getId());
         intent.putExtra(Constantes.NOMBRE_HABITACION, habitacion.getNombre());
@@ -748,22 +753,175 @@ public class HabitacionesActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        controlVoz = new ControladorOrdenesDeVoz(this);
+        //controlVoz = new ControladorOrdenesDeVoz(this);
         if (requestCode == VOICE_RECOGNITION_REQUEST_CODE && resultCode == RESULT_OK)
         {
             ArrayList<String> matches = data.getStringArrayListExtra(
                     RecognizerIntent.EXTRA_RESULTS);
             if(matches.size()>0){
                 palabra=matches.get(0).toString();
-                controlVoz.guardarOrden(palabra);
-
+                guardarOrden(palabra);
+                analizarOrden(habitaciones);
             }
             else{
                 Toast.makeText(this, "Orden vacia, repita la orden", Toast.LENGTH_LONG).show();
             }
         }
         else{
-            Toast.makeText(this, "Error en el reconocimiento de las palbras. Repita la orden", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error en el reconocimiento de las palabras. Repita la orden", Toast.LENGTH_LONG).show();
+        }
+
+    }
+    /**
+     * Voy a poner todo aca de forma previsoria...
+     */
+
+    private void noHayOrdenes() {
+        Toast.makeText(this, "No hay ordenes que interpretar", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Reiterar orden", Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * mensajes que se muestran cuando se registra una sola palabra
+     */
+    private void unaPalabra () {
+        Toast.makeText(this, "Faltan palabras para interpretar", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Reiterar orden", Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * mensajes que se muestran cuando se registran tres palabras
+     */
+    private void tresPalabras () {
+        Toast.makeText(this, "Sobran o faltan palabras", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Reiterar orden", Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * Separa la orden obtenida en palabras
+     * @param cadena
+     * @return
+     */
+    private List<String> obtenerPalabras(String cadena){
+        //Lista a devolver.
+        List<String> palabras = new LinkedList<String>();
+        cadena = cadena.toLowerCase();
+        //borra espacios al principio y final de la cadena
+        cadena = cadena.trim();
+        //indexOf devuelve la posicion del espacio, si no existe devuelve -1
+        while(cadena.indexOf(' ') != -1) {
+            String palabraAlmacenar = cadena.substring(0, cadena.indexOf(' '));
+            palabras.add(palabraAlmacenar);
+            cadena = cadena.substring(cadena.indexOf(' '), cadena.length());
+            cadena = cadena.trim();
+        }
+        palabras.add(cadena);
+        return palabras;
+    }
+
+    /**
+     * Carga las palabras separadas en las variables
+     * @param palabras
+     */
+    private void cargarPalabras (List<String> palabras) {
+        Iterator<String> iterador= palabras.iterator();
+        String cadena;
+        int i= 0;
+        cantidadPalabras = palabras.size();
+        while (iterador.hasNext()) {
+            cadena= iterador.next();
+            switch (i) {
+                case 0:
+                    palabra1 = cadena;
+                    break;
+                case 1: palabra2 = cadena;
+                    break;
+                case 2: palabra3 = cadena;
+                    break;
+                case 3: palabra4 = cadena;
+                    break;
+                default:
+                    break;
+            }
+            i++;
+        }
+    }
+
+    /**
+     * Con los metodos anteriores, carga las cuatro palabras en las variables
+     * @param cadena
+     */
+    public void guardarOrden (String cadena){
+        cargarPalabras(obtenerPalabras(cadena));
+    }
+
+    /**
+     * La palabra que se pasa por parametro es el nombre de la habitacion
+     * Siempre sera la segunda palabra.
+     */
+    private void abrirHabitacion (List<Habitacion> habitaciones, String palabra){
+            if (habitaciones.size() > 0) {
+                for (Habitacion habitacion : habitaciones) {
+                    if (palabra.equals(habitacion.getNombre())) {
+                        abrirArtefactosActivity(habitacion);
+                    }
+                }
+            } else {
+                Toast.makeText(this, "No se cargo ninguna habitacion", Toast.LENGTH_LONG).show();
+            }
+    }
+
+    /**
+     * Sale del programa o de la habitacion dependiendo de la segunda palabra
+     */
+    private void salir (String palabra) {
+            if (palabra.equals("programa")){
+                this.finish();
+            } else {
+                Toast.makeText(this, "Comando invalido", Toast.LENGTH_LONG).show();
+            }
+    }
+
+    private void realizarOrdenDosPalabras (List<Habitacion> habitaciones, String palabra1, String palabra2) {
+        switch (palabra1){
+            case "abrir": abrirHabitacion(habitaciones, palabra2);
+                break;
+            case "encender": {
+                if (palabra2.equals("todo")){
+                    //encenderTodoHabitacion(habitaciones);
+                } else {
+                    //encenderArtefacto(artefactos, palabra2);
+                }
+            }
+            break;
+            case "apagar": {
+                if (palabra2.equals("todo")) {
+                    //apagarTodoHabitacion(habitaciones);
+                } else {
+                    //apagarArtefacto(artefactos, palabra2);
+                }
+            }
+            break;
+            case "salir": salir(palabra2);
+                break;
+        }
+    }
+
+    public void analizarOrden(List<Habitacion> habitaciones) {
+        switch (cantidadPalabras) {
+            case 0:
+                noHayOrdenes();
+                break;
+            case 1: unaPalabra();
+                break;
+            case 2: realizarOrdenDosPalabras(habitaciones, palabra1, palabra2);
+                break;
+            case 3: //realizarOrdenTresPalabras(habitaciones,palabra1,palabra2,palabra3);
+                break;
+            case 4:
+                break;
+            default: Toast.makeText(this, "Muchas palabras, repita orden", Toast.LENGTH_LONG).show();
+                break;
         }
 
     }

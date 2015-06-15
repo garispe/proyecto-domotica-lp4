@@ -49,10 +49,8 @@ public class ArtefactosActivity extends Activity {
         setContentView(R.layout.activity_artefactos);
 
         Logger.init(TAG);
-
-        nombreHabitacion = getIntent().getExtras().getString(Constantes.NOMBRE_HABITACION);
-
-        idHabitacion = getIntent().getExtras().getInt(Constantes.ID_HABITACION);
+        setNombreHabitacion();
+        setIdHabitacion();
 
         TextView habitacion = (TextView) findViewById(R.id.nombre_habitacion);
         habitacion.setText(nombreHabitacion);
@@ -63,8 +61,20 @@ public class ArtefactosActivity extends Activity {
         inicializarListViewArtefactos();
     }
 
+    public void setNombreHabitacion () {
+        nombreHabitacion = getIntent().getExtras().getString(Constantes.NOMBRE_HABITACION);
+    }
+
     public String getNombreHabitacion () {
         return nombreHabitacion;
+    }
+
+    public void setIdHabitacion () {
+        idHabitacion = getIntent().getExtras().getInt(Constantes.ID_HABITACION);
+    }
+
+    public int getIdHabitacion () {
+        return idHabitacion;
     }
 
     /**

@@ -3,10 +3,12 @@ package ar.edu.untref.lp4.proyectodomotica.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -68,6 +70,9 @@ public class HabitacionesActivity extends Activity {
     private ShowcaseView showcaseAgregarHabitacion;
     private ShowcaseView showcaseIngresarHabitacion;
 
+    private SharedPreferences preferences;
+    private boolean mostrarTutorial;
+
     //a partir de acá son atributos pegados directamente desde ComandoDeVoz
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
     public String palabra="vacio";
@@ -89,6 +94,9 @@ public class HabitacionesActivity extends Activity {
 
         Logger.init(TAG);
         Logger.i("onCreate");
+
+        preferences = getSharedPreferences("du_preferences", Context.MODE_PRIVATE);
+        mostrarTutorial = preferences.getBoolean("mostrar_tutorial", true);
 
         bd = new BaseDatos(this, Constantes.NOMBRE_BD, null, Constantes.VERSION_BD);
         controladorBaseDatos = new ControladorBaseDatos(bd);
@@ -292,13 +300,15 @@ public class HabitacionesActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                preferences.edit().putBoolean("mostrar_tutorial", false).apply();
+
                 if (menu.botonAccionMenu.isOpen()) {
 
                     menu.botonAccionMenu.close(true);
 
                 } else {
 
-                    if (showcaseIngresarHabitacion.isShown()) {
+                    if (showcaseIngresarHabitacion != null) {
                         showcaseIngresarHabitacion.hide();
                     }
                     abrirArtefactosActivity(habitaciones.get(position));
@@ -323,7 +333,7 @@ public class HabitacionesActivity extends Activity {
      */
     private void menuOpciones(int position) {
 
-        if (showcaseIngresarHabitacion.isShown()) {
+        if (showcaseIngresarHabitacion != null) {
             showcaseIngresarHabitacion.hide();
         }
 
@@ -340,6 +350,10 @@ public class HabitacionesActivity extends Activity {
 
                     case R.id.editar:
                         editarHabitacion((Habitacion) gridview.getItemAtPosition(pos));
+                        break;
+
+                    case R.id.agregar_foto:
+                        agregarFoto((Habitacion) gridview.getItemAtPosition(pos));
                         break;
 
                     case R.id.apagar:
@@ -506,6 +520,15 @@ public class HabitacionesActivity extends Activity {
     }
 
     /**
+     * Permite tomar una foto con la camara y setearsela a la habitación seleccionada
+     */
+    private void agregarFoto(final Habitacion habitacion) {
+
+        Toast.makeText(HabitacionesActivity.this, R.string.proximamente, Toast.LENGTH_SHORT).show();
+
+    }
+
+    /**
      * Devuelve la lista de artefactos de una habitacion obtenida desde la BD
      */
     private List<Artefacto> getListaArtefactos(Habitacion habitacion) {
@@ -572,7 +595,9 @@ public class HabitacionesActivity extends Activity {
         @Override
         public void onClick(View v) {
 
-            showcaseAgregarHabitacion.hide();
+            if (showcaseAgregarHabitacion != null) {
+                showcaseAgregarHabitacion.hide();
+            }
             escribirNombreHabitacion();
         }
     };
@@ -619,7 +644,9 @@ public class HabitacionesActivity extends Activity {
                                 inicializarListaHabitaciones();
                                 inicializarGridViewHabitaciones();
 
-                                mostrarShowcaseHabitacion();
+                                if(mostrarTutorial) {
+                                    mostrarShowcaseHabitacion();
+                                }
 
 
                             } else {
@@ -668,6 +695,7 @@ public class HabitacionesActivity extends Activity {
 
         inicializarListaHabitaciones();
         inicializarGridViewHabitaciones();
+        mostrarTutorial = preferences.getBoolean("mostrar_tutorial", true);
     }
 
     /**
@@ -689,6 +717,14 @@ public class HabitacionesActivity extends Activity {
                 .setTarget(targetBotonAgregar)
                 .setContentTitle(getString(R.string.agregar_habitacion))
                 .setContentText(getString(R.string.mensaje_agregar_habitacion_showcase))
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        showcaseAgregarHabitacion.hide();
+                        escribirNombreHabitacion();
+                    }
+                })
                 .build();
 
         showcaseAgregarHabitacion.setButtonPosition(paramsBotonAgregar);
@@ -710,6 +746,13 @@ public class HabitacionesActivity extends Activity {
                 .setTarget(targetGridView)
                 .setContentTitle(getString(R.string.habitacion))
                 .setContentText(getString(R.string.mensaje_showcase_habitacion))
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        preferences.edit().putBoolean("mostrar_tutorial", false).apply();
+                        showcaseIngresarHabitacion.hide();
+                    }
+                })
                 .build();
 
         showcaseIngresarHabitacion.setButtonPosition(paramsHabitacion);

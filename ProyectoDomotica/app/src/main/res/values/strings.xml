@@ -39,7 +39,7 @@
 
     <string name="idioma">Idioma</string>
     <string name="vaciar_habitacion">- Vaciar Datos</string>
-    <string name="domotica" translatable="false">- Domótica</string>
+    <string name="domotica">- Domótica</string>
     <string name="informacion">Información</string>
     <string name="espanol">Español</string>
     <string name="ingles">Inglés</string>
@@ -65,6 +65,9 @@
     <string name="prender_todo">Prender todo</string>
     <string name="artefactos_apagados">Todos los artefactos se han apagado</string>
     <string name="artefactos_encendidos">Todos los artefactos se han encendido</string>
-    <string name="no_esta_presente">No se enceuntra presente el reconocimiento de voz</string>
+    <string name="agregar_foto">Agregar foto</string>
+    <string name="cambio_idioma">El idioma ha cambiado correctamente</string>
+    <string name="cambio_idioma_ingles">Language changed successfully</string>
+
 
 </resources>

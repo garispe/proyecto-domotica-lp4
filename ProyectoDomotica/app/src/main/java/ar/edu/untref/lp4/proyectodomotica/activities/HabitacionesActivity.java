@@ -929,6 +929,41 @@ public class HabitacionesActivity extends Activity {
             }
     }
 
+    private void encenderArtefacto (String lugar, String artefacto){
+        if (controladorBluetooth.estaConectado()) {
+            Habitacion aux = null;
+            for (Habitacion habitacion : habitaciones) {
+                if (lugar.equals(habitacion.getNombre())) {
+                    aux = habitacion;
+                }
+            }
+            List<Artefacto> lista = getListaArtefactos(aux);
+            if (lista.size() > 0) {
+                for (Artefacto aparato : lista) {
+                    if (artefacto.equals(aparato.getNombre())) {
+                        if (!aparato.isActivo()) {
+
+                            Integer pin = ControladorBaseDatos.getPinArtefacto(aparato);
+                            String dato = pin.toString();
+
+                            aparato.setActivo(true);
+
+                            controladorBaseDatos.actualizarEstadoArtefacto(aparato);
+                            controladorBluetooth.enviarDato(dato + "1");
+
+                            Toast.makeText(HabitacionesActivity.this, R.string.artefactos_encendidos, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            } else {
+                Toast.makeText(this, "No hay artefactos cargados", Toast.LENGTH_LONG).show();
+            }
+
+        } else {
+            Toast.makeText(this, "No esta conectado", Toast.LENGTH_LONG).show();
+        }
+    }
+
     private void realizarOrdenDosPalabras (List<Habitacion> habitaciones, String palabra1, String palabra2) {
         switch (palabra1){
             case "abrir": abrirHabitacion(habitaciones, palabra2);
@@ -954,6 +989,20 @@ public class HabitacionesActivity extends Activity {
         }
     }
 
+    private void realizarOrdenCuatroPalabras (String palabra1, String palabra2, String palabra3,
+                                              String palabra4){
+        if (palabra1.equals("abrir")){
+            if (nombreHabitacionDisponible(palabra2)){
+                Toast.makeText(this, "no existe dicha habitacion", Toast.LENGTH_LONG).show();
+            } else {
+                if (palabra3.equals("encender")) {
+                    encenderArtefacto(palabra2, palabra4);
+                }
+            }
+        }
+
+    }
+
     public void analizarOrden(List<Habitacion> habitaciones) {
         switch (cantidadPalabras) {
             case 0:
@@ -965,7 +1014,7 @@ public class HabitacionesActivity extends Activity {
                 break;
             case 3: //realizarOrdenTresPalabras(habitaciones,palabra1,palabra2,palabra3);
                 break;
-            case 4:
+            case 4: realizarOrdenCuatroPalabras(palabra1,palabra2, palabra3, palabra4);
                 break;
             default: Toast.makeText(this, "Muchas palabras, repita orden", Toast.LENGTH_LONG).show();
                 break;

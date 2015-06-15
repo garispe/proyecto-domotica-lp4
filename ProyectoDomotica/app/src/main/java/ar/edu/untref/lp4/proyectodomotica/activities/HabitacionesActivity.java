@@ -671,6 +671,7 @@ public class HabitacionesActivity extends Activity {
 
         inicializarListaHabitaciones();
         inicializarGridViewHabitaciones();
+        mostrarTutorial = preferences.getBoolean("mostrar_tutorial", true);
     }
 
     /**

@@ -55,4 +55,6 @@
     <string name="habitacion">Room</string>
     <string name="mensaje_agregar_habitacion_showcase">Adds new rooms, in order to adapt the application to your needs</string>
     <string name="mensaje_showcase_habitacion">Enter the created room and adds new artifacts.\nKeep holding in a room for the obtain options.</string>
+    <string name="agregar_foto">Add photo</string>
+    <string name="agregar_habitacion">Add Room</string>
 </resources>

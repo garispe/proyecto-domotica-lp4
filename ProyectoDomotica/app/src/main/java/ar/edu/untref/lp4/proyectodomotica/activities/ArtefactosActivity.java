@@ -63,6 +63,10 @@ public class ArtefactosActivity extends Activity {
         inicializarListViewArtefactos();
     }
 
+    public String getNombreHabitacion () {
+        return nombreHabitacion;
+    }
+
     /**
      * Actualiza la lista de artefactos
      */

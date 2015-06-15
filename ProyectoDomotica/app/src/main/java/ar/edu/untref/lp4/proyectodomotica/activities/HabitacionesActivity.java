@@ -36,6 +36,7 @@ import ar.edu.untref.lp4.proyectodomotica.adapters.GridHabitacionesAdapter;
 import ar.edu.untref.lp4.proyectodomotica.baseDatos.BaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
+import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorOrdenesDeVoz;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
 import ar.edu.untref.lp4.proyectodomotica.tasks.ConexionTask;
@@ -68,6 +69,7 @@ public class HabitacionesActivity extends Activity {
     //a partir de acá son atributos pegados directamente desde ComandoDeVoz
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
     public String palabra="vacio";
+    private ControladorOrdenesDeVoz controlVoz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -435,7 +437,7 @@ public class HabitacionesActivity extends Activity {
      * Apaga todos los artefactos que se encuentren encendidos
      * en la habitacion y actualiza en la BD
      */
-    private void apagarTodo(Habitacion habitacion) {
+    public void apagarTodo(Habitacion habitacion) {
 
         if (getListaArtefactos(habitacion).size() > 0 && controladorBluetooth.estaConectado()) {
 
@@ -468,7 +470,7 @@ public class HabitacionesActivity extends Activity {
      * Prende todos los artefactos que se encuentren apagados
      * en la habitacion y actualiza en la BD
      */
-    private void prenderTodo(Habitacion habitacion) {
+    public void prenderTodo(Habitacion habitacion) {
 
         if (getListaArtefactos(habitacion).size() > 0 && controladorBluetooth.estaConectado()) {
 
@@ -511,7 +513,7 @@ public class HabitacionesActivity extends Activity {
     /**
      * Abre una Activity asignandole el id de la habitacion
      */
-    private void abrirArtefactosActivity(Habitacion habitacion) {
+    public void abrirArtefactosActivity(Habitacion habitacion) {
 
         Intent intent = new Intent(HabitacionesActivity.this, ArtefactosActivity.class);
         intent.putExtra(Constantes.ID_HABITACION, habitacion.getId());
@@ -637,7 +639,7 @@ public class HabitacionesActivity extends Activity {
     /**
      * Devuelve si el nombre esta disponible para la habitacion
      */
-    private boolean nombreHabitacionDisponible(String nombre) {
+    public boolean nombreHabitacionDisponible(String nombre) {
 
         boolean nombreDisponible = true;
 
@@ -746,13 +748,15 @@ public class HabitacionesActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
+        controlVoz = new ControladorOrdenesDeVoz(this);
         if (requestCode == VOICE_RECOGNITION_REQUEST_CODE && resultCode == RESULT_OK)
         {
             ArrayList<String> matches = data.getStringArrayListExtra(
                     RecognizerIntent.EXTRA_RESULTS);
             if(matches.size()>0){
                 palabra=matches.get(0).toString();
-                entrarHabitacionPorComandoDeVoz(palabra);
+                controlVoz.guardarOrden(palabra);
+
             }
             else{
                 palabra="default";
@@ -762,24 +766,6 @@ public class HabitacionesActivity extends Activity {
             palabra="default";
         }
 
-    }
-
-    public String getPalabra(){
-        return palabra;
-    }
-
-    private void entrarHabitacionPorComandoDeVoz (String nombreHabitacion) {
-
-        if (habitaciones.size() > 0) {
-
-            for (Habitacion habitacion : habitaciones) {
-
-                if (nombreHabitacion.equals(habitacion.getNombre())) {
-
-                    abrirArtefactosActivity(habitacion);
-                }
-            }
-        }
     }
 }
 

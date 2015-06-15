@@ -767,7 +767,7 @@ public class HabitacionesActivity extends Activity {
                 empezarReconocimientoDeVoz();
 
             } else {
-                Toast.makeText(HabitacionesActivity.this, getString(R.string.no_esta_presente), Toast.LENGTH_SHORT).show();
+                Toast.makeText(HabitacionesActivity.this, "No se encuentra el reconocimiento de voz en el dispositivo", Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -904,9 +904,13 @@ public class HabitacionesActivity extends Activity {
      */
     private void abrirHabitacion (List<Habitacion> habitaciones, String palabra){
             if (habitaciones.size() > 0) {
-                for (Habitacion habitacion : habitaciones) {
-                    if (palabra.equals(habitacion.getNombre())) {
-                        abrirArtefactosActivity(habitacion);
+                if (nombreHabitacionDisponible(palabra)) {
+                    Toast.makeText(this, "No existe dicha habitacion", Toast.LENGTH_LONG).show();
+                } else {
+                    for (Habitacion habitacion : habitaciones) {
+                        if (palabra.equals(habitacion.getNombre())) {
+                            abrirArtefactosActivity(habitacion);
+                        }
                     }
                 }
             } else {

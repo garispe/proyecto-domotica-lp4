@@ -303,7 +303,7 @@ public class ArtefactosActivity extends Activity {
             if (verificarExisteReconocimientoVoz()) {
 
             } else {
-                Toast.makeText(ArtefactosActivity.this, getString(R.string.no_esta_presente), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ArtefactosActivity.this, "No esta presente el reconocimiento de voz en el dispositivo", Toast.LENGTH_SHORT).show();
             }
         }
     };

@@ -78,5 +78,9 @@
     <string name="habitaciones_vacias">No hay habitaciones cargadas</string>
     <string name="comando_invalido">Comando invalido</string>
     <string name="muchas_palabras">Muchas palabras, repita orden</string>
+    <string name="se_encendio">El artefacto fue encendido</string>
+    <string name="se_apago">El artefacto fue apagado</string>
+    <string name="estaba_encendido">El artefacto se encuentra encendido</string>
+    <string name="estaba_apagado">El artefacto se encuentra apagado</string>
 
 </resources>

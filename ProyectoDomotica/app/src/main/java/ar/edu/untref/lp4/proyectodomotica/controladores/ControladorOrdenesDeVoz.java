@@ -165,7 +165,9 @@ public class ControladorOrdenesDeVoz {
                             aparato.setActivo(true);
                             baseDatos.actualizarEstadoArtefacto(aparato);
                             controladorBluetooth.enviarDato(dato + "1");
-                            Toast.makeText(this.habitacionActivity, R.string.artefactos_encendidos, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this.habitacionActivity, R.string.se_encendio, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(this.habitacionActivity, R.string.estaba_encendido, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -193,7 +195,9 @@ public class ControladorOrdenesDeVoz {
                             aparato.setActivo(false);
                             baseDatos.actualizarEstadoArtefacto(aparato);
                             controladorBluetooth.enviarDato(dato + "0");
-                            Toast.makeText(this.habitacionActivity, R.string.artefactos_apagados, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this.habitacionActivity, R.string.se_apago, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(this.habitacionActivity, R.string.estaba_apagado, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

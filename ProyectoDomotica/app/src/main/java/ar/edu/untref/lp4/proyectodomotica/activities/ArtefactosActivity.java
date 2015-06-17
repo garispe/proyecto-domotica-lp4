@@ -3,7 +3,11 @@ package ar.edu.untref.lp4.proyectodomotica.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -33,6 +37,7 @@ public class ArtefactosActivity extends Activity {
     private ListViewArtefactosAdapter artefactosAdapter;
 
     private FloatingActionButton botonAgregarHabitacion;
+    private FloatingActionButton botonHablar;
     public static String nombreHabitacion;
     private int idHabitacion;
 
@@ -42,10 +47,8 @@ public class ArtefactosActivity extends Activity {
         setContentView(R.layout.activity_artefactos);
 
         Logger.init(TAG);
-
-        nombreHabitacion = getIntent().getExtras().getString(Constantes.NOMBRE_HABITACION);
-
-        idHabitacion = getIntent().getExtras().getInt(Constantes.ID_HABITACION);
+        setNombreHabitacion();
+        setIdHabitacion();
 
         TextView habitacion = (TextView) findViewById(R.id.nombre_habitacion);
         habitacion.setText(nombreHabitacion);
@@ -53,6 +56,22 @@ public class ArtefactosActivity extends Activity {
         inicializarBotonAgregar();
         inicializarListaArtefactosPorHabitacion();
         inicializarListViewArtefactos();
+    }
+
+    public void setNombreHabitacion () {
+        nombreHabitacion = getIntent().getExtras().getString(Constantes.NOMBRE_HABITACION);
+    }
+
+    public String getNombreHabitacion () {
+        return nombreHabitacion;
+    }
+
+    public void setIdHabitacion () {
+        idHabitacion = getIntent().getExtras().getInt(Constantes.ID_HABITACION);
+    }
+
+    public int getIdHabitacion () {
+        return idHabitacion;
     }
 
     /**

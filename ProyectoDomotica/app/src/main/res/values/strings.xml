@@ -68,6 +68,15 @@
     <string name="agregar_foto">Agregar foto</string>
     <string name="cambio_idioma">El idioma ha cambiado correctamente</string>
     <string name="cambio_idioma_ingles">Language changed successfully</string>
-
+    <!-- Para traducir-->
+    <string name="mensaje_ventana">Diga la orden a procesar</string>
+    <string name="no_orden">No hay ordenes para interpretar</string>
+    <string name="reiterar_comando">Reiterar comando</string>
+    <string name="faltan_palabras">Faltan palabras para interpretar</string>
+    <string name="faltan_o_sobran">Sobran o faltan palabras para interpretar</string>
+    <string name="no_existe_habitacion">Habitacion inexistente</string>
+    <string name="habitaciones_vacias">No hay habitaciones cargadas</string>
+    <string name="comando_invalido">Comando invalido</string>
+    <string name="muchas_palabras">Muchas palabras, repita orden</string>
 
 </resources>

@@ -6,9 +6,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +30,8 @@ import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import ar.edu.untref.lp4.proyectodomotica.BuildConfig;
@@ -35,6 +40,7 @@ import ar.edu.untref.lp4.proyectodomotica.adapters.GridHabitacionesAdapter;
 import ar.edu.untref.lp4.proyectodomotica.baseDatos.BaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
+import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorOrdenesDeVoz;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
 import ar.edu.untref.lp4.proyectodomotica.tasks.ConexionTask;
@@ -51,6 +57,7 @@ public class HabitacionesActivity extends Activity {
     private ProgressDialog progressDialog;
     private TextView textoConexion;
     private FloatingActionButton botonAgregarHabitacion;
+    private FloatingActionButton botonHablar;
 
     private GridHabitacionesAdapter adapter;
     private GridView gridview;
@@ -65,6 +72,11 @@ public class HabitacionesActivity extends Activity {
 
     private SharedPreferences preferences;
     private boolean mostrarTutorial;
+
+    //a partir de acá son atributos pegados directamente desde ComandoDeVoz
+    private static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
+    public String palabra="vacio";
+    private ControladorOrdenesDeVoz controlVoz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +98,7 @@ public class HabitacionesActivity extends Activity {
         controladorBaseDatos = new ControladorBaseDatos(bd);
 
         realizarConexion();
+
     }
 
     /**
@@ -114,6 +127,14 @@ public class HabitacionesActivity extends Activity {
         botonAgregarHabitacion.setSize(FloatingActionButton.SIZE_NORMAL);
         botonAgregarHabitacion.setIcon(R.drawable.cruz);
         botonAgregarHabitacion.setOnClickListener(agregarHabitacionListener);
+    }
+
+    public void inicializarBotonHablar() {
+
+        botonHablar = (FloatingActionButton) findViewById(R.id.boton_hablar);
+        botonHablar.setSize(FloatingActionButton.SIZE_NORMAL);
+        botonHablar.setIcon(R.drawable.microfono);
+        botonHablar.setOnClickListener(hablar);
     }
 
     /**
@@ -432,7 +453,7 @@ public class HabitacionesActivity extends Activity {
      * Apaga todos los artefactos que se encuentren encendidos
      * en la habitacion y actualiza en la BD
      */
-    private void apagarTodo(Habitacion habitacion) {
+    public void apagarTodo(Habitacion habitacion) {
 
         if (getListaArtefactos(habitacion).size() > 0 && controladorBluetooth.estaConectado()) {
 
@@ -465,7 +486,7 @@ public class HabitacionesActivity extends Activity {
      * Prende todos los artefactos que se encuentren apagados
      * en la habitacion y actualiza en la BD
      */
-    private void prenderTodo(Habitacion habitacion) {
+    public void prenderTodo(Habitacion habitacion) {
 
         if (getListaArtefactos(habitacion).size() > 0 && controladorBluetooth.estaConectado()) {
 
@@ -494,7 +515,6 @@ public class HabitacionesActivity extends Activity {
         }
     }
 
-
     /**
      * Permite tomar una foto con la camara y setearsela a la habitación seleccionada
      */
@@ -507,7 +527,7 @@ public class HabitacionesActivity extends Activity {
     /**
      * Devuelve la lista de artefactos de una habitacion obtenida desde la BD
      */
-    private List<Artefacto> getListaArtefactos(Habitacion habitacion) {
+    public List<Artefacto> getListaArtefactos(Habitacion habitacion) {
 
         List<Artefacto> lista = new ArrayList<>();
         lista.addAll(ControladorBaseDatos.getArtefactosPorHabitacion(habitacion.getId()));
@@ -518,8 +538,7 @@ public class HabitacionesActivity extends Activity {
     /**
      * Abre una Activity asignandole el id de la habitacion
      */
-    private void abrirArtefactosActivity(Habitacion habitacion) {
-
+    public void abrirArtefactosActivity(Habitacion habitacion) {
         Intent intent = new Intent(HabitacionesActivity.this, ArtefactosActivity.class);
         intent.putExtra(Constantes.ID_HABITACION, habitacion.getId());
         intent.putExtra(Constantes.NOMBRE_HABITACION, habitacion.getNombre());
@@ -625,6 +644,7 @@ public class HabitacionesActivity extends Activity {
                                     mostrarShowcaseHabitacion();
                                 }
 
+
                             } else {
 
                                 escribirNombreHabitacion();
@@ -647,7 +667,7 @@ public class HabitacionesActivity extends Activity {
     /**
      * Devuelve si el nombre esta disponible para la habitacion
      */
-    private boolean nombreHabitacionDisponible(String nombre) {
+    public boolean nombreHabitacionDisponible(String nombre) {
 
         boolean nombreDisponible = true;
 
@@ -732,6 +752,63 @@ public class HabitacionesActivity extends Activity {
                 .build();
 
         showcaseIngresarHabitacion.setButtonPosition(paramsHabitacion);
+
+    }
+
+    private View.OnClickListener hablar = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            if (verificarExisteReconocimientoVoz()) {
+                empezarReconocimientoDeVoz();
+
+            } else {
+                Toast.makeText(HabitacionesActivity.this, "No se encuentra el reconocimiento de voz en el dispositivo", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+    // Verifica que este instalado en el celular el paquete de reconocimiento de voz. En caso contrario, devuelve false.
+    public boolean verificarExisteReconocimientoVoz () {
+        PackageManager pm = getPackageManager();
+        List<ResolveInfo> activities = pm.queryIntentActivities(
+                new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
+        if (activities.size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void empezarReconocimientoDeVoz()
+    {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, R.string.mensaje_ventana);
+        startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        controlVoz = new ControladorOrdenesDeVoz(this,controladorBaseDatos);
+        if (requestCode == VOICE_RECOGNITION_REQUEST_CODE && resultCode == RESULT_OK)
+        {
+            ArrayList<String> matches = data.getStringArrayListExtra(
+                    RecognizerIntent.EXTRA_RESULTS);
+            if(matches.size()>0){
+                palabra=matches.get(0).toString();
+                controlVoz.guardarOrden(palabra);
+                controlVoz.analizarOrden(habitaciones);
+            }
+            else{
+                Toast.makeText(this, "Orden vacia, repita la orden", Toast.LENGTH_LONG).show();
+            }
+        }
+        else{
+            Toast.makeText(this, "Error en el reconocimiento de las palabras. Repita la orden", Toast.LENGTH_LONG).show();
+        }
 
     }
 }

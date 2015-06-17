@@ -56,7 +56,6 @@ public class ArtefactosActivity extends Activity {
         habitacion.setText(nombreHabitacion);
 
         inicializarBotonAgregar();
-        inicializarBotonHablar();
         inicializarListaArtefactosPorHabitacion();
         inicializarListViewArtefactos();
     }
@@ -95,14 +94,6 @@ public class ArtefactosActivity extends Activity {
         botonAgregarHabitacion.setSize(FloatingActionButton.SIZE_NORMAL);
         botonAgregarHabitacion.setIcon(R.drawable.cruz);
         botonAgregarHabitacion.setOnClickListener(agregarArtefactoListener);
-    }
-
-    private void inicializarBotonHablar() {
-
-        botonHablar = (FloatingActionButton) findViewById(R.id.boton_hablar);
-        botonHablar.setSize(FloatingActionButton.SIZE_NORMAL);
-        botonHablar.setIcon(R.drawable.microfono);
-        botonHablar.setOnClickListener(hablar);
     }
 
     /**
@@ -284,29 +275,4 @@ public class ArtefactosActivity extends Activity {
         alertDialog.show();
 
     }
-
-    public boolean verificarExisteReconocimientoVoz () {
-        PackageManager pm = getPackageManager();
-        List<ResolveInfo> activities = pm.queryIntentActivities(
-                new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
-        if (activities.size() == 0) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    private View.OnClickListener hablar = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-            if (verificarExisteReconocimientoVoz()) {
-
-            } else {
-                Toast.makeText(ArtefactosActivity.this, "No esta presente el reconocimiento de voz en el dispositivo", Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
-
-
 }

@@ -1,9 +1,7 @@
 package ar.edu.untref.lp4.proyectodomotica.controladores;
 
+
 import android.app.Activity;
-import android.os.CountDownTimer;
-import android.util.Log;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -12,49 +10,50 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ar.edu.untref.lp4.proyectodomotica.R;
-import ar.edu.untref.lp4.proyectodomotica.activities.ArtefactosActivity;
 import ar.edu.untref.lp4.proyectodomotica.activities.HabitacionesActivity;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
+import ar.edu.untref.lp4.proyectodomotica.utils.Constantes;
 
 public class ControladorOrdenesDeVoz {
 
-    private Activity activity;
-    private String palabra1, palabra2, palabra3, palabra4;
+    private ControladorBluetooth controladorBluetooth = ControladorBluetooth.getInstance();
+    private ControladorBaseDatos baseDatos;
+    private HabitacionesActivity habitacionActivity;
+    private Activity prueba;
+    private String palabra1, palabra2, palabra3;
     private int cantidadPalabras;
-    private HabitacionesActivity habitacionesActivity;
-    private ArtefactosActivity artefactosActivity;
+
 
     /**
-     * Guarda la activity desde donde es llamado
-     * @param activity
+     * Guarda la habitacionActivity desde donde es llamado
+     * @param habitacionActivity
      */
-    public ControladorOrdenesDeVoz(Activity activity) {
-        this.activity = activity;
-        habitacionesActivity = new HabitacionesActivity();
-        artefactosActivity = new ArtefactosActivity();
-        palabra1 = palabra2 = palabra3 = palabra4 = "";
+    public ControladorOrdenesDeVoz(HabitacionesActivity habitacionActivity, ControladorBaseDatos baseDatos) {
+        this.habitacionActivity = habitacionActivity;
+        this.baseDatos = baseDatos;
+        this.palabra1 = this.palabra2 = this.palabra3 = "";
     }
 
     private void noHayOrdenes() {
-        Toast.makeText(this.activity, "No hay ordenes que interpretar", Toast.LENGTH_LONG).show();
-        Toast.makeText(this.activity, "Reiterar orden", Toast.LENGTH_LONG).show();
+        Toast.makeText(this.habitacionActivity, R.string.no_orden, Toast.LENGTH_LONG).show();
+        Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_LONG).show();
     }
 
     /**
      * mensajes que se muestran cuando se registra una sola palabra
      */
     private void unaPalabra () {
-        Toast.makeText(this.activity, "Faltan palabras para interpretar", Toast.LENGTH_LONG).show();
-        Toast.makeText(this.activity, "Reiterar orden", Toast.LENGTH_LONG).show();
+        Toast.makeText(this.habitacionActivity, R.string.faltan_palabras, Toast.LENGTH_LONG).show();
+        Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_LONG).show();
     }
 
     /**
      * mensajes que se muestran cuando se registran tres palabras
      */
     private void tresPalabras () {
-        Toast.makeText(this.activity, "Sobran o faltan palabras", Toast.LENGTH_LONG).show();
-        Toast.makeText(this.activity, "Reiterar orden", Toast.LENGTH_LONG).show();
+        Toast.makeText(this.habitacionActivity, R.string.faltan_o_sobran, Toast.LENGTH_LONG).show();
+        Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -87,20 +86,17 @@ public class ControladorOrdenesDeVoz {
         Iterator<String> iterador= palabras.iterator();
         String cadena;
         int i= 0;
-        cantidadPalabras = palabras.size();
+        this.cantidadPalabras = palabras.size();
         while (iterador.hasNext()) {
             cadena= iterador.next();
             switch (i) {
-                case 0:
-                    palabra1 = cadena;
+                case 0: this.palabra1 = cadena;
                     break;
-                case 1: palabra2 = cadena;
+                case 1: this.palabra2 = cadena;
                     break;
-                case 2: palabra3 = cadena;
+                case 2: this.palabra3 = cadena;
                     break;
-                case 3: palabra4 = cadena;
-                    break;
-                default:
+                default: //No hago nada
                     break;
             }
             i++;
@@ -114,172 +110,192 @@ public class ControladorOrdenesDeVoz {
     public void guardarOrden (String cadena){
         cargarPalabras(obtenerPalabras(cadena));
     }
+
+    private Habitacion obtenerHabitacion (List<Habitacion> habitaciones, String nombre){
+        Habitacion lugar = null;
+        if (habitaciones.size() > 0) {
+            if (this.habitacionActivity.nombreHabitacionDisponible(nombre)) {
+                Toast.makeText(this.habitacionActivity, R.string.no_existe_habitacion, Toast.LENGTH_LONG).show();
+            } else {
+                for (Habitacion habitacion : habitaciones) {
+                    if (nombre.equals(habitacion.getNombre())) {
+                        lugar = habitacion;
+                    }
+                }
+            }
+        } else {
+            Toast.makeText(this.habitacionActivity, R.string.habitaciones_vacias, Toast.LENGTH_LONG).show();
+        }
+        return lugar;
+    }
     /**
      * La palabra que se pasa por parametro es el nombre de la habitacion
      * Siempre sera la segunda palabra.
      */
-    private void abrirHabitacion (List<Habitacion> habitaciones, String palabra){
-            if (habitaciones.size() > 0) {
-                for (Habitacion habitacion : habitaciones) {
-                    if (palabra.equals(habitacion.getNombre())) {
-                        habitacionesActivity.abrirArtefactosActivity(habitacion);
-                    }
-                }
-            } else {
-                Toast.makeText(this.activity, "No se cargo ninguna habitacion", Toast.LENGTH_LONG).show();
-            }
+    private void abrirHabitacion (List<Habitacion> habitaciones, String nombre){
+        Habitacion habitacion = obtenerHabitacion(habitaciones, nombre);
+        if (habitacion != null) {
+            this.habitacionActivity.abrirArtefactosActivity(habitacion);
+        }
     }
 
-    private List<Artefacto> obtenerListaArtefactos (Habitacion habitacion) {
-
-        List<Artefacto> lista = new ArrayList<>();
-        lista.addAll(ControladorBaseDatos.getArtefactosPorHabitacion(artefactosActivity.getIdHabitacion()));
+    private List<Artefacto> obtenerListadoArtefactos (List<Habitacion> habitaciones, String nombre){
+        Habitacion habitacion = obtenerHabitacion(habitaciones, nombre);
+        List<Artefacto> lista= this.habitacionActivity.getListaArtefactos(habitacion);
+        if (lista.size() == 0){
+            Toast.makeText(this.habitacionActivity, R.string.no_hay_artefactos, Toast.LENGTH_LONG).show();
+            lista = null;
+        }
         return lista;
     }
+
     /**
      * La palabra que se pasa por parametro es el nombre del artefacto
      * Si la orden es de dos palabras, sera la segunda. Si es de cuatro, la cuarta
      */
-    private void encenderArtefacto (List<Artefacto> artefactos, String palabra){
-        if (artefactos.size() > 0) {
-            if (!artefactosActivity.nombreArtefactoDisponible(palabra)){
-                for (Artefacto artefacto : artefactos) {
-                    //Deberia de llamar al metodo que enciende el artefacto
-                    Toast.makeText(this.activity, this.activity.getString(R.string.proximamente), Toast.LENGTH_LONG).show();
+    private void encenderArtefacto (List<Habitacion> habitaciones, String lugar, String artefacto){
+        if (controladorBluetooth.estaConectado()) {
+            List<Artefacto> lista = obtenerListadoArtefactos(habitaciones, lugar);
+            if (lista.size() > 0) {
+                for (Artefacto aparato : lista) {
+                    if (artefacto.equals(aparato.getNombre())) {
+                        if (!aparato.isActivo()) {
+                            Integer pin = ControladorBaseDatos.getPinArtefacto(aparato);
+                            String dato = pin.toString();
+                            aparato.setActivo(true);
+                            baseDatos.actualizarEstadoArtefacto(aparato);
+                            controladorBluetooth.enviarDato(dato + "1");
+                            Toast.makeText(this.habitacionActivity, R.string.artefactos_encendidos, Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
             } else {
-                Toast.makeText(this.activity, "No existe dicho artefacto", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.habitacionActivity, R.string.no_hay_artefactos, Toast.LENGTH_LONG).show();
             }
         } else {
-            Toast.makeText(this.activity, "No hay artefactos cargados", Toast.LENGTH_LONG).show();
+            Toast.makeText(this.habitacionActivity, R.string.no_conectado, Toast.LENGTH_LONG).show();
         }
-
     }
 
     /**
      * La palabra que se pasa por parametro es el nombre del artefacto
      * Si la orden es de dos palabras, sera la segunda. Si es de cuatro, la cuarta
      */
-    private void apagarArtefacto (List<Artefacto> artefactos, String palabra2){
-        if (artefactos.size() > 0) {
-            if (!artefactosActivity.nombreArtefactoDisponible(palabra2)){
-                for (Artefacto artefacto : artefactos) {
-                    if (palabra2.equals(artefacto.getNombre())) {
-                        Toast.makeText(this.activity, this.activity.getString(R.string.proximamente), Toast.LENGTH_LONG).show();
+    private void apagarArtefacto (List<Habitacion> habitaciones, String lugar, String artefacto){
+        if (controladorBluetooth.estaConectado()) {
+            List<Artefacto> lista = obtenerListadoArtefactos(habitaciones, lugar);
+            if (lista.size() > 0) {
+                for (Artefacto aparato : lista) {
+                    if (artefacto.equals(aparato.getNombre())) {
+                        if (aparato.isActivo()) {
+                            Integer pin = ControladorBaseDatos.getPinArtefacto(aparato);
+                            String dato = pin.toString();
+                            aparato.setActivo(false);
+                            baseDatos.actualizarEstadoArtefacto(aparato);
+                            controladorBluetooth.enviarDato(dato + "0");
+                            Toast.makeText(this.habitacionActivity, R.string.artefactos_apagados, Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             } else {
-                Toast.makeText(this.activity, "No existe dicho artefacto", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.habitacionActivity, R.string.no_hay_artefactos, Toast.LENGTH_LONG).show();
             }
         } else {
-            Toast.makeText(this.activity, "No hay artefactos cargados", Toast.LENGTH_LONG).show();
+            Toast.makeText(this.habitacionActivity, R.string.no_conectado, Toast.LENGTH_LONG).show();
         }
-
     }
 
     /**
      * Sale del programa o de la habitacion dependiendo de la segunda palabra
      */
-    private void salir (String palabra) {
-        if (palabra.equals(artefactosActivity.getNombreHabitacion())) {
-            artefactosActivity.finish();
-        } else {
-            if (palabra.equals("programa")){
-                try {
-                    artefactosActivity.finish();
-                } catch (Exception e) {
-                    //No hago nada
-                }
-                habitacionesActivity.finish();
-            } else {
-                Toast.makeText(this.activity, "Comando invalido", Toast.LENGTH_LONG).show();
-            }
+    private void salir (String orden) {
+        switch (orden){ //para futuras opciones
+            case "programa" : this.habitacionActivity.finish();
+                break;
+            default: Toast.makeText(this.habitacionActivity, R.string.comando_invalido, Toast.LENGTH_LONG).show();
         }
     }
 
-    private void encenderTodoHabitacion (List<Habitacion> habitaciones) {
-        String nombre = artefactosActivity.getNombreHabitacion();
-        if (habitaciones.size() > 0) {
-            for (Habitacion habitacion : habitaciones) {
-                if (nombre.equals(habitacion.getNombre())) {
-                    habitacionesActivity.prenderTodo(habitacion);
-                }
-            }
-        }
+    private void encenderTodoHabitacion (List<Habitacion> habitaciones, String nombre) {
+        Habitacion habitacion = obtenerHabitacion(habitaciones, nombre);
+        this.habitacionActivity.prenderTodo(habitacion);
     }
 
     private void encenderTodoCasa (List<Habitacion> habitaciones) {
         if (habitaciones.size() > 0) {
             for (Habitacion habitacion : habitaciones) {
-                habitacionesActivity.prenderTodo(habitacion);
+                this.habitacionActivity.prenderTodo(habitacion);
             }
         } else {
-            Toast.makeText(this.activity, "No hay habitaciones cargadas", Toast.LENGTH_LONG).show();
+            Toast.makeText(this.habitacionActivity, R.string.habitaciones_vacias, Toast.LENGTH_LONG).show();
         }
     }
 
     private void apagarTodoCasa (List<Habitacion> habitaciones) {
         if (habitaciones.size() > 0) {
             for (Habitacion habitacion : habitaciones) {
-                habitacionesActivity.apagarTodo(habitacion);
+                this.habitacionActivity.apagarTodo(habitacion);
             }
         } else {
-            Toast.makeText(this.activity, "No hay habitaciones cargadas", Toast.LENGTH_LONG).show();
+            Toast.makeText(this.habitacionActivity, R.string.habitaciones_vacias, Toast.LENGTH_LONG).show();
         }
     }
 
-    private void apagarTodoHabitacion (List<Habitacion> habitaciones) {
-        //Ya estoy adentro del activity ArtefactosHabitacion, por eso puedo hacer el llamado... no?
-        String nombre = artefactosActivity.getNombreHabitacion();
-        if (habitaciones.size() > 0) {
-            for (Habitacion habitacion : habitaciones) {
-                if (nombre.equals(habitacion.getNombre())) {
-                    habitacionesActivity.apagarTodo(habitacion);
-                }
-            }
-        }
+    private void apagarTodoHabitacion (List<Habitacion> habitaciones, String nombre) {
+        Habitacion habitacion = obtenerHabitacion(habitaciones, nombre);
+        this.habitacionActivity.apagarTodo(habitacion);
     }
 
     private void realizarOrdenDosPalabras (List<Habitacion> habitaciones, String palabra1, String palabra2) {
         switch (palabra1){
-            case "abrir": abrirHabitacion(habitaciones, palabra2);
+            case Constantes.ABRIR: abrirHabitacion(habitaciones, palabra2);
                 break;
-            case "encender": {
-                if (palabra2.equals("todo")){
-                    encenderTodoHabitacion(habitaciones);
+            case Constantes.ENCENDER: {
+                if (palabra2.equals(Constantes.TODO)){
+                    encenderTodoHabitacion(habitaciones, palabra2);
                 } else {
-                    //encenderArtefacto(artefactos, palabra2);
+                    Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_LONG).show();
                 }
             }
                 break;
-            case "apagar": {
-                if (palabra2.equals("todo")) {
-                    apagarTodoHabitacion(habitaciones);
+            case Constantes.APAGAR: {
+                if (palabra2.equals(Constantes.TODO)) {
+                    apagarTodoHabitacion(habitaciones, palabra2);
                 } else {
-                    //apagarArtefacto(artefactos, palabra2);
+                    Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_LONG).show();
                 }
             }
                 break;
-            case "salir": salir(palabra2);
+            case Constantes.SALIR: salir(palabra2);
+                break;
+            default: Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_LONG).show();
                 break;
         }
     }
 
+    /**
+     * Enciende un artefacto de una habitacion
+     *
+     * @param habitaciones
+     * @param palabra1 orden
+     * @param palabra2 artefacto
+     * @param palabra3 habitacion
+     */
     private void realizarOrdenTresPalabras (List<Habitacion> habitaciones, String palabra1, String palabra2, String palabra3) {
         switch (palabra1) {
-            case "encender": {
-                if (palabra2.equals("todo") && palabra3.equals("casa")){
+            case Constantes.ENCENDER: {
+                if (palabra2.equals(Constantes.TODO) && palabra3.equals(Constantes.CASA)){
                     encenderTodoCasa(habitaciones);
                 } else {
-                    tresPalabras();
+                    encenderArtefacto(habitaciones,palabra3,palabra2);
                 }
             }
                 break;
-            case "apagar": {
-                if (palabra2.equals("todo") && palabra3.equals("casa")){
+            case Constantes.APAGAR: {
+                if (palabra2.equals(Constantes.TODO) && palabra3.equals(Constantes.CASA)){
                     apagarTodoCasa(habitaciones);
                 } else {
-                    tresPalabras();
+                    apagarArtefacto(habitaciones,palabra3,palabra2);
                 }
             }
                 break;
@@ -290,21 +306,18 @@ public class ControladorOrdenesDeVoz {
     }
 
     public void analizarOrden(List<Habitacion> habitaciones) {
-        switch (cantidadPalabras) {
+        switch (this.cantidadPalabras) {
             case 0:
                 noHayOrdenes();
                 break;
             case 1: unaPalabra();
                 break;
-            case 2: realizarOrdenDosPalabras(habitaciones, palabra1, palabra2);
+            case 2: realizarOrdenDosPalabras(habitaciones, this.palabra1, this.palabra2);
                 break;
-            case 3: realizarOrdenTresPalabras(habitaciones,palabra1,palabra2,palabra3);
+            case 3: realizarOrdenTresPalabras(habitaciones,this.palabra1,this.palabra2,this.palabra3);
                 break;
-            case 4:
-                break;
-            default: Toast.makeText(this.activity, "Muchas palabras, repita orden", Toast.LENGTH_LONG).show();
+            default: Toast.makeText(this.habitacionActivity, R.string.muchas_palabras, Toast.LENGTH_LONG).show();
                 break;
         }
-
     }
 }

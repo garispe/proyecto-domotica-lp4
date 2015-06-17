@@ -784,7 +784,7 @@ public class HabitacionesActivity extends Activity {
     {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Nombre artefacto + encender/apagar");
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, R.string.mensaje_ventana);
         startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
     }
 

@@ -151,11 +151,11 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
 
                         if (viewHolder.switchArtefacto.isChecked()) {
 
-                            controladorBluetooth.enviarDato(dato + "1");
+                            controladorBluetooth.enviarDato(dato + "0");
 
                         } else {
 
-                            controladorBluetooth.enviarDato(dato + "0");
+                            controladorBluetooth.enviarDato(dato + "1");
                         }
 
                         artefacto.setActivo(viewHolder.switchArtefacto.isChecked());

@@ -36,8 +36,6 @@ public class ArtefactosActivity extends Activity {
     public static String nombreHabitacion;
     private int idHabitacion;
 
-    private BaseDatos bd;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

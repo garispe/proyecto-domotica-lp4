@@ -218,7 +218,11 @@ public class ControladorOrdenesDeVoz {
 
     private void encenderTodoHabitacion (List<Habitacion> habitaciones, String nombre) {
         Habitacion habitacion = obtenerHabitacion(habitaciones, nombre);
-        this.habitacionActivity.prenderTodo(habitacion);
+        if (nombre.equals(habitacion.getNombre())) {
+            this.habitacionActivity.prenderTodo(habitacion);
+        } else {
+            Toast.makeText(this.habitacionActivity, R.string.no_existe_habitacion, Toast.LENGTH_LONG).show();
+        }
     }
 
     private void encenderTodoCasa (List<Habitacion> habitaciones) {
@@ -243,7 +247,11 @@ public class ControladorOrdenesDeVoz {
 
     private void apagarTodoHabitacion (List<Habitacion> habitaciones, String nombre) {
         Habitacion habitacion = obtenerHabitacion(habitaciones, nombre);
-        this.habitacionActivity.apagarTodo(habitacion);
+        if (nombre.equals(habitacion.getNombre())) {
+            this.habitacionActivity.apagarTodo(habitacion);
+        } else {
+            Toast.makeText(this.habitacionActivity, R.string.no_existe_habitacion, Toast.LENGTH_LONG).show();
+        }
     }
 
     private void realizarOrdenDosPalabras (List<Habitacion> habitaciones, String palabra1, String palabra2) {
@@ -252,7 +260,7 @@ public class ControladorOrdenesDeVoz {
                 break;
             case Constantes.ENCENDER: {
                 if (palabra2.equals(Constantes.TODO)){
-                    encenderTodoHabitacion(habitaciones, palabra2);
+                    encenderTodoCasa(habitaciones);
                 } else {
                     Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_LONG).show();
                 }
@@ -260,7 +268,7 @@ public class ControladorOrdenesDeVoz {
                 break;
             case Constantes.APAGAR: {
                 if (palabra2.equals(Constantes.TODO)) {
-                    apagarTodoHabitacion(habitaciones, palabra2);
+                    apagarTodoCasa(habitaciones);
                 } else {
                     Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_LONG).show();
                 }
@@ -284,16 +292,16 @@ public class ControladorOrdenesDeVoz {
     private void realizarOrdenTresPalabras (List<Habitacion> habitaciones, String palabra1, String palabra2, String palabra3) {
         switch (palabra1) {
             case Constantes.ENCENDER: {
-                if (palabra2.equals(Constantes.TODO) && palabra3.equals(Constantes.CASA)){
-                    encenderTodoCasa(habitaciones);
+                if (palabra2.equals(Constantes.TODO)){
+                    encenderTodoHabitacion(habitaciones, palabra3);
                 } else {
                     encenderArtefacto(habitaciones,palabra3,palabra2);
                 }
             }
                 break;
             case Constantes.APAGAR: {
-                if (palabra2.equals(Constantes.TODO) && palabra3.equals(Constantes.CASA)){
-                    apagarTodoCasa(habitaciones);
+                if (palabra2.equals(Constantes.TODO)){
+                    apagarTodoHabitacion(habitaciones, palabra3);
                 } else {
                     apagarArtefacto(habitaciones,palabra3,palabra2);
                 }

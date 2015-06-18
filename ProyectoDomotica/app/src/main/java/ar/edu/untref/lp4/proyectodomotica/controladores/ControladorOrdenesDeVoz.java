@@ -18,8 +18,7 @@ public class ControladorOrdenesDeVoz {
 
     private ControladorBluetooth controladorBluetooth = ControladorBluetooth.getInstance();
     private HabitacionesActivity habitacionActivity;
-    private Activity prueba;
-    private String palabra1, palabra2, palabra3;
+    private String palabra1, palabra2, palabra3, orden;
     private int cantidadPalabras;
 
 
@@ -118,6 +117,10 @@ public class ControladorOrdenesDeVoz {
      */
     public void guardarOrden(String cadena) {
         cargarPalabras(obtenerPalabras(cadena));
+    }
+
+    public void guardarOrden2(String cadena) {
+        orden = cadena;
     }
 
     private Habitacion obtenerHabitacion(List<Habitacion> habitaciones, String nombre) {
@@ -439,6 +442,50 @@ public class ControladorOrdenesDeVoz {
             default:
                 Toast.makeText(this.habitacionActivity, R.string.muchas_palabras, Toast.LENGTH_SHORT).show();
                 break;
+        }
+    }
+
+    public boolean encenderVerdadero (String cadena) {
+        return cadena.contains(Constantes.ENCENDER);
+    }
+
+    public boolean apagarVerdadero (String cadena) {
+        return cadena.contains(Constantes.APAGAR);
+    }
+
+    public boolean existeHabitacion (List<Habitacion> habitaciones, String cadena) {
+        boolean encontrado = false;
+        String nombre;
+        for (Habitacion habitacion : habitaciones) {
+            nombre = habitacion.getNombre().toLowerCase();
+            if (cadena.contains(nombre)) {
+                encontrado = true;
+            }
+        }
+        return encontrado;
+    }
+
+    public boolean existeArtefacto (List<Habitacion> habitaciones, String cadena) {
+        boolean encontrado = false;
+        List<Artefacto> lista;
+        String nombre;
+        for (Habitacion habitacion : habitaciones) {
+            lista = obtenerListadoArtefactos(habitaciones, habitacion.getNombre());
+            for (Artefacto artefacto : lista) {
+                nombre = artefacto.getNombre().toLowerCase();
+                if (cadena.contains(nombre)) {
+                    encontrado = true;
+                }
+            }
+        }
+        return encontrado;
+    }
+
+    public void analizarOrden2 (List<Habitacion> habitaciones, String cadena) {
+        if (encenderVerdadero(cadena)) {
+            if (existeHabitacion(habitaciones, cadena)){
+
+            }
         }
     }
 }

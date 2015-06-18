@@ -40,6 +40,8 @@ void procesarDatos(){
   dato = dato - 48;
 
   pin = (decena*10) + unidad;
+  digitalWrite(pin, OUTPUT);
+  
 }
 
 

@@ -120,24 +120,25 @@ public class ControladorOrdenesDeVoz {
         cargarPalabras(obtenerPalabras(cadena));
     }
 
+    /**
+     * Devuelve la habitacion que tiene el mismo nombre que la del parametro
+     */
     private Habitacion obtenerHabitacion(List<Habitacion> habitaciones, String nombre) {
 
-        Habitacion lugar = null;
+        Habitacion habitacion = null;
 
         if (habitaciones.size() > 0) {
 
-            if (this.habitacionActivity.nombreHabitacionDisponible(nombre)) {
+            for (Habitacion habitacionActual : habitaciones) {
 
-                Toast.makeText(this.habitacionActivity, R.string.no_existe_habitacion, Toast.LENGTH_SHORT).show();
+                if (habitacionActual.getNombre().equalsIgnoreCase(nombre)) {
 
-            } else {
+                    habitacion = habitacionActual;
+                    break;
 
-                for (Habitacion habitacion : habitaciones) {
+                } else {
 
-                    if (nombre.equals(habitacion.getNombre())) {
-
-                        lugar = habitacion;
-                    }
+                    Toast.makeText(this.habitacionActivity, R.string.no_existe_habitacion, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -146,7 +147,7 @@ public class ControladorOrdenesDeVoz {
             Toast.makeText(this.habitacionActivity, R.string.habitaciones_vacias, Toast.LENGTH_SHORT).show();
         }
 
-        return lugar;
+        return habitacion;
     }
 
     /**
@@ -357,7 +358,7 @@ public class ControladorOrdenesDeVoz {
             case Constantes.ENCENDER: {
 
                 if (palabra2.equals(Constantes.TODO)) {
-                    encenderTodoCasa(habitaciones);
+                    encenderTodoCasa(habitaciones); // TODO: corregir
                 } else {
                     Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_SHORT).show();
                 }
@@ -367,7 +368,7 @@ public class ControladorOrdenesDeVoz {
             case Constantes.APAGAR: {
 
                 if (palabra2.equals(Constantes.TODO)) {
-                    apagarTodoCasa(habitaciones);
+                    apagarTodoCasa(habitaciones); // TODO: corregir
                 } else {
                     Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_SHORT).show();
                 }

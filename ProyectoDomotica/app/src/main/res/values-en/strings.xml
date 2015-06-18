@@ -57,4 +57,5 @@
     <string name="mensaje_showcase_habitacion">Enter the created room and adds new artifacts.\nKeep holding in a room for the obtain options.</string>
     <string name="agregar_foto">Add photo</string>
     <string name="agregar_habitacion">Add Room</string>
+    <string name="cambio_idioma"></string>
 </resources>

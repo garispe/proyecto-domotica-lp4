@@ -75,7 +75,7 @@ public class HabitacionesActivity extends Activity {
 
     //a partir de acá son atributos pegados directamente desde ComandoDeVoz
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
-    public String palabra="vacio";
+    public String palabra = "vacio";
     private ControladorOrdenesDeVoz controlVoz;
 
     @Override
@@ -640,7 +640,7 @@ public class HabitacionesActivity extends Activity {
                                 inicializarListaHabitaciones();
                                 inicializarGridViewHabitaciones();
 
-                                if(mostrarTutorial) {
+                                if (mostrarTutorial) {
                                     mostrarShowcaseHabitacion();
                                 }
 
@@ -769,7 +769,7 @@ public class HabitacionesActivity extends Activity {
     };
 
     // Verifica que este instalado en el celular el paquete de reconocimiento de voz. En caso contrario, devuelve false.
-    public boolean verificarExisteReconocimientoVoz () {
+    public boolean verificarExisteReconocimientoVoz() {
         PackageManager pm = getPackageManager();
         List<ResolveInfo> activities = pm.queryIntentActivities(
                 new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
@@ -780,8 +780,7 @@ public class HabitacionesActivity extends Activity {
         }
     }
 
-    public void empezarReconocimientoDeVoz()
-    {
+    public void empezarReconocimientoDeVoz() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, R.string.mensaje_ventana);
@@ -789,24 +788,20 @@ public class HabitacionesActivity extends Activity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        controlVoz = new ControladorOrdenesDeVoz(this,controladorBaseDatos);
-        if (requestCode == VOICE_RECOGNITION_REQUEST_CODE && resultCode == RESULT_OK)
-        {
+        controlVoz = new ControladorOrdenesDeVoz(this, controladorBaseDatos);
+        if (requestCode == VOICE_RECOGNITION_REQUEST_CODE && resultCode == RESULT_OK) {
             ArrayList<String> matches = data.getStringArrayListExtra(
                     RecognizerIntent.EXTRA_RESULTS);
-            if(matches.size()>0){
-                palabra=matches.get(0).toString();
+            if (matches.size() > 0) {
+                palabra = matches.get(0);
                 controlVoz.guardarOrden(palabra);
                 controlVoz.analizarOrden(habitaciones);
-            }
-            else{
+            } else {
                 Toast.makeText(this, "Orden vacia, repita la orden", Toast.LENGTH_LONG).show();
             }
-        }
-        else{
+        } else {
             Toast.makeText(this, "Error en el reconocimiento de las palabras. Repita la orden", Toast.LENGTH_LONG).show();
         }
 

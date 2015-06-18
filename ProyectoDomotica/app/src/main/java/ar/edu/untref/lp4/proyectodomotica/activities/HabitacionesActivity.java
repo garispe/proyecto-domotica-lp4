@@ -768,43 +768,60 @@ public class HabitacionesActivity extends Activity {
         }
     };
 
-    // Verifica que este instalado en el celular el paquete de reconocimiento de voz. En caso contrario, devuelve false.
+    /**
+     * Verifica que este instalado en el celular el paquete de reconocimiento de voz. En caso contrario, devuelve false.
+     */
     public boolean verificarExisteReconocimientoVoz() {
+
         PackageManager pm = getPackageManager();
-        List<ResolveInfo> activities = pm.queryIntentActivities(
-                new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
+
+        List<ResolveInfo> activities = pm.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
+
         if (activities.size() == 0) {
+
             return false;
+
         } else {
+
             return true;
         }
     }
 
     public void empezarReconocimientoDeVoz() {
+
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, R.string.mensaje_ventana);
+
         startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        controlVoz = new ControladorOrdenesDeVoz(this, controladorBaseDatos);
+
+        controlVoz = new ControladorOrdenesDeVoz(this);
+
         if (requestCode == VOICE_RECOGNITION_REQUEST_CODE && resultCode == RESULT_OK) {
+
             ArrayList<String> matches = data.getStringArrayListExtra(
                     RecognizerIntent.EXTRA_RESULTS);
+
             if (matches.size() > 0) {
+
                 palabra = matches.get(0);
                 controlVoz.guardarOrden(palabra);
                 controlVoz.analizarOrden(habitaciones);
-            } else {
-                Toast.makeText(this, "Orden vacia, repita la orden", Toast.LENGTH_LONG).show();
-            }
-        } else {
-            Toast.makeText(this, "Error en el reconocimiento de las palabras. Repita la orden", Toast.LENGTH_LONG).show();
-        }
 
+            } else {
+
+                Toast.makeText(this, "Orden vacia, repita la orden", Toast.LENGTH_SHORT).show();
+            }
+
+        } else {
+
+            Toast.makeText(this, "Error en el reconocimiento de las palabras. Repita la orden", Toast.LENGTH_SHORT).show();
+        }
     }
 }
 

@@ -675,7 +675,7 @@ public class HabitacionesActivity extends Activity {
 
             for (Habitacion habitacion : habitaciones) {
 
-                if (nombre.equals(habitacion.getNombre())) {
+                if (nombre.equalsIgnoreCase(habitacion.getNombre())) {
 
                     nombreDisponible = false;
                 }

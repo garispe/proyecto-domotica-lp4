@@ -4,6 +4,8 @@ package ar.edu.untref.lp4.proyectodomotica.controladores;
 import android.app.Activity;
 import android.widget.Toast;
 
+import com.orhanobut.logger.Logger;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -58,7 +60,7 @@ public class ControladorOrdenesDeVoz {
         //Lista a devolver.
         List<String> palabras = new LinkedList<String>();
 
-        cadena = cadena.toLowerCase();
+//        cadena = cadena.toLowerCase();
 
         //borra espacios al principio y final de la cadena
         cadena = cadena.trim();
@@ -73,6 +75,11 @@ public class ControladorOrdenesDeVoz {
         }
 
         palabras.add(cadena);
+
+        for(String palabra : palabras){
+
+            Logger.e(palabra);
+        }
 
         return palabras;
     }
@@ -193,7 +200,7 @@ public class ControladorOrdenesDeVoz {
 
                 for (Artefacto artefacto : lista) {
 
-                    if (nombreArtefacto.equals(artefacto.getNombre())) {
+                    if (nombreArtefacto.equalsIgnoreCase(artefacto.getNombre())) {
 
                         if (!artefacto.isActivo()) {
 
@@ -240,7 +247,7 @@ public class ControladorOrdenesDeVoz {
 
                 for (Artefacto aparato : lista) {
 
-                    if (artefacto.equals(aparato.getNombre())) {
+                    if (artefacto.equalsIgnoreCase(aparato.getNombre())) {
 
                         if (aparato.isActivo()) {
 
@@ -292,7 +299,7 @@ public class ControladorOrdenesDeVoz {
 
         Habitacion habitacion = obtenerHabitacion(habitaciones, nombre);
 
-        if (nombre.equals(habitacion.getNombre())) {
+        if (nombre.equalsIgnoreCase(habitacion.getNombre())) {
 
             this.habitacionActivity.prenderTodo(habitacion);
 
@@ -337,7 +344,7 @@ public class ControladorOrdenesDeVoz {
 
         Habitacion habitacion = obtenerHabitacion(habitaciones, nombre);
 
-        if (nombre.equals(habitacion.getNombre())) {
+        if (nombre.equalsIgnoreCase(habitacion.getNombre())) {
 
             this.habitacionActivity.apagarTodo(habitacion);
 

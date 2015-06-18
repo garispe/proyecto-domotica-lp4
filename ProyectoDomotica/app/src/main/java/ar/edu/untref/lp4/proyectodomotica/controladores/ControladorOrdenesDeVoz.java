@@ -36,24 +36,24 @@ public class ControladorOrdenesDeVoz {
     }
 
     private void noHayOrdenes() {
-        Toast.makeText(this.habitacionActivity, R.string.no_orden, Toast.LENGTH_LONG).show();
-        Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_LONG).show();
+        Toast.makeText(this.habitacionActivity, R.string.no_orden, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_SHORT).show();
     }
 
     /**
      * mensajes que se muestran cuando se registra una sola palabra
      */
     private void unaPalabra () {
-        Toast.makeText(this.habitacionActivity, R.string.faltan_palabras, Toast.LENGTH_LONG).show();
-        Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_LONG).show();
+        Toast.makeText(this.habitacionActivity, R.string.faltan_palabras, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_SHORT).show();
     }
 
     /**
      * mensajes que se muestran cuando se registran tres palabras
      */
     private void tresPalabras () {
-        Toast.makeText(this.habitacionActivity, R.string.faltan_o_sobran, Toast.LENGTH_LONG).show();
-        Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_LONG).show();
+        Toast.makeText(this.habitacionActivity, R.string.faltan_o_sobran, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -115,7 +115,7 @@ public class ControladorOrdenesDeVoz {
         Habitacion lugar = null;
         if (habitaciones.size() > 0) {
             if (this.habitacionActivity.nombreHabitacionDisponible(nombre)) {
-                Toast.makeText(this.habitacionActivity, R.string.no_existe_habitacion, Toast.LENGTH_LONG).show();
+                Toast.makeText(this.habitacionActivity, R.string.no_existe_habitacion, Toast.LENGTH_SHORT).show();
             } else {
                 for (Habitacion habitacion : habitaciones) {
                     if (nombre.equals(habitacion.getNombre())) {
@@ -124,7 +124,7 @@ public class ControladorOrdenesDeVoz {
                 }
             }
         } else {
-            Toast.makeText(this.habitacionActivity, R.string.habitaciones_vacias, Toast.LENGTH_LONG).show();
+            Toast.makeText(this.habitacionActivity, R.string.habitaciones_vacias, Toast.LENGTH_SHORT).show();
         }
         return lugar;
     }
@@ -143,7 +143,7 @@ public class ControladorOrdenesDeVoz {
         Habitacion habitacion = obtenerHabitacion(habitaciones, nombre);
         List<Artefacto> lista= this.habitacionActivity.getListaArtefactos(habitacion);
         if (lista.size() == 0){
-            Toast.makeText(this.habitacionActivity, R.string.no_hay_artefactos, Toast.LENGTH_LONG).show();
+            Toast.makeText(this.habitacionActivity, R.string.no_hay_artefactos, Toast.LENGTH_SHORT).show();
             lista = null;
         }
         return lista;
@@ -172,10 +172,10 @@ public class ControladorOrdenesDeVoz {
                     }
                 }
             } else {
-                Toast.makeText(this.habitacionActivity, R.string.no_hay_artefactos, Toast.LENGTH_LONG).show();
+                Toast.makeText(this.habitacionActivity, R.string.no_hay_artefactos, Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(this.habitacionActivity, R.string.no_conectado, Toast.LENGTH_LONG).show();
+            Toast.makeText(this.habitacionActivity, R.string.no_conectado, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -202,10 +202,10 @@ public class ControladorOrdenesDeVoz {
                     }
                 }
             } else {
-                Toast.makeText(this.habitacionActivity, R.string.no_hay_artefactos, Toast.LENGTH_LONG).show();
+                Toast.makeText(this.habitacionActivity, R.string.no_hay_artefactos, Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(this.habitacionActivity, R.string.no_conectado, Toast.LENGTH_LONG).show();
+            Toast.makeText(this.habitacionActivity, R.string.no_conectado, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -216,7 +216,7 @@ public class ControladorOrdenesDeVoz {
         switch (orden){ //para futuras opciones
             case "programa" : this.habitacionActivity.finish();
                 break;
-            default: Toast.makeText(this.habitacionActivity, R.string.comando_invalido, Toast.LENGTH_LONG).show();
+            default: Toast.makeText(this.habitacionActivity, R.string.comando_invalido, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -225,7 +225,7 @@ public class ControladorOrdenesDeVoz {
         if (nombre.equals(habitacion.getNombre())) {
             this.habitacionActivity.prenderTodo(habitacion);
         } else {
-            Toast.makeText(this.habitacionActivity, R.string.no_existe_habitacion, Toast.LENGTH_LONG).show();
+            Toast.makeText(this.habitacionActivity, R.string.no_existe_habitacion, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -235,7 +235,7 @@ public class ControladorOrdenesDeVoz {
                 this.habitacionActivity.prenderTodo(habitacion);
             }
         } else {
-            Toast.makeText(this.habitacionActivity, R.string.habitaciones_vacias, Toast.LENGTH_LONG).show();
+            Toast.makeText(this.habitacionActivity, R.string.habitaciones_vacias, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -245,7 +245,7 @@ public class ControladorOrdenesDeVoz {
                 this.habitacionActivity.apagarTodo(habitacion);
             }
         } else {
-            Toast.makeText(this.habitacionActivity, R.string.habitaciones_vacias, Toast.LENGTH_LONG).show();
+            Toast.makeText(this.habitacionActivity, R.string.habitaciones_vacias, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -254,7 +254,7 @@ public class ControladorOrdenesDeVoz {
         if (nombre.equals(habitacion.getNombre())) {
             this.habitacionActivity.apagarTodo(habitacion);
         } else {
-            Toast.makeText(this.habitacionActivity, R.string.no_existe_habitacion, Toast.LENGTH_LONG).show();
+            Toast.makeText(this.habitacionActivity, R.string.no_existe_habitacion, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -266,7 +266,7 @@ public class ControladorOrdenesDeVoz {
                 if (palabra2.equals(Constantes.TODO)){
                     encenderTodoCasa(habitaciones);
                 } else {
-                    Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_LONG).show();
+                    Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_SHORT).show();
                 }
             }
                 break;
@@ -274,13 +274,13 @@ public class ControladorOrdenesDeVoz {
                 if (palabra2.equals(Constantes.TODO)) {
                     apagarTodoCasa(habitaciones);
                 } else {
-                    Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_LONG).show();
+                    Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_SHORT).show();
                 }
             }
                 break;
             case Constantes.SALIR: salir(palabra2);
                 break;
-            default: Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_LONG).show();
+            default: Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -328,7 +328,7 @@ public class ControladorOrdenesDeVoz {
                 break;
             case 3: realizarOrdenTresPalabras(habitaciones,this.palabra1,this.palabra2,this.palabra3);
                 break;
-            default: Toast.makeText(this.habitacionActivity, R.string.muchas_palabras, Toast.LENGTH_LONG).show();
+            default: Toast.makeText(this.habitacionActivity, R.string.muchas_palabras, Toast.LENGTH_SHORT).show();
                 break;
         }
     }

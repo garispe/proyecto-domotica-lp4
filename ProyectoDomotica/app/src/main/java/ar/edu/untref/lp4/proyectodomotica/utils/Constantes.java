@@ -7,23 +7,19 @@ public class Constantes {
     public static final int VERSION_BD = 4;
 
 
-    // HABITACIONES
+    // TABLA HABITACIONES
 
     public static final String ID_HABITACION = "id";
     public static final String NOMBRE_HABITACION = "nombre";
-
     public static final String TABLA_HABITACIONES = "habitaciones";
 
-    // ---------------------------------- //
-
-    // ARTEFACTOS
+    // TABLA ARTEFACTOS
 
     public static final String ID_ARTEFACTO = "id";
     public static final String NOMBRE_ARTEFACTO = "nombre";
     public static final String ESTADO = "estado";
     public static final String FK_HABITACION = "id_habitacion";
     public static final String ID_PIN = "id_pin";
-
     public static final String TABLA_ARTEFACTOS = "artefactos";
 
     //CONTROLADOR COMANDO DE VOZ

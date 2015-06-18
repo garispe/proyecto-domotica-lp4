@@ -3,11 +3,16 @@
 SoftwareSerial BT(12, 13); // Receptor, Tramsmisor.
 int pin;
 int dato;
+int configuracionBT = 9;
+int relay = 2;
 
 void setup(){
 
-  pinMode(9, OUTPUT); // Se utiliza para configuracion del modulo a traves de comandos AT.
-  digitalWrite(9, HIGH);
+  pinMode(relay, OUTPUT);
+  digitalWrite(relay, LOW);
+  
+  //pinMode(configuracionBT, OUTPUT); // Se utiliza para configuracion del modulo a traves de comandos AT.
+  //digitalWrite(configuracionBT, HIGH);
   
   Serial.begin(9600);
   
@@ -18,9 +23,8 @@ void loop() {
   
   if (BT.available()) {
   
-  procesarDatos();
-  prenderLed(pin, dato);
-  
+      procesarDatos();
+      prenderLed(pin, dato);
   }
 }
 
@@ -39,9 +43,7 @@ void procesarDatos(){
   unidad = unidad - 48;
   dato = dato - 48;
 
-  pin = (decena*10) + unidad;
-  digitalWrite(pin, OUTPUT);
-  
+  pin = (decena*10) + unidad;  
 }
 
 

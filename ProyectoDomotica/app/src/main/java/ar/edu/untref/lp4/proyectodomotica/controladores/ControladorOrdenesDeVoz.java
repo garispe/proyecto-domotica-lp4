@@ -119,10 +119,6 @@ public class ControladorOrdenesDeVoz {
         cargarPalabras(obtenerPalabras(cadena));
     }
 
-    public void guardarOrden2(String cadena) {
-        orden = cadena;
-    }
-
     private Habitacion obtenerHabitacion(List<Habitacion> habitaciones, String nombre) {
 
         Habitacion lugar = null;
@@ -445,47 +441,4 @@ public class ControladorOrdenesDeVoz {
         }
     }
 
-    public boolean encenderVerdadero (String cadena) {
-        return cadena.contains(Constantes.ENCENDER);
-    }
-
-    public boolean apagarVerdadero (String cadena) {
-        return cadena.contains(Constantes.APAGAR);
-    }
-
-    public boolean existeHabitacion (List<Habitacion> habitaciones, String cadena) {
-        boolean encontrado = false;
-        String nombre;
-        for (Habitacion habitacion : habitaciones) {
-            nombre = habitacion.getNombre().toLowerCase();
-            if (cadena.contains(nombre)) {
-                encontrado = true;
-            }
-        }
-        return encontrado;
-    }
-
-    public boolean existeArtefacto (List<Habitacion> habitaciones, String cadena) {
-        boolean encontrado = false;
-        List<Artefacto> lista;
-        String nombre;
-        for (Habitacion habitacion : habitaciones) {
-            lista = obtenerListadoArtefactos(habitaciones, habitacion.getNombre());
-            for (Artefacto artefacto : lista) {
-                nombre = artefacto.getNombre().toLowerCase();
-                if (cadena.contains(nombre)) {
-                    encontrado = true;
-                }
-            }
-        }
-        return encontrado;
-    }
-
-    public void analizarOrden2 (List<Habitacion> habitaciones, String cadena) {
-        if (encenderVerdadero(cadena)) {
-            if (existeHabitacion(habitaciones, cadena)){
-
-            }
-        }
-    }
 }

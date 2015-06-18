@@ -9,6 +9,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.cocosw.bottomsheet.BottomSheet;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 

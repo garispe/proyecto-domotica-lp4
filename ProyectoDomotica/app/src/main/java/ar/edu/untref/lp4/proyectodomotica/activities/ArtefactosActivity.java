@@ -190,7 +190,7 @@ public class ArtefactosActivity extends Activity {
 
             for (Artefacto artefacto : artefactos) {
 
-                if (nombre.equals(artefacto.getNombre())) {
+                if (nombre.equalsIgnoreCase(artefacto.getNombre())) {
 
                     nombreDisponible = false;
                 }

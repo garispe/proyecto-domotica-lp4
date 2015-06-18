@@ -76,11 +76,6 @@ public class ControladorOrdenesDeVoz {
 
         palabras.add(cadena);
 
-        for(String palabra : palabras){
-
-            Logger.e(palabra);
-        }
-
         return palabras;
     }
 

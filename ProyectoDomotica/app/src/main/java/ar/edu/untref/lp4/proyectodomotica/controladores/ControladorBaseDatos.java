@@ -182,6 +182,9 @@ public class ControladorBaseDatos {
 
             values.put(Constantes.ID_PIN, getUltimoPin() + 1);
 
+        } else {
+
+            values.put(Constantes.ID_PIN, getUltimoPin());
         }
 
         db.insert(Constantes.TABLA_ARTEFACTOS, null, values);
@@ -194,7 +197,7 @@ public class ControladorBaseDatos {
     private static int getUltimoPin() {
 
         int pin = 0;
-        int max = 0;
+        int max = 3;
 
         Cursor c = db.rawQuery("SELECT " + Constantes.ID_PIN + " FROM "
                 + Constantes.TABLA_ARTEFACTOS, null);

@@ -455,14 +455,21 @@ public class HabitacionesActivity extends Activity {
      */
     public void apagarTodo(Habitacion habitacion) {
 
-        if (getListaArtefactos(habitacion).size() > 0 && controladorBluetooth.estaConectado()) {
+        List<Artefacto> artefactos = getListaArtefactos(habitacion);
 
-            for (Artefacto artefacto : getListaArtefactos(habitacion)) {
+        if (artefactos.size() > 0 && controladorBluetooth.estaConectado()) {
+
+            for (Artefacto artefacto : artefactos) {
 
                 if (artefacto.isActivo()) {
 
                     Integer pin = ControladorBaseDatos.getPinArtefacto(artefacto);
                     String dato = pin.toString();
+
+                    if (pin < 10) {
+
+                        dato = "0" + dato;
+                    }
 
                     artefacto.setActivo(false);
 
@@ -472,7 +479,8 @@ public class HabitacionesActivity extends Activity {
                     Toast.makeText(HabitacionesActivity.this, R.string.artefactos_apagados, Toast.LENGTH_SHORT).show();
                 }
             }
-        } else if (getListaArtefactos(habitacion).size() == 0) {
+
+        } else if (artefactos.size() == 0) {
 
             Toast.makeText(HabitacionesActivity.this, R.string.no_hay_artefactos, Toast.LENGTH_SHORT).show();
 
@@ -488,14 +496,21 @@ public class HabitacionesActivity extends Activity {
      */
     public void prenderTodo(Habitacion habitacion) {
 
-        if (getListaArtefactos(habitacion).size() > 0 && controladorBluetooth.estaConectado()) {
+        List<Artefacto> artefactos = getListaArtefactos(habitacion);
 
-            for (Artefacto artefacto : getListaArtefactos(habitacion)) {
+        if (artefactos.size() > 0 && controladorBluetooth.estaConectado()) {
+
+            for (Artefacto artefacto : artefactos) {
 
                 if (!artefacto.isActivo()) {
 
                     Integer pin = ControladorBaseDatos.getPinArtefacto(artefacto);
                     String dato = pin.toString();
+
+                    if (pin < 10) {
+
+                        dato = "0" + dato;
+                    }
 
                     artefacto.setActivo(true);
 
@@ -505,7 +520,8 @@ public class HabitacionesActivity extends Activity {
                     Toast.makeText(HabitacionesActivity.this, R.string.artefactos_encendidos, Toast.LENGTH_SHORT).show();
                 }
             }
-        } else if (getListaArtefactos(habitacion).size() == 0) {
+
+        } else if (artefactos.size() == 0) {
 
             Toast.makeText(HabitacionesActivity.this, R.string.no_hay_artefactos, Toast.LENGTH_SHORT).show();
 

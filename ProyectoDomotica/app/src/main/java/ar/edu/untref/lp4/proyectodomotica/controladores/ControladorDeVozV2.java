@@ -235,17 +235,14 @@ public class ControladorDeVozV2 {
      * @param cadena
      */
     private void encender (List<Habitacion> habitaciones, String cadena) {
-        if (getNombreArtefacto().equals(Constantes.VACIO) && getNombreHabitacion().equals(Constantes.VACIO) &&
-                cadena.contains(Constantes.TODO)) {
-            encenderTodoCasa(habitaciones);
-        } else {
-            if (getNombreArtefacto().equals(Constantes.VACIO) && cadena.contains(Constantes.TODO)) {
+        if (cadena.contains(Constantes.TODO)){
+            if (!getNombreHabitacion().equals(Constantes.VACIO) && getNombreArtefacto().equals(Constantes.VACIO)){
                 encenderTodoHabitacion(habitaciones);
-            } else {
-                if (cadena.contains(getNombreArtefacto())) {
-                    encenderArtefacto(habitaciones);
-                }
+            } else if (getNombreHabitacion().equals(Constantes.VACIO) && getNombreArtefacto().equals(Constantes.VACIO)) {
+                encenderTodoCasa(habitaciones);
             }
+        } else if (!getNombreHabitacion().equals(Constantes.VACIO) && !getNombreArtefacto().equals(Constantes.VACIO)) {
+            encenderArtefacto(habitaciones);
         }
     }
 
@@ -308,19 +305,14 @@ public class ControladorDeVozV2 {
      * @param cadena
      */
     private void apagar (List<Habitacion> habitaciones, String cadena) {
-        if (getNombreHabitacion().equals(Constantes.VACIO) && cadena.contains(Constantes.TODO)) {
-            apagarTodoCasa(habitaciones);
-            Toast.makeText(this.habitacionActivity, "Prueba...", Toast.LENGTH_SHORT).show();
-        } else {
-            if (getNombreArtefacto().equals(Constantes.VACIO) && cadena.contains(Constantes.TODO)) {
+        if (cadena.contains(Constantes.TODO)){
+            if (!getNombreHabitacion().equals(Constantes.VACIO) && getNombreArtefacto().equals(Constantes.VACIO)){
                 apagarTodoHabitacion(habitaciones);
-                Toast.makeText(this.habitacionActivity, "Prueba1...", Toast.LENGTH_SHORT).show();
-            } else {
-                if (cadena.contains(getNombreArtefacto())) {
-                    apagarArtefacto(habitaciones);
-                    Toast.makeText(this.habitacionActivity, "Prueba2...", Toast.LENGTH_SHORT).show();
-                }
+            } else if (getNombreHabitacion().equals(Constantes.VACIO) && getNombreArtefacto().equals(Constantes.VACIO)) {
+                apagarTodoCasa(habitaciones);
             }
+        } else if (!getNombreHabitacion().equals(Constantes.VACIO) && !getNombreArtefacto().equals(Constantes.VACIO)) {
+            apagarArtefacto(habitaciones);
         }
     }
 

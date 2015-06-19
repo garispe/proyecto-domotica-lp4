@@ -27,7 +27,7 @@ public class Constantes {
     public static final String ABRIR = "abrir";
     public static final String TODO = "todo";
     public static final String APAGAR = "apagar";
-    public static final String CASA = "casa";
     public static final String ENCENDER = "encender";
     public static final String SALIR = "salir";
+    public static final String VACIO = "";
 }

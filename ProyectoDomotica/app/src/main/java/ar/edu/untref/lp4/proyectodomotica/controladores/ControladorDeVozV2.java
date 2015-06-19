@@ -332,9 +332,9 @@ public class ControladorDeVozV2 {
      */
     public void ejecutarOrden (List<Habitacion> habitaciones, String cadena) {
         if (habitaciones.size() > 0) {
-            this.orden = Constantes.VACIO;
-            this.nombreHabitacion = Constantes.VACIO;
-            this.nombreArtefacto = Constantes.VACIO;
+            setOrden(Constantes.VACIO);
+            setNombreHabitacion(Constantes.VACIO);
+            setNombreArtefacto(Constantes.VACIO);
             analizarOrden(habitaciones, cadena);
             switch (getOrden()) {
                 case Constantes.ABRIR:

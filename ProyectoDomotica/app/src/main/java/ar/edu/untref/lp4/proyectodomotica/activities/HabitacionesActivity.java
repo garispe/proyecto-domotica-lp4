@@ -30,8 +30,6 @@ import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import ar.edu.untref.lp4.proyectodomotica.BuildConfig;
@@ -41,7 +39,6 @@ import ar.edu.untref.lp4.proyectodomotica.baseDatos.BaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorDeVozV2;
-import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorOrdenesDeVoz;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
 import ar.edu.untref.lp4.proyectodomotica.tasks.ConexionTask;

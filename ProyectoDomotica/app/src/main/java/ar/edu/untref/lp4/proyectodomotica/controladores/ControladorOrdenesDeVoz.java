@@ -4,8 +4,6 @@ package ar.edu.untref.lp4.proyectodomotica.controladores;
 import android.app.Activity;
 import android.widget.Toast;
 
-import com.orhanobut.logger.Logger;
-
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -360,7 +358,7 @@ public class ControladorOrdenesDeVoz {
             case Constantes.ENCENDER: {
 
                 if (palabra2.equals(Constantes.TODO)) {
-                    encenderTodoCasa(habitaciones); // TODO: corregir
+                    encenderTodoCasa(habitaciones);
                 } else {
                     Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_SHORT).show();
                 }
@@ -370,7 +368,7 @@ public class ControladorOrdenesDeVoz {
             case Constantes.APAGAR: {
 
                 if (palabra2.equals(Constantes.TODO)) {
-                    apagarTodoCasa(habitaciones); // TODO: corregir
+                    apagarTodoCasa(habitaciones);
                 } else {
                     Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_SHORT).show();
                 }

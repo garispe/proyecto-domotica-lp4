@@ -48,6 +48,10 @@ public class ConexionTask extends AsyncTask<Void, Void, Void> {
 
             activity.mostrarTextoConexion(true);
             Toast.makeText(activity, activity.getString(R.string.conexion_no_establecida), Toast.LENGTH_SHORT).show();
+
+        } else {
+
+            activity.mostrarTextoConexion(false);
         }
 
         activity.inicializarMenu();

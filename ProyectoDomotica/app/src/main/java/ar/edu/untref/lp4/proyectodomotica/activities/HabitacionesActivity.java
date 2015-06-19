@@ -6,9 +6,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -30,8 +30,6 @@ import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import ar.edu.untref.lp4.proyectodomotica.BuildConfig;
@@ -154,7 +152,7 @@ public class HabitacionesActivity extends Activity {
 
                 if (!controladorBluetooth.estaConectado()) {
 
-                    // Deberia actualizar el texto de NO CONECTADO
+                    // TODO: Deberia actualizar el texto de NO CONECTADO
                     realizarConexion();
 
                 } else {

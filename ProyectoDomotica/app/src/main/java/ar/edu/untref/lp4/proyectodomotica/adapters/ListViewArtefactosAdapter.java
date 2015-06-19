@@ -1,10 +1,12 @@
 package ar.edu.untref.lp4.proyectodomotica.adapters;
 
 import android.content.DialogInterface;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -81,7 +83,7 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
     /**
      * Modela el comportamiento al mantener presionado el texto de un artefacto
      */
-    private void mantenerPresionado(final ViewHolder viewHolder, final Artefacto artefacto, final int position){
+    private void mantenerPresionado(final ViewHolder viewHolder, final Artefacto artefacto, final int position) {
 
         viewHolder.texto.setText(artefacto.getNombre());
         viewHolder.texto.setOnLongClickListener(new View.OnLongClickListener() {
@@ -115,7 +117,7 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
     /**
      * Habilita los artefactos si hay una conexion establecida con el BT
      */
-    private void habilitacionArtefactos(ViewHolder viewHolder, Artefacto artefacto){
+    private void habilitacionArtefactos(ViewHolder viewHolder, Artefacto artefacto) {
 
         boolean estadoAlmacenado = ControladorBaseDatos.getEstadoArtefacto(artefacto);
         viewHolder.switchArtefacto.setChecked(estadoAlmacenado);
@@ -135,37 +137,43 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
     /**
      * Envia los datos correspodientes al estado del artefacto
      */
-    private void enviarDatos(final ViewHolder viewHolder,final Artefacto artefacto){
+    private void enviarDatos(final ViewHolder viewHolder, final Artefacto artefacto) {
 
-        viewHolder.switchArtefacto.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+        viewHolder.switchArtefacto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                        Integer pin = ControladorBaseDatos.getPinArtefacto(artefacto);
-                        String dato = pin.toString();
+                cambiarEstadoArtefacto(viewHolder, artefacto);
 
-                        if (pin < 10) {
-
-                            dato = "0" + dato;
-                        }
-
-                        if (viewHolder.switchArtefacto.isChecked()) {
-
-                            controladorBluetooth.enviarDato(dato + "1");
-
-                        } else {
-
-                            controladorBluetooth.enviarDato(dato + "0");
-                        }
-
-                        artefacto.setActivo(viewHolder.switchArtefacto.isChecked());
-
-                        ControladorBaseDatos.actualizarEstadoArtefacto(artefacto);
-                    }
-                }
-        );
+            }
+        });
     }
+
+    private void cambiarEstadoArtefacto(ViewHolder viewHolder, Artefacto artefacto) {
+
+        Integer pin = ControladorBaseDatos.getPinArtefacto(artefacto);
+        String dato = pin.toString();
+
+        if (pin < 10) {
+
+            dato = "0" + dato;
+        }
+
+        if (viewHolder.switchArtefacto.isChecked()) {
+
+            controladorBluetooth.enviarDato(dato + "1");
+
+        } else {
+
+            controladorBluetooth.enviarDato(dato + "0");
+        }
+
+        artefacto.setActivo(viewHolder.switchArtefacto.isChecked());
+
+        ControladorBaseDatos.actualizarEstadoArtefacto(artefacto);
+
+    }
+
 
     private class ViewHolder {
 

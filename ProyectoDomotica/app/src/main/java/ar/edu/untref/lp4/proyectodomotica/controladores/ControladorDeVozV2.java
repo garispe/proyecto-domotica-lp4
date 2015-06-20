@@ -243,6 +243,8 @@ public class ControladorDeVozV2 {
             }
         } else if (!getNombreHabitacion().equals(Constantes.VACIO) && !getNombreArtefacto().equals(Constantes.VACIO)) {
             encenderArtefacto(habitaciones);
+        } else {
+            Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -313,6 +315,8 @@ public class ControladorDeVozV2 {
             }
         } else if (!getNombreHabitacion().equals(Constantes.VACIO) && !getNombreArtefacto().equals(Constantes.VACIO)) {
             apagarArtefacto(habitaciones);
+        } else {
+            Toast.makeText(this.habitacionActivity, R.string.reiterar_comando, Toast.LENGTH_SHORT).show();
         }
     }
 

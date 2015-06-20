@@ -33,6 +33,6 @@ public class Constantes {
 
     //TEMPORIZADOR
 
-    public static final int MAX_ANCHO_HORA = 3;
-    public static final int MAX_ANCHO_MINUTOS = 3;
+    public static final int MAX_ANCHO_HORA = 2;
+    public static final int MAX_ANCHO_MINUTOS = 2;
 }

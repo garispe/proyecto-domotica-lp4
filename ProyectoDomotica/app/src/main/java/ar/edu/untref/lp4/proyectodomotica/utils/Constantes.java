@@ -30,4 +30,9 @@ public class Constantes {
     public static final String ENCENDER = "encender";
     public static final String SALIR = "salir";
     public static final String VACIO = "";
+
+    //TEMPORIZADOR
+
+    public static final int MAX_ANCHO_HORA = 3;
+    public static final int MAX_ANCHO_MINUTOS = 3;
 }

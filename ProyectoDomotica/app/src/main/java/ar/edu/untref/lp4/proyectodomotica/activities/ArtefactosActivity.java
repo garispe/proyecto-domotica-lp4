@@ -3,11 +3,7 @@ package ar.edu.untref.lp4.proyectodomotica.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -24,7 +20,6 @@ import java.util.List;
 
 import ar.edu.untref.lp4.proyectodomotica.R;
 import ar.edu.untref.lp4.proyectodomotica.adapters.ListViewArtefactosAdapter;
-import ar.edu.untref.lp4.proyectodomotica.baseDatos.BaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
 import ar.edu.untref.lp4.proyectodomotica.utils.Constantes;
@@ -271,9 +266,5 @@ public class ArtefactosActivity extends Activity {
 
         alertDialog.show();
 
-    }
-
-    public void temporizador () {
-        Toast.makeText(ArtefactosActivity.this, R.string.proximamente, Toast.LENGTH_SHORT).show();
     }
 }

@@ -83,5 +83,8 @@
     <string name="estaba_encendido">El artefacto se encuentra encendido</string>
     <string name="estaba_apagado">El artefacto se encuentra apagado</string>
     <string name="temporizador">Temporizador</string>
+    <string name="mensaje_temporizador">Ingrese hora y minuto:</string>
+    <string name="hora">Hora:</string>
+    <string name="minutos">Minuto:</string>
 
 </resources>

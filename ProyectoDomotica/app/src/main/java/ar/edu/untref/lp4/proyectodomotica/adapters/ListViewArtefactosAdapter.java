@@ -1,7 +1,6 @@
 package ar.edu.untref.lp4.proyectodomotica.adapters;
 
 import android.content.DialogInterface;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.cocosw.bottomsheet.BottomSheet;
-import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -20,12 +18,14 @@ import ar.edu.untref.lp4.proyectodomotica.activities.ArtefactosActivity;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
+import ar.edu.untref.lp4.proyectodomotica.services.Temporizador;
 
 public class ListViewArtefactosAdapter extends BaseAdapter {
 
     private ArtefactosActivity artefactosActivity;
     private List<Artefacto> artefactos;
     private ControladorBluetooth controladorBluetooth = ControladorBluetooth.getInstance();
+    private Temporizador temporizador;
     private boolean estaConectado = false;
 
     public ListViewArtefactosAdapter(ArtefactosActivity artefactosActivity, List<Artefacto> artefactos) {
@@ -85,6 +85,7 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
      */
     private void mantenerPresionado(final ViewHolder viewHolder, final Artefacto artefacto, final int position) {
 
+        temporizador = new Temporizador(this.artefactosActivity);
         viewHolder.texto.setText(artefacto.getNombre());
         viewHolder.texto.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -100,12 +101,11 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
                             case R.id.eliminar:
                                 artefactosActivity.borrarArtefacto(artefacto);
                                 break;
-
                             case R.id.editar:
                                 artefactosActivity.editarArtefacto(artefacto);
                                 break;
                             case R.id.temporizador:
-                                artefactosActivity.temporizador();
+                                temporizador.alertaTemporizador();
                                 break;
                         }
                     }

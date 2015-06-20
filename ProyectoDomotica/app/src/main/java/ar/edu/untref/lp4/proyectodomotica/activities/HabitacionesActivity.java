@@ -38,7 +38,7 @@ import ar.edu.untref.lp4.proyectodomotica.adapters.GridHabitacionesAdapter;
 import ar.edu.untref.lp4.proyectodomotica.baseDatos.BaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBaseDatos;
 import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorBluetooth;
-import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorOrdenesDeVoz;
+import ar.edu.untref.lp4.proyectodomotica.controladores.ControladorDeVozV2;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Artefacto;
 import ar.edu.untref.lp4.proyectodomotica.modelos.Habitacion;
 import ar.edu.untref.lp4.proyectodomotica.tasks.ConexionTask;
@@ -74,7 +74,7 @@ public class HabitacionesActivity extends Activity {
     //a partir de acá son atributos pegados directamente desde ComandoDeVoz
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
     public String palabra = "vacio";
-    private ControladorOrdenesDeVoz controlVoz;
+    private ControladorDeVozV2 controlVoz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -814,7 +814,7 @@ public class HabitacionesActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        controlVoz = new ControladorOrdenesDeVoz(this);
+        controlVoz = new ControladorDeVozV2(this);
 
         if (requestCode == VOICE_RECOGNITION_REQUEST_CODE && resultCode == RESULT_OK) {
 
@@ -824,8 +824,7 @@ public class HabitacionesActivity extends Activity {
             if (matches.size() > 0) {
 
                 palabra = matches.get(0);
-                controlVoz.guardarOrden(palabra);
-                controlVoz.analizarOrden(habitaciones);
+                controlVoz.ejecutarOrden(habitaciones, palabra);
 
             } else {
 

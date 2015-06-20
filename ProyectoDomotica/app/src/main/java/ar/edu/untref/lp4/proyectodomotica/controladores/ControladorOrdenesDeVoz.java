@@ -58,7 +58,7 @@ public class ControladorOrdenesDeVoz {
         //Lista a devolver.
         List<String> palabras = new LinkedList<String>();
 
-//        cadena = cadena.toLowerCase();
+        cadena = cadena.toLowerCase();
 
         //borra espacios al principio y final de la cadena
         cadena = cadena.trim();
@@ -120,25 +120,24 @@ public class ControladorOrdenesDeVoz {
         cargarPalabras(obtenerPalabras(cadena));
     }
 
-    /**
-     * Devuelve la habitacion que tiene el mismo nombre que la del parametro
-     */
     private Habitacion obtenerHabitacion(List<Habitacion> habitaciones, String nombre) {
 
-        Habitacion habitacion = null;
+        Habitacion lugar = null;
 
         if (habitaciones.size() > 0) {
 
-            for (Habitacion habitacionActual : habitaciones) {
+            if (this.habitacionActivity.nombreHabitacionDisponible(nombre)) {
 
-                if (habitacionActual.getNombre().equalsIgnoreCase(nombre)) {
+                Toast.makeText(this.habitacionActivity, R.string.no_existe_habitacion, Toast.LENGTH_SHORT).show();
 
-                    habitacion = habitacionActual;
-                    break;
+            } else {
 
-                } else {
+                for (Habitacion habitacion : habitaciones) {
 
-                    Toast.makeText(this.habitacionActivity, R.string.no_existe_habitacion, Toast.LENGTH_SHORT).show();
+                    if (nombre.equals(habitacion.getNombre())) {
+
+                        lugar = habitacion;
+                    }
                 }
             }
 
@@ -147,7 +146,7 @@ public class ControladorOrdenesDeVoz {
             Toast.makeText(this.habitacionActivity, R.string.habitaciones_vacias, Toast.LENGTH_SHORT).show();
         }
 
-        return habitacion;
+        return lugar;
     }
 
     /**
@@ -193,7 +192,7 @@ public class ControladorOrdenesDeVoz {
 
                 for (Artefacto artefacto : lista) {
 
-                    if (nombreArtefacto.equalsIgnoreCase(artefacto.getNombre())) {
+                    if (nombreArtefacto.equals(artefacto.getNombre())) {
 
                         if (!artefacto.isActivo()) {
 
@@ -240,7 +239,7 @@ public class ControladorOrdenesDeVoz {
 
                 for (Artefacto aparato : lista) {
 
-                    if (artefacto.equalsIgnoreCase(aparato.getNombre())) {
+                    if (artefacto.equals(aparato.getNombre())) {
 
                         if (aparato.isActivo()) {
 
@@ -292,7 +291,7 @@ public class ControladorOrdenesDeVoz {
 
         Habitacion habitacion = obtenerHabitacion(habitaciones, nombre);
 
-        if (nombre.equalsIgnoreCase(habitacion.getNombre())) {
+        if (nombre.equals(habitacion.getNombre())) {
 
             this.habitacionActivity.prenderTodo(habitacion);
 
@@ -337,7 +336,7 @@ public class ControladorOrdenesDeVoz {
 
         Habitacion habitacion = obtenerHabitacion(habitaciones, nombre);
 
-        if (nombre.equalsIgnoreCase(habitacion.getNombre())) {
+        if (nombre.equals(habitacion.getNombre())) {
 
             this.habitacionActivity.apagarTodo(habitacion);
 

@@ -3,4 +3,5 @@
 
     <item android:id="@+id/editar" android:title="@string/editar" android:icon="@drawable/editar"/>
     <item android:id="@+id/eliminar" android:title="@string/eliminar" android:icon="@drawable/eliminar"/>
+    <item android:id="@+id/temporizador" android:title="Temporizador" android:icon="@drawable/reloj"/>
 </menu>

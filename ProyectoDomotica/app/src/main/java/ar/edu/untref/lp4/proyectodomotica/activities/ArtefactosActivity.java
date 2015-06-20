@@ -37,7 +37,6 @@ public class ArtefactosActivity extends Activity {
     private ListViewArtefactosAdapter artefactosAdapter;
 
     private FloatingActionButton botonAgregarHabitacion;
-    private FloatingActionButton botonHablar;
     public static String nombreHabitacion;
     private int idHabitacion;
 
@@ -272,5 +271,9 @@ public class ArtefactosActivity extends Activity {
 
         alertDialog.show();
 
+    }
+
+    public void temporizador () {
+        Toast.makeText(ArtefactosActivity.this, R.string.proximamente, Toast.LENGTH_SHORT).show();
     }
 }

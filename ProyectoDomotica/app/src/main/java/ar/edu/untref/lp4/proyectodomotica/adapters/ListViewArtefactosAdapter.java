@@ -104,6 +104,9 @@ public class ListViewArtefactosAdapter extends BaseAdapter {
                             case R.id.editar:
                                 artefactosActivity.editarArtefacto(artefacto);
                                 break;
+                            case R.id.temporizador:
+                                artefactosActivity.temporizador();
+                                break;
                         }
                     }
                 }).show();

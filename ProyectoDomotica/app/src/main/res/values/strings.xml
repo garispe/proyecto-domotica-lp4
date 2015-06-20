@@ -82,5 +82,6 @@
     <string name="se_apago">El artefacto fue apagado</string>
     <string name="estaba_encendido">El artefacto se encuentra encendido</string>
     <string name="estaba_apagado">El artefacto se encuentra apagado</string>
+    <string name="temporizador">Temporizador</string>
 
 </resources>

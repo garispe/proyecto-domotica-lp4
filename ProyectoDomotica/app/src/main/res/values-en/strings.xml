@@ -59,4 +59,19 @@
     <string name="agregar_habitacion">Add Room</string>
     <string name="cambio_idioma">The language has been changed succesfully</string>
 
+
+    <string name="mensaje_ventana">Say the command to be processed</string>
+    <string name="no_orden">There are no orders to be interpreted</string>
+    <string name="reiterar_comando">Reenter command</string>
+    <string name="faltan_palabras">Command incomplete. Please repeat.</string>
+    <string name="faltan_o_sobran">There are extra/missing words in the command. Please repeat.</string>
+    <string name="no_existe_habitacion">Inexistent Room</string>
+    <string name="habitaciones_vacias">There are no charged rooms</string>
+    <string name="comando_invalido">Invalid Command</string>
+    <string name="muchas_palabras">Too many words. Please repeat.</string>
+    <string name="se_encendio">The device was turned on</string>
+    <string name="se_apago">The device was turned off</string>
+    <string name="estaba_encendido">The device is turned on</string>
+    <string name="estaba_apagado">The device is turned off</string>
+
 </resources>

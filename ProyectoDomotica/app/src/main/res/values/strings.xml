@@ -66,7 +66,7 @@
     <string name="artefactos_apagados">Todos los artefactos se han apagado</string>
     <string name="artefactos_encendidos">Todos los artefactos se han encendido</string>
     <string name="agregar_foto">Agregar foto</string>
-    <string name="cambio_idioma">El idioma ha cambiado correctamente</string>
+    <string name="cambio_idioma">El idioma ha sido cambiado correctamente</string>
     <string name="cambio_idioma_ingles">Language changed successfully</string>
     <!-- Para traducir-->
     <string name="mensaje_ventana">Diga la orden a procesar</string>

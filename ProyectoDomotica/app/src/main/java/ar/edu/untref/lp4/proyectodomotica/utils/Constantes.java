@@ -35,4 +35,6 @@ public class Constantes {
 
     public static final int MAX_ANCHO_HORA = 2;
     public static final int MAX_ANCHO_MINUTOS = 2;
+    public static final Integer MAX_HORAS = 25; //Nunca llegan a este valor.
+    public static final Integer MAX_MINUTOS = 60; //Nunca llegan a este valor.
 }

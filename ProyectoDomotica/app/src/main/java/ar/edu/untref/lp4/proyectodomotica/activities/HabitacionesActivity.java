@@ -71,7 +71,6 @@ public class HabitacionesActivity extends Activity {
     private SharedPreferences preferences;
     private boolean mostrarTutorial;
 
-    //a partir de acá son atributos pegados directamente desde ComandoDeVoz
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
     public String palabra = "vacio";
     private ControladorDeVozV2 controlVoz;

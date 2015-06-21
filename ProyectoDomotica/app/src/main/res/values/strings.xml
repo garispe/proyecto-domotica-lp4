@@ -86,5 +86,6 @@
     <string name="mensaje_temporizador">Ingrese hora y minuto:</string>
     <string name="hora">Hora:</string>
     <string name="minutos">Minuto:</string>
+    <string name="timepo_incorrecto">Los valores ingresados son incorrectos</string>
 
 </resources>

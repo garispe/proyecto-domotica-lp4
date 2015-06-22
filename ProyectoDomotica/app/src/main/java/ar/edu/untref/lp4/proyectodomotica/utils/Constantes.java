@@ -30,4 +30,12 @@ public class Constantes {
     public static final String ENCENDER = "encender";
     public static final String SALIR = "salir";
     public static final String VACIO = "";
+    public static final String COMANDO = "\nCOMANDOS DE VOZ VALIDOS:\n" +
+            "\n-Abrir + Nombre de Habitacion\n" + "\n-Encender/Apagar + Todo + Nombre de Habitacion\n" +
+            "\n-Encender/Apagar + Nombre de Habitacion + Todo\n" + "\n-Encender/Apagar + Todo\n" +
+            "\n-Encender/Apagar + Nombre de Habitacion + Nombre de Artefacto\n" +
+            "\n-Encender/Apagar + Nombre de Artefacto + Nombre de Habitacion\n";
+
+
+
 }

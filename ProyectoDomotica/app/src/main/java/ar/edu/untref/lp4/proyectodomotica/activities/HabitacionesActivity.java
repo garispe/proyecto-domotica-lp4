@@ -170,7 +170,7 @@ public class HabitacionesActivity extends Activity {
             public void onClick(View v) {
                 menu.botonAccionMenu.close(true);
                 AlertDialog.Builder builder = new AlertDialog.Builder(HabitacionesActivity.this);
-                builder.setMessage("VERSION: " + BuildConfig.VERSION_NAME + "\n" + Constantes.COMANDO)
+                builder.setMessage(Constantes.COMANDO)
                         .setTitle(getString(R.string.app_name))
                         .setCancelable(false)
                         .setNeutralButton(getString(R.string.entendido),

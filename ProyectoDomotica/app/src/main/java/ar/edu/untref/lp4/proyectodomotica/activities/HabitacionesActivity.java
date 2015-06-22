@@ -131,7 +131,7 @@ public class HabitacionesActivity extends Activity {
 
         botonHablar = (FloatingActionButton) findViewById(R.id.boton_hablar);
         botonHablar.setSize(FloatingActionButton.SIZE_NORMAL);
-        botonHablar.setIcon(R.drawable.microfono);
+        botonHablar.setIcon(R.drawable.icon_microphone);
         botonHablar.setOnClickListener(hablar);
     }
 

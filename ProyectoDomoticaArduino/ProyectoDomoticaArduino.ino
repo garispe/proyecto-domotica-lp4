@@ -4,12 +4,11 @@ SoftwareSerial BT(12, 13); // Receptor, Tramsmisor.
 int pin;
 int dato;
 int configuracionBT = 9;
-int relay = 2;
+int relay = 3;
 
 void setup(){
 
   pinMode(relay, OUTPUT);
-  digitalWrite(relay, LOW);
   
   //pinMode(configuracionBT, OUTPUT); // Se utiliza para configuracion del modulo a traves de comandos AT.
   //digitalWrite(configuracionBT, HIGH);

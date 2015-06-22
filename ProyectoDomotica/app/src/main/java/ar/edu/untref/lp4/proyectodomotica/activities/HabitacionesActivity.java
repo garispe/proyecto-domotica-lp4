@@ -346,10 +346,6 @@ public class HabitacionesActivity extends Activity {
                         editarHabitacion((Habitacion) gridview.getItemAtPosition(pos));
                         break;
 
-                    case R.id.agregar_foto:
-                        agregarFoto((Habitacion) gridview.getItemAtPosition(pos));
-                        break;
-
                     case R.id.apagar:
                         apagarTodo((Habitacion) gridview.getItemAtPosition(pos));
                         break;
@@ -529,14 +525,6 @@ public class HabitacionesActivity extends Activity {
         }
     }
 
-    /**
-     * Permite tomar una foto con la camara y setearsela a la habitación seleccionada
-     */
-    private void agregarFoto(final Habitacion habitacion) {
-
-        Toast.makeText(HabitacionesActivity.this, R.string.proximamente, Toast.LENGTH_SHORT).show();
-
-    }
 
     /**
      * Devuelve la lista de artefactos de una habitacion obtenida desde la BD

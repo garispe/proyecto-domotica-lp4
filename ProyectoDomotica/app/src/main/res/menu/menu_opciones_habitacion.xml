@@ -4,7 +4,6 @@
 
     <item android:id="@+id/editar" android:title="@string/editar" android:icon="@drawable/editar"/>
     <item android:id="@+id/eliminar" android:title="@string/eliminar" android:icon="@drawable/eliminar"/>
-    <item android:id="@+id/agregar_foto" android:title="@string/agregar_foto" android:icon="@drawable/camara"/>
     <item android:id="@+id/apagar" android:title="@string/apagar_todo" android:icon="@drawable/foco"/>
     <item android:id="@+id/prender" android:title="@string/prender_todo" android:icon="@drawable/foco"/>
 
